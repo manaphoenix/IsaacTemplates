@@ -1,0 +1,36 @@
+<players nameimageroot="gfx/ui/boss/" portraitroot="gfx/ui/stage/" root="gfx/characters/costumes/">
+	<player hp="2" bombs="1" name="Alpha"
+	nameimage="playername_template.png" portrait="playerportrait_template.png" skin="character_template.png" skincolor="-1"/>
+</players>
+<!--
+	the tags for this if you have being following the instructions are:
+	bigportrait = playerportraitbig_charactername.png
+	nameimage = playername_charactername.png
+	portrait = playerportrait_charactername.png
+	skin = character_charactername.png
+	name = charactername , this time Uppercase the name you put here.
+	
+	skincolor="-1" if you don't need this, just leave it at -1
+	
+	known valid numbers:
+	"-1": "Default",
+	"0": "Black", 
+	"1": "Blue", 
+	"2": "Green", 
+	"3": "Grey", 
+	"4": "Red", 
+	"5": "White"
+	
+	other valid tags are:
+	hp="2" this is how much hp the character starts with, every 2 is 1 red heart.
+	armor="1" this is how many soul hearts the character starts with, every 2 is 1 soul heart
+	black="1" this is how many black hearts the character starts with, every 2 is 1 black heart
+	coins="1" this is how many coins the character starts with
+	bombs="1" this is how many bombs the character starts with
+	keys="1" this is how many keys the character starts with
+	broken="1" this is how many broken hearts the character starts with every 2 is 1 broken heart (REP)
+	birthright="" this is the unique description that will appear when picking up birthright with your character.
+	bskinparent="name" use this to set this character as the tainted version of the specified character name.
+	
+	when your done remove this comment section :)
+!-->

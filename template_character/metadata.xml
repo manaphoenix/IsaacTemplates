@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>template_character</name>
+    <directory>template_character</directory>
+    <id>0</id>
+    <description>My Character Is...</description>
+    <version>1.0</version>
+    <visibility>Public</visibility>
+</metadata>
