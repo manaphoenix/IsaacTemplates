@@ -166,7 +166,7 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
     end
   end
 
-  if (cache & CacheFlag.CACHE_SPEED == CacheFlag.SPEED) then
+  if (cache & CacheFlag.CACHE_SPEED == CacheFlag.CACHE_SPEED) then
     if (not taint) then
       player.MoveSpeed = player.MoveSpeed * stats.default.speed
     else
