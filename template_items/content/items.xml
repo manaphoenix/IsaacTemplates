@@ -1,0 +1,6 @@
+<items gfxroot="gfx/Items/" version="1">
+  <passive gfx="elysium.png" description="Life anew" name="Elysium" quality="1" />
+	<!--
+	<passive cache="tearcolor" gfx="laidoblade.png" description="laijutsu" name="TestItem"/>
+	!-->
+</items>
