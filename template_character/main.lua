@@ -75,6 +75,10 @@ local pill = {
   default = 0,
   tainted = 0
 }
+local charge = {
+  default = nil,
+  tainted = nil
+}
 --[[
 Fill in the above with the items you want your character to start with.
 separated by a comma (like above, only not commented out using the '--')
@@ -106,6 +110,10 @@ another way to get these ids is to go to the wiki, the you should see a 3 number
 the last number is the ID
 (https://bindingofisaacrebirth.fandom.com/wiki/)
 
+the charge variable is for how many charges you want your active item of choice to start with.
+set to nil for no charge.
+set to a number for specific charges
+set to true for full charge :)
 ]]
 
 -- CODE --
@@ -210,9 +218,23 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
         for i,v in ipairs(items.default) do
           player:AddCollectible(v)
         end
+        if (player:GetActiveItem() and charge.default) then
+          if (charge.default == true) then
+            player:FullCharge()
+          else
+            player:SetActiveCharge(charge.default)
+          end
+        end
       else
         for i,v in ipairs(items.tainted) do
           player:AddCollectible(v)
+        end
+        if (player:GetActiveItem() and charge.tainted) then
+          if (charge.tainted == true) then
+            player:FullCharge()
+          else
+            player:SetActiveCharge(charge.tainted)
+          end
         end
       end
     end
