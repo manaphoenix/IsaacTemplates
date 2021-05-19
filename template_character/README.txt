@@ -4,6 +4,7 @@
 	2:1 playername image
 	3:1 stage portrait
 	4:1 character costume
+	4:2 character costume
 	5:1 players.xml
 	6:1 character menu
 	6:2 character menu
@@ -74,6 +75,24 @@ its highly recommened to use my template and just edit it instead of trying to m
 the file needs to be a 512x512
 be sure to name the file "character_charactername.png" just like all the rest, lowercase the name.
 
+[ 4:2 character costume ]
+Included in this template is a simple cat ears costume. along with its PSD reference I used to create it.
+this template mod allows you to apply a costume for both the default and tainted character separately
+
+creating a costume takes 4 steps
+1. make the costume frames in "\resources\gfx\characters\costumes"
+	- you need 8 frames total, 1 for each each facing direction + 1 for each heading direction while firing
+2. setup the anm2 in "\resources\gfx\characters"
+	- you can use the animation editor in the tools folder of isaac install (this is covered 6:2)
+3. tell the game your costume exists by adding it to costumes2.xml in "\content"
+4. apply the costume in main.lua
+
+If you do not have / want a costume, you can delete these the costumes2.xml, along with my example costume files:
+"character_alpha_cat_ears.anm2"
+"character_cat_ears_template.png"
+
+regardless if you do a costume or not be sure to delete the "character_cat_ears_template_reference.psd" file
+when your done using it (if you do).
 
 [ 5:1 players.xml ]
 ok, with all of the basic images done and out of the way, we need to head over to players.xml to actually tell the game about our new character

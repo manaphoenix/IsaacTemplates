@@ -51,6 +51,17 @@ offset values are input directly as 0-255 instead of being normalized.
 
 the first four numbers are normalized, basically to get a normalized RGB value take the RGB value from 0-255 and divide by 255. thats the normalized number.
 ]]
+local costume = {
+  default = "character_alpha_cat_ears",
+  tainted = nil
+}
+--[[
+if your character has a costume to apply, put the name of the file above
+without the .anm2 extension. if not just put nil.
+
+NOTE: your anm2 must be in ".\resources\gfx\characters" or it will not be found.
+]]
+
 local items = {
   default = {
     --item1,
@@ -213,6 +224,19 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
   local taint = IsTainted(player)
 
   if TotPlayers == 0 and game:GetFrameCount() == 0 then
+    -- Costume
+    local cost = -1
+    if (not taint) then
+      cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.default .. ".anm2")
+    else
+      cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.tainted .. ".anm2")
+    end
+
+    if (cost ~= -1) then
+      player:AddNullCostume(cost)
+    end
+
+    -- Items
     if (#items.default > 0 or #items.tainted) then
       if (not taint) then
         for i,v in ipairs(items.default) do
