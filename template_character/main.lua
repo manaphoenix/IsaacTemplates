@@ -10,7 +10,7 @@ local stats = {
     range = 1.00,
     speed = 1.00,
     tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE,
-    tearcolor = Color(1.0, 1.0, 1.0, 1.0, 255, 255, 255),
+    tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0),
     flying = false,
     luck = 1.00
   },
@@ -21,7 +21,7 @@ local stats = {
     range = 1.00,
     speed = 1.00,
     tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE,
-    tearcolor = Color(1.0, 1.0, 1.0, 1.0, 255, 255, 255),
+    tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0),
     flying = false,
     luck = 1.00
   }
@@ -35,6 +35,21 @@ aka
 if you set damage to 1.00, then your character will start with 3.50 damage (the default)
 
 set tearflags to TearFlags.TEAR_NORMAL if you don't want your character to have any innate tear effects
+for tearcolor the first 4 numbers are the color of the base tear, and the last 3 numbers are for the "overlay" tear color
+default value is (1,1,1,1,0,0,0)
+
+color is R,G,B,A,R0,G0,B0
+Red
+Green
+Blue
+Alpha (Transparency)
+Red offset
+Green offset
+Blue Offset
+
+offset values are input directly as 0-255 instead of being normalized.
+
+the first four numbers are normalized, basically to get a normalized RGB value take the RGB value from 0-255 and divide by 255. thats the normalized number.
 ]]
 local items = {
   default = {
