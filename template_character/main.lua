@@ -195,9 +195,13 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
 
   if (cache & CacheFlag.CACHE_FLYING == CacheFlag.CACHE_FLYING) then
     if (not taint) then
-      player.CanFly = stats.default.flying
+      if (stats.default.flying) then
+        player.CanFly = true
+      end
     else
-      player.CanFly = stats.tainted.flying
+      if (stats.tainted.flying) then
+        player.CanFly = true
+      end
     end
   end
 
