@@ -41,6 +41,8 @@ to create the base for this image you can use (https://wofsauge.github.io/IsaacT
 
 this file can be found in ".\resources\gfx\ui\boss"
 
+Keep an original copy of this file, you will need it later!
+
 The image created by the website will be much too big with the text much too small. but at least has the right font
 Open your preferred image editor and do these steps.
 First move the text to roughly in the center of the image instead of the top left corner
