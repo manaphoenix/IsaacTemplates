@@ -1,5 +1,5 @@
 local mod = RegisterMod("MODNAME", 1) -- Replace the Mod name with something unique.
-local playerName = "MyCustomCharacter" -- the name of your character (from the players.xml file)
+local playerName = "Alpha" -- the name of your character (from the players.xml file)
 local isTainted = false -- is this a tainted character?
 
 local stats = {
@@ -109,6 +109,7 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
 end)
 
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
+  if (player:GetPlayerType() ~= char) then return end
   local TotPlayers = #Isaac.FindByType(EntityType.ENTITY_PLAYER)
 
   if TotPlayers == 0 and game:GetFrameCount() == 0 then

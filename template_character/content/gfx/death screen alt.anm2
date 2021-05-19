@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="5/18/2021 9:06:46 PM" Version="50" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="5/18/2021 9:06:36 PM" Version="50" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="death portraits.png" Id="0"/>
@@ -23,8 +23,8 @@
 		</Nulls>
 		<Events/>
 	</Content>
-	<Animations DefaultAnimation="Alpha">
-		<Animation Name="Alpha" FrameNum="732" Loop="true">
+	<Animations DefaultAnimation="Omega">
+		<Animation Name="Omega" FrameNum="732" Loop="true">
 			<RootAnimation>
 				<Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
 			</RootAnimation>
@@ -1363,7 +1363,7 @@
 					<Frame XPosition="22" YPosition="-29" XPivot="32" YPivot="24" XCrop="962" YCrop="1440" Width="64" Height="48" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
 				</LayerAnimation>
 				<LayerAnimation LayerId="4" Visible="true">
-					<Frame XPosition="21" YPosition="80" XPivot="32" YPivot="8" XCrop="450" YCrop="125" Width="51" Height="22" XScale="72.9166641235352" YScale="90.625" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="6.24999952316284" Interpolated="false"/>
+					<Frame XPosition="18" YPosition="78" XPivot="32" YPivot="8" XCrop="443" YCrop="148" Width="67" Height="27" XScale="66.6666717529297" YScale="84.375" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="10.4166660308838" Interpolated="false"/>
 				</LayerAnimation>
 				<LayerAnimation LayerId="7" Visible="true">
 					<Frame XPosition="-175" YPosition="-87" XPivot="16" YPivot="16" XCrop="0" YCrop="0" Width="128" Height="64" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
