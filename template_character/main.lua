@@ -20,12 +20,13 @@ local stats = {
     shotspeed = 1.00,
     range = 1.00,
     speed = 1.00,
-    tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE,
+    tearflags = TearFlags.TEAR_ECOLI,
     tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0),
     flying = false,
     luck = 1.00
   }
 }
+
 --[[
 The way stats work all characters start with isaac's base.
 then you affect starting stats from there.
@@ -53,11 +54,11 @@ the first four numbers are normalized, basically to get a normalized RGB value t
 ]]
 local costume = {
   default = "character_alpha_cat_ears",
-  tainted = nil
+  tainted = ""
 }
 --[[
 if your character has a costume to apply, put the name of the file above
-without the .anm2 extension. if not just put nil.
+without the .anm2 extension. if not just put "".
 
 NOTE: your anm2 must be in ".\resources\gfx\characters" or it will not be found.
 ]]
@@ -139,7 +140,6 @@ local function IsTainted(player)
 
   return true
 end
-
 
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
   if (player:GetPlayerType() ~= char and player:GetPlayerType() ~= taintedChar) then return end
@@ -243,7 +243,7 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
     -- Items
     if (#items.default > 0 or #items.tainted) then
       if (not taint) then
-        for i,v in ipairs(items.default) do
+        for i, v in ipairs(items.default) do
           player:AddCollectible(v)
         end
         if (player:GetActiveItem() and charge.default) then
@@ -254,7 +254,7 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
           end
         end
       else
-        for i,v in ipairs(items.tainted) do
+        for i, v in ipairs(items.tainted) do
           player:AddCollectible(v)
         end
         if (player:GetActiveItem() and charge.tainted) then
