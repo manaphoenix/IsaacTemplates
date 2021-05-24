@@ -65,12 +65,12 @@ NOTE: your anm2 must be in ".\resources\gfx\characters" or it will not be found.
 
 local items = {
   default = {
-    --item1,
-    --item2
+    --{item1, true},
+    --{item2, false}
   },
   tainted = {
-    --item1,
-    --item2
+    --{item1, true},
+    --{item2, false}
   }
 }
 
@@ -96,6 +96,8 @@ Fill in the above with the items you want your character to start with.
 separated by a comma (like above, only not commented out using the '--')
 the items are given to you in the order they put into the table, from top to bottom
 that way items that are specific to when you get them work correctly :)
+
+the second statement is if you want the item to render its costume. put true to remove it.
 
 for vanilla items you can use the CollectibleType Enum
 (https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType/)
@@ -132,6 +134,7 @@ set to true for full charge :)
 
 local char = Isaac.GetPlayerTypeByName(playerName, false)
 local taintedChar = Isaac.GetPlayerTypeByName(taintedName or playerName, true)
+local config = Isaac.GetItemConfig()
 local game = Game()
 local function IsTainted(player)
   if (player:GetPlayerType() ~= char and player:GetPlayerType() ~= taintedChar) then return nil end
@@ -240,7 +243,11 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
   if (#items.default > 0 or #items.tainted) then
     if (not taint) then
       for i, v in ipairs(items.default) do
-        player:AddCollectible(v)
+        player:AddCollectible(v[1])
+        if (v[2]) then
+          local ic = config:GetCollectible(v[1])
+          player:RemoveCostume(ic)
+        end
       end
       if (player:GetActiveItem() and charge.default) then
         if (charge.default == true) then
@@ -251,7 +258,11 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
       end
     else
       for i, v in ipairs(items.tainted) do
-        player:AddCollectible(v)
+        player:AddCollectible(v[1])
+        if (v[2]) then
+          local ic = config:GetCollectible(v[1])
+          player:RemoveCostume(ic)
+        end
       end
       if (player:GetActiveItem() and charge.tainted) then
         if (charge.tainted == true) then
