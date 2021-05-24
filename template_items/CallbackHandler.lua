@@ -20,7 +20,7 @@ end
 function handler:AddCallbacks(CallBacks)
   for i, v in pairs(CallBacks) do
     if (callbacks[i]) then
-      table.insert(callbacks[Callback], v)
+      table.insert(callbacks[i], v)
     else
       callbacks[i] = {v}
     end
