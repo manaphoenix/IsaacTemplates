@@ -15,7 +15,6 @@
 	10:1 uploading
 	11:1 workshop
 
-
 [ 1:1 Intro ]
 Welcome to the "Template Mod Character"
 This readme file will guide you through each step of what you need to do.

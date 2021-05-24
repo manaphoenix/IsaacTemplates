@@ -224,71 +224,66 @@ end)
 
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
   if (player:GetPlayerType() ~= char and player:GetPlayerType() ~= taintedChar) then return end
-  local TotPlayers = #Isaac.FindByType(EntityType.ENTITY_PLAYER)
-  local taint = IsTainted(player)
+  -- Costume
+  local cost = -1
+  if (not taint) then
+    cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.default .. ".anm2")
+  else
+    cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.tainted .. ".anm2")
+  end
 
-  if TotPlayers == 0 and game:GetFrameCount() == 0 then
-    -- Costume
-    local cost = -1
+  if (cost ~= -1) then
+    player:AddNullCostume(cost)
+  end
+
+  -- Items
+  if (#items.default > 0 or #items.tainted) then
     if (not taint) then
-      cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.default .. ".anm2")
+      for i, v in ipairs(items.default) do
+        player:AddCollectible(v)
+      end
+      if (player:GetActiveItem() and charge.default) then
+        if (charge.default == true) then
+          player:FullCharge()
+        else
+          player:SetActiveCharge(charge.default)
+        end
+      end
     else
-      cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.tainted .. ".anm2")
-    end
-
-    if (cost ~= -1) then
-      player:AddNullCostume(cost)
-    end
-
-    -- Items
-    if (#items.default > 0 or #items.tainted) then
-      if (not taint) then
-        for i, v in ipairs(items.default) do
-          player:AddCollectible(v)
-        end
-        if (player:GetActiveItem() and charge.default) then
-          if (charge.default == true) then
-            player:FullCharge()
-          else
-            player:SetActiveCharge(charge.default)
-          end
-        end
-      else
-        for i, v in ipairs(items.tainted) do
-          player:AddCollectible(v)
-        end
-        if (player:GetActiveItem() and charge.tainted) then
-          if (charge.tainted == true) then
-            player:FullCharge()
-          else
-            player:SetActiveCharge(charge.tainted)
-          end
+      for i, v in ipairs(items.tainted) do
+        player:AddCollectible(v)
+      end
+      if (player:GetActiveItem() and charge.tainted) then
+        if (charge.tainted == true) then
+          player:FullCharge()
+        else
+          player:SetActiveCharge(charge.tainted)
         end
       end
     end
+  end
 
-    if (REPENTANCE and ((trinket.default ~= 0 and not taint) or (trinket.tainted ~= 0 and taint))) then
-      if (not taint) then
-        player:AddTrinket(trinket.default, true)
-      else
-        player:AddTrinket(trinket.tainted, true)
-      end
+  if (REPENTANCE and ((trinket.default ~= 0 and not taint) or (trinket.tainted ~= 0 and taint))) then
+    if (not taint) then
+      player:AddTrinket(trinket.default, true)
+    else
+      player:AddTrinket(trinket.tainted, true)
     end
+  end
 
-    if (pill.default ~= 0 and not taint) or (pill.tainted ~= 0 and taint) then
-      if (not taint) then
-        player:SetPill(0, pill.default)
-      else
-        player:SetPill(0, pill.tainted)
-      end
+  if (pill.default ~= 0 and not taint) or (pill.tainted ~= 0 and taint) then
+    if (not taint) then
+      player:SetPill(0, pill.default)
+    else
+      player:SetPill(0, pill.tainted)
     end
+  end
 
-    if (card.default ~= 0 and not taint) or (card.tainted ~= 0 and taint) then
-      if (not taint) then
-        player:SetCard(0, card.default)
-      else
-        player:SetCard(0, card.tainted)
-      end
+  if (card.default ~= 0 and not taint) or (card.tainted ~= 0 and taint) then
+    if (not taint) then
+      player:SetCard(0, card.default)
+    else
+      player:SetCard(0, card.tainted)
     end
   end
 end)
