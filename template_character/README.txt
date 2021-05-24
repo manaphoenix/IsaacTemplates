@@ -10,10 +10,11 @@
 	6:2 character menu
 	7:1 death portraits
 	7:2 death portraits
-	8:1 main.lua
-	9:1 metadata
-	10:1 uploading
-	11:1 workshop
+	8:1 coop menu
+	9:1 main.lua
+	10:1 metadata
+	11:1 uploading
+	12:1 workshop
 
 [ 1:1 Intro ]
 Welcome to the "Template Mod Character"
@@ -155,7 +156,12 @@ once your done save it.
 If you have a tainted character that has a different name from its default then you need to do the same thing in "death screen alt.anm2"
 otherwise, just delete the alt anm2 altogether.
 
-[ 8:1 main.lua ]
+[ 8:1 coop menu ]
+yet again, like all the others, open coop menu.png and coop menu b.png replace my heads with yours.
+
+then open coop menu.anm2 and coop menu alt.anm2 and add your characters name + picture.
+
+[ 9:1 main.lua ]
 Ok, now that we have all the image stuff out of the way. lets actually get your characters base items/stats setup.
 go back to the root of your mod and open main.lua
 
@@ -164,7 +170,7 @@ difficult to setup the file.
 
 you can remove the comments if you *want* when your done. but leaving them there won't harm anything :)
 
-[ 9:1 metadata ]
+[ 10:1 metadata ]
 your almost there!
 
 the first thing you want to do is rename the folder to whatever you want for your mod.
@@ -190,7 +196,7 @@ now you can change everything to your hearts galore.
 don't hit upload or worry about the thumbnail image, or "change notes" section yet.
 once your done close the uploader, it will save what you did.
 
-[ 10:1 Uploading ]
+[ 11:1 Uploading ]
 Ok, now is a good time to double check you have everything in order.
 
 then we need to create a thumbnail for the workshop "THIS DOES NOT GO IN THE MOD FOLDER" it is only used by the workshop
@@ -228,7 +234,7 @@ at the top of that page you can change it to "By YOUR STEAM NAME" ex "by manapho
 click that and it will reload the page, and you can now see your mod that you uploaded.
 click that and lets setup the rest of the things.
 
-[ 11:1 Workshop ]
+[ 12:1 Workshop ]
 On the right side when you will see Owner Controls
 
 if you have more images you can add/remove that from "Add/edit images & videos"
