@@ -34,7 +34,7 @@
 	broken="1" this is how many broken hearts the character starts with every 2 is 1 broken heart (REP)
 	birthright="" this is the unique description that will appear when picking up birthright with your character.
 	bSkinParent="name" use this to set this character as the tainted version of the specified character name.
-	items="" you can use this tag to give the player starting items, put the id(s) here separated by a space. You can also do this step in main.lua, which is suggested for your active item to give better control. Or for Items for which you do not want the costume to show.
+	items="" you can use this tag to give the player starting items, put the id(s) here separated by a space. You can also do this step in main.lua, which is suggested for your active item to give better control. Or for Items for which you do not want the costume to show (WIP).
 	
 	NOTE: items="" DOES NOT work for modded items.
 	

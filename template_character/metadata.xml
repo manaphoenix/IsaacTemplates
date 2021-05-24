@@ -2,8 +2,14 @@
 <metadata>
     <name>template_character</name>
     <directory>template_character</directory>
-    <id>0</id>
-    <description>My Character Is...</description>
-    <version>1.0</version>
+    <id>2496957623</id>
+    <description>[h1]About this mod[/h1]
+This is a mod for being a template to make your own character. Updated for Rept!
+
+[h1]Notes[/h1]
+It is [b]highly suggested[/b] to grab the latest release of this character from its github [url=https://github.com/manaphoenix/IsaacTemplates]here[/url]</description>
+    <version>1.1</version>
     <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Player Characters"/>
 </metadata>
