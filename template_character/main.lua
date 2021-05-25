@@ -227,25 +227,36 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
   end
 end)
 
+local function AddCostume(AppliedCostume, player)
+  if (type(AppliedCostume) == "table") then
+    for i = 1, #AppliedCostume do
+      local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. AppliedCostume[i] .. ".anm2")
+      if (cost ~= -1) then
+        player:AddNullCostume(cost)
+        return
+      else
+        print("Could not find gfx/characters/" .. AppliedCostume[i] .. ".anm2!")
+        return
+      end
+    end
+  end
+  local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. AppliedCostume .. ".anm2")
+  if (cost ~= -1) then
+    player:AddNullCostume(cost)
+  else
+    if (AppliedCostume ~= "") then
+      print("Could not find gfx/characters/" .. AppliedCostume .. ".anm2!")
+    end
+  end
+end
+
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
   if (player:GetPlayerType() ~= char and player:GetPlayerType() ~= taintedChar) then return end
   -- Costume
   if (not taint) then
-    if (type(costume.default) == "table") then
-      for i = 1, #costume.default do
-        player:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.default[i] .. ".anm2"))
-      end
-    else
-      player:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.default .. ".anm2"))
-    end
+    AddCostume(costume.default, player)
   else
-    if (type(costume.tainted) == "table") then
-      for i = 1, #costume.tainted do
-        player:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.tainted[i] .. ".anm2"))
-      end
-    else
-      player:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.tainted .. ".anm2"))
-    end
+    AddCostume(costume.tainted, player)
   end
 
   -- Items
