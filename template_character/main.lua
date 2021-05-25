@@ -233,12 +233,11 @@ local function AddCostume(AppliedCostume, player)
       local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. AppliedCostume[i] .. ".anm2")
       if (cost ~= -1) then
         player:AddNullCostume(cost)
-        return
       else
         print("Could not find gfx/characters/" .. AppliedCostume[i] .. ".anm2!")
-        return
       end
     end
+    return
   end
   local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. AppliedCostume .. ".anm2")
   if (cost ~= -1) then
