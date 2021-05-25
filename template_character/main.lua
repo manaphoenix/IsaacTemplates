@@ -57,8 +57,10 @@ local costume = {
   tainted = ""
 }
 --[[
-if your character has a costume to apply, put the name of the file above
-without the .anm2 extension. if not just put "".
+for costumes if you have one just type the name of the file without the .anm2 extension.
+if you have multiple make it a table {"costume1","costume2"}.
+ 
+if you have no costume just put "".
 
 NOTE: your anm2 must be in ".\resources\gfx\characters" or it will not be found.
 ]]
@@ -228,15 +230,22 @@ end)
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
   if (player:GetPlayerType() ~= char and player:GetPlayerType() ~= taintedChar) then return end
   -- Costume
-  local cost = -1
   if (not taint) then
-    cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.default .. ".anm2")
+    if (type(costume.default) == "table") then
+      for i = 1, #costume.default do
+        player:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.default[i] .. ".anm2"))
+      end
+    else
+      player:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.default .. ".anm2"))
+    end
   else
-    cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.tainted .. ".anm2")
-  end
-
-  if (cost ~= -1) then
-    player:AddNullCostume(cost)
+    if (type(costume.tainted) == "table") then
+      for i = 1, #costume.tainted do
+        player:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.tainted[i] .. ".anm2"))
+      end
+    else
+      player:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/characters/" .. costume.tainted .. ".anm2"))
+    end
   end
 
   -- Items
