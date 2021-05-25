@@ -252,6 +252,7 @@ end
 
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
   if (player:GetPlayerType() ~= char and player:GetPlayerType() ~= taintedChar) then return end
+  local taint = IsTainted(player)
   -- Costume
   if (not taint) then
     AddCostume(costume.default, player)
