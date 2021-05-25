@@ -7,11 +7,26 @@
 	bSkinParent="Alpha"/>
 </players>
 <!--
-	the tags for this if you have being following the instructions are:
-	nameimage = playername_charactername.png
-	portrait = playerportrait_charactername.png
-	skin = character_charactername.png
-	name = charactername , this time Uppercase the name you put here.
+	this xml is pre-setup for you, but I will still explain what everything does.
+	
+	the root <players> is what the game uses to tell the game that this is a list of players.
+	you will notice a bunch of something="". In xml this is called a "tag"
+	a tag has no specific order, meaning you can do this in whatever order you want.
+	
+	below is the tags that the root <players> uses and what it does.
+	nameimageroot - tells the game where to find the name images for our character(s).
+	portraitroot - tells the game where to find the portrait images used for our character(s)
+	root - tells the game where to find the character skin images used for our character(s).
+	
+	
+	next we have the <player> inside of <players>
+	each one of these is a different player. we have 2, one regular and one tainted variant.
+	
+	the tags are below and what they mean.
+	nameimage = "playername_charactername.png" the image file name of the player name image.
+	portrait = "playerportrait_charactername.png" the image file name of the player portrait.
+	skin = "character_charactername.png" the image file for of the players' skin.
+	name = "charactername" The name of the character, Uppercase the name you put here.
 	
 	skincolor="-1" if you don't need this, just leave it at -1
 	
@@ -34,7 +49,7 @@
 	broken="1" this is how many broken hearts the character starts with every 2 is 1 broken heart (REP)
 	birthright="" this is the unique description that will appear when picking up birthright with your character.
 	bSkinParent="name" use this to set this character as the tainted version of the specified character name.
-	items="" you can use this tag to give the player starting items, put the id(s) here separated by a space. You can also do this step in main.lua, which is suggested for your active item to give better control. Or for Items for which you do not want the costume to show (WIP).
+	items="" you can use this tag to give the player starting items, put the id(s) here separated by a space. You can also do this step in main.lua, which is suggested for your active item to give better control. Or for Items for which you do not want the costume to show.
 	
 	NOTE: items="" DOES NOT work for modded items.
 	
