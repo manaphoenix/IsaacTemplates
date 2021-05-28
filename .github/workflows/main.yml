@@ -22,7 +22,7 @@ jobs:
       uses: thedoctor0/zip-release@master
       with:
         filename: 'template_character.zip'
-        exclusions: '*.git* /*node_modules/* .editorconfig template_items'
+        exclusions: '*.git* /*node_modules/* .editorconfig ./template_items'
     - uses: actions/checkout@v1
     - uses: ncipollo/release-action@v1
       with:
