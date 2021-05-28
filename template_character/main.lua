@@ -61,9 +61,9 @@ do
       tab.range and
       tab.tearflags and
       tab.tearcolor and
-      tab.flying and
-      tab.luck) then
-        out("incomplete stats table for default")
+      tab.flying ~= nil and
+    tab.luck) then
+      out("incomplete stats table for default")
     end
     tab = stats.tainted
     if not (tab.damage
@@ -72,9 +72,9 @@ do
       tab.range and
       tab.tearflags and
       tab.tearcolor and
-      tab.flying and
-      tab.luck) then
-        out("incomplete stats table for default")
+      tab.flying ~= nil and
+    tab.luck) then
+      out("incomplete stats table for default")
     end
   end
 
@@ -327,7 +327,6 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
     AddCostume(stats.costume.tainted, player)
   end
 
-  -- Items
   if (#stats.items.default > 0 or #stats.items.tainted) then
     if (not taint) then
       for i, v in ipairs(stats.items.default) do
