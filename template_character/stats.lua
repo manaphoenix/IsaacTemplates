@@ -38,6 +38,8 @@ if you set damage to 1.00, then your character will start with 3.50 damage (the 
 
 EXCEPTION: Luck in game is added or subtracted from :shrug:, so the number you put there is what you want your luck to be added or subtracted from 0 (the base)
 
+NOTE: Range is currently bugged in the API changing it will do nothing :(
+
 set tearflags to TearFlags.TEAR_NORMAL if you don't want your character to have any innate tear effects
 for tearcolor the first 4 numbers are the color of the base tear, and the last 3 numbers are for the "overlay" tear color
 default value is (1,1,1,1,0,0,0)
