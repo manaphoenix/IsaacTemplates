@@ -128,7 +128,7 @@ the last number is the ID
 (https://bindingofisaacrebirth.fandom.com/wiki/)
 
 the charge variable is for how many charges you want your active item of choice to start with.
-set to nil for no charge.
+set to -1 for no charge.
 set to a number for specific charges
 set to true for full charge :)
 ]]
