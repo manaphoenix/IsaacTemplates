@@ -30,8 +30,7 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         tag: 'latest'
-        artifacts: "release.tar.gz,foo/*.txt"
-        bodyFile: "body.md"
+        artifacts: "template_character.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
     
       
