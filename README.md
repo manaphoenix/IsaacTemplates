@@ -13,3 +13,6 @@ If you notice any bugs REPORT THEM. There is an issues tab in the top left you c
 You cannot mod in Epic version OR if you are using a cracked version.
 
 The same thing goes for additions/changes. If there is a feature you want to do with your character that my template doesn't cover, leave it as a suggestion.
+
+# Testing
+Adding autobuild for jenkins.
