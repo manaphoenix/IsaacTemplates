@@ -25,14 +25,13 @@ jobs:
       with:
         filename: 'template_character.zip'
         path: ./template_character
-        directory: .
         exclusions: '*.git* /*node_modules/* .editorconfig'
     - uses: actions/checkout@v1
     - uses: ncipollo/release-action@v1
       with:
         tag: 'latest'
         allowUpdates: true
-        artifacts: "template_character.zip"
+        artifacts: "./template_character.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
     
       
