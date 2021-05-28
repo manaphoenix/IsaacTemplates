@@ -101,6 +101,8 @@ separated by a comma (like above, only not commented out using the '--')
 the items are given to you in the order they put into the table, from top to bottom
 that way items that are specific to when you get them work correctly :)
 
+NOTE items that drop items like chaos or squeezy will CRASH the game. DO NOT USE.
+
 the second statement is if you want the item to render its costume. put true to remove it.
 
 for vanilla items you can use the CollectibleType Enum
