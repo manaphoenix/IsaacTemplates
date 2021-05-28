@@ -83,7 +83,6 @@ stats.trinket = {
   default = TrinketType.TRINKET_SWALLOWED_PENNY,
   tainted = TrinketType.TRINKET_SWALLOWED_PENNY
 }
-
 stats.card = {
   default = Card.CARD_FOOL,
   tainted = Card.CARD_FOOL
@@ -93,8 +92,8 @@ stats.pill = {
   tainted = 0
 }
 stats.charge = {
-  default = nil,
-  tainted = nil
+  default = -1,
+  tainted = -1
 }
 --[[
 Fill in the above with the items you want your character to start with.
@@ -115,7 +114,6 @@ the Name is whatever you used in the Items.xml file
 
 trinket is what trinket the player should start with.
 if you don't want a trinket just set it to 0
-(trinket variable only workks in rep, will be ignored otherwise)
 
 pill and card is what card/pill/rune etc.. the player should start with.
 if you don't want one set it 0

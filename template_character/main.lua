@@ -1,20 +1,209 @@
--- init and stupid person checking --
+-- Imports --
 local stats = include("stats")
-if (stats.ModName == "ModName") then
-  error("Must have a unique mod name")
+local imports = include("includes")
+local char = -1
+local taintedChar = -1
+
+do
+  -- Stupid Person Checking
+  local f = Font()
+  f:Load("font/terminus.fnt")
+  local str = {}
+  local x = 0
+
+  local function out(...)
+    local s = ""
+    local args = table.pack(...)
+    for i = 1, args.n do
+      local t = args[i] or nil
+      s = s .. tostring(t) .. " "
+    end
+    table.insert(str, s)
+  end
+
+  local function render()
+    x = 45
+    for i = 1, #str do
+      f:DrawStringScaled(str[i], 60, x, 0.5, 0.5, KColor(1, 0, 0, 1), 0, true)
+      x = x + 7
+    end
+  end
+
+  local function checkForTable(tab, name, def)
+    if (not tab) then
+      out("Missing table:", name)
+      return false
+    end
+    if (not tab.default) then
+      out("missing default field for", name)
+      return false
+    elseif (def and tab.default == def) then
+      out("default field returned nil for", name)
+      return false
+    end
+    if (not tab.tainted) then
+      out("missing tainted field for", name)
+      return false
+    elseif (def and tab.tainted == def) then
+      out("tainted field returned nil for", name)
+      return false
+    end
+    return true
+  end
+
+  if (not checkForTable(stats, "stats")) then
+    goto tablechecker
+  else
+    local tab = stats.default
+    if not (tab.damage
+      and tab.firedelay and
+      tab.shotspeed and
+      tab.range and
+      tab.tearflags and
+      tab.tearcolor and
+      tab.flying and
+      tab.luck) then
+        out("incomplete stats table for default")
+    end
+    tab = stats.tainted
+    if not (tab.damage
+      or tab.firedelay and
+      tab.shotspeed and
+      tab.range and
+      tab.tearflags and
+      tab.tearcolor and
+      tab.flying and
+      tab.luck) then
+        out("incomplete stats table for default")
+    end
+  end
+
+  if (not stats.ModName) then
+    out("No Mod Name found!")
+  elseif (stats.ModName:match("ModName")) then
+    out("Mod Name must be unique!")
+  end
+
+  if (not stats.playerName) then
+    out("No player name specified!")
+  else
+    char = Isaac.GetPlayerTypeByName(stats.playerName, false)
+    taintedChar = Isaac.GetPlayerTypeByName(stats.taintedName or stats.playerName, true)
+    if (char == -1) then
+      out("Character Not Found:", stats.playerName)
+    end
+    if (taintedChar == -1) then
+      out("Tainted Character Not Found:", (stats.taintedName or stats.playerName))
+    end
+  end
+
+  -- costume
+
+  if (checkForTable(stats.costume, "costume")) then
+    if stats.costume.default ~= "" then
+      if (type(stats.costume.default) == "table") then
+        for i = 1, #stats.costume.default do
+          local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. stats.costume.default[i] .. ".anm2")
+          if (cost == -1) then
+            out("Costume not found:", stats.costume.default[i])
+          end
+        end
+      else
+        local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. stats.costume.default .. ".anm2")
+        if (cost == -1) then
+          out("Costume not found:", stats.costume.default)
+        end
+      end
+    end
+    if stats.costume.tainted ~= "" then
+      if (type(stats.costume.tainted) == "table") then
+        for i = 1, #stats.costume.tainted do
+          local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. stats.costume.tainted[i] .. ".anm2")
+          if (cost == -1) then
+            out("Costume not found:", stats.costume.tainted[i])
+          end
+        end
+      else
+        local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. stats.costume.tainted .. ".anm2")
+        if (cost == -1) then
+          out("Costume not found:", stats.costume.tainted)
+        end
+      end
+    end
+  end
+
+  --TODO more item checks
+  if (checkForTable(stats.items, "items")) then
+    if (#stats.items.default > 0) then
+      if (type(stats.items.default) ~= "table") then
+        out("default items is not a table!")
+      else
+        for i = 1, #stats.items.default do
+          if (type(stats.items.default[i]) ~= "table") then
+            out("invalid table entry at index:", i, "in default table")
+          else
+            local item = stats.items.default[i][1]
+            if (item == -1) then
+              out("item index:", i, "is returning nil for default")
+            end
+          end
+        end
+      end
+    end
+    if (#stats.items.tainted > 0) then
+      if (type(stats.items.tainted) ~= "table") then
+        out("tainted items is not a table!")
+      else
+        for i = 1, #stats.items.tainted do
+          if (type(stats.items.tainted[i]) ~= "table") then
+            out("invalid table entry at index:", i, "in tainted table")
+          else
+            local item = stats.items.tainted[i][1]
+            if (item == -1) then
+              out("item index:", i, "is returning nil for tainted")
+            end
+          end
+        end
+      end
+    end
+  end
+
+  checkForTable(stats.trinket, "trinket", - 1)
+
+  checkForTable(stats.card, "card", - 1)
+
+  checkForTable(stats.pill, "pill", - 1)
+
+  checkForTable(stats.charge, "charge")
+
+  -- checker
+  ::tablechecker::
+
+  if (#str > 0) then
+    local s = {
+      "Template Character Errors:"
+    }
+    for i = 1, #str do
+      table.insert(s, str[i])
+    end
+    str = s
+
+    local mod = RegisterMod("TemplateCharacterError", 1)
+    mod:AddCallback(ModCallbacks.MC_POST_RENDER, render)
+
+    goto EndOfFile
+  end
 end
 
+-- Init --
 local mod = RegisterMod(stats.ModName, 1)
-local imports = include("includes")
 
 if (type(imports) == "table") then
   imports:Init(mod)
 end
 
--- CODE --
 
-local char = Isaac.GetPlayerTypeByName(stats.playerName, false)
-local taintedChar = Isaac.GetPlayerTypeByName(stats.taintedName or stats.playerName, true)
+-- CODE --
 local config = Isaac.GetItemConfig()
 local game = Game()
 local function IsTainted(player)
@@ -148,7 +337,7 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
           player:RemoveCostume(ic)
         end
       end
-      if (player:GetActiveItem() and stats.charge.default) then
+      if (player:GetActiveItem() and stats.charge.default ~= -1) then
         if (stats.charge.default == true) then
           player:FullCharge()
         else
@@ -163,7 +352,7 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
           player:RemoveCostume(ic)
         end
       end
-      if (player:GetActiveItem() and stats.charge.tainted) then
+      if (player:GetActiveItem() and stats.charge.tainted ~= -1) then
         if (stats.charge.tainted == true) then
           player:FullCharge()
         else
@@ -197,3 +386,5 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
     end
   end
 end)
+
+::EndOfFile::
