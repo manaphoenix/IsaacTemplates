@@ -26,12 +26,15 @@ jobs:
         filename: 'template_character.zip'
         path: ./template_character
         exclusions: '*.git* /*node_modules/* .editorconfig'
-    - uses: actions/checkout@master
-    - name: Upload Release
-      uses: ncipollo/release-action@v1
+    - name: Upload
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        artifacts: "template_character.zip"
-        token: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          title: "Latest Build"
+          files: |
+            'template_character.zip'
     
       
     
