@@ -25,6 +25,7 @@ jobs:
       with:
         filename: 'template_character.zip'
         path: ./template_character
+        directory: .
         exclusions: '*.git* /*node_modules/* .editorconfig'
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
