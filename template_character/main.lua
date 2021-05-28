@@ -1,7 +1,7 @@
+-- init and stupid person checking --
 local stats = include("stats")
 if (stats.ModName == "ModName") then
   error("Must have a unique mod name")
-  return
 end
 
 local mod = RegisterMod(stats.ModName, 1)
