@@ -317,7 +317,8 @@ local function AddCostume(AppliedCostume, player)
   end
 end
 
-mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
+local function postPlayerInitLate(player)
+  local player = player or Isaac.GetPlayer()
   if (player:GetPlayerType() ~= char and player:GetPlayerType() ~= taintedChar) then return end
   local taint = IsTainted(player)
   -- Costume
@@ -384,6 +385,19 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
       player:SetCard(0, stats.card.tainted)
     end
   end
+end
+
+mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
+  local gameFrameCount = game:GetFrameCount()
+  if (gameFrameCount ~= 0) then  
+    postPlayerInitLate (player)
+  end
+end)
+
+mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, IsContin)
+  if IsContin then return end
+  
+  postPlayerInitLate ()
 end)
 
 ::EndOfFile::
