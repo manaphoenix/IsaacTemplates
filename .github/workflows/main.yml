@@ -25,7 +25,6 @@ jobs:
       with:
         filename: 'template_character.zip'
         exclusions: '*.git* /*node_modules/* .editorconfig'
-        type: 'zip'
     - uses: actions/checkout@v1
     - uses: ncipollo/release-action@v1
       with:
