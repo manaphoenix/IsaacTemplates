@@ -26,7 +26,6 @@ jobs:
         filename: 'template_character.zip'
         path: ./template_character
         exclusions: '*.git* /*node_modules/* .editorconfig'
-    - name: Upload
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
