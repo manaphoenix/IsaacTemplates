@@ -7,8 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ dev ]
-    tags:
-      'latest'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,7 +22,7 @@ jobs:
       uses: thedoctor0/zip-release@master
       with:
         filename: 'template_character.zip'
-        exclusions: '*.git* /*node_modules/* .editorconfig'
+        exclusions: '*.git* /*node_modules/* .editorconfig template_items'
     - uses: actions/checkout@v1
     - uses: ncipollo/release-action@v1
       with:
