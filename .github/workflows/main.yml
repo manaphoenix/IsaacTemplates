@@ -32,7 +32,7 @@ jobs:
       with:
         tag: 'latest'
         allowUpdates: true
-        artifacts: "./template_character/template_character.zip"
+        artifacts: "template_character.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
     
       
