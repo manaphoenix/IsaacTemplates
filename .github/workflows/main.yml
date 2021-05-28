@@ -8,7 +8,7 @@ on:
   push:
     branches: [ main ]
     tags:
-      - '*'
+      'latest'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,16 +25,13 @@ jobs:
       with:
         filename: 'template_character.zip'
         path: ./template_character
-        directory: .
         exclusions: '*.git* /*node_modules/* .editorconfig'
-    - uses: "marvinpinto/action-automatic-releases@latest"
+    - uses: actions/checkout@v1
+    - uses: ncipollo/release-action@v1
       with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: false
-          title: "Latest Build"
-          files: |
-            'template_character.zip'
+        artifacts: "release.tar.gz,foo/*.txt"
+        bodyFile: "body.md"
+        token: ${{ secrets.GITHUB_TOKEN }}
     
       
     
