@@ -63,7 +63,11 @@ stats.costume = {
 }
 --[[
 for costumes if you have one just type the name of the file without the .anm2 extension.
-if you have multiple make it a table {"costume1","costume2"}.
+if you have multiple make it a table like this:
+
+{"costume 1","costume 2"}
+
+you must do the {} and separate each costume by a comma like above.
  
 if you have no costume just put "".
 
