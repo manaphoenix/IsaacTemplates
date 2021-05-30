@@ -389,7 +389,7 @@ end
 
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
   local gameFrameCount = game:GetFrameCount()
-  if (gameFrameCount ~= 0) then  
+  if (gameFrameCount ~= 0 and player.ControllerIndex ~= Isaac.GetPlayer().ControllerIndex) then  
     postPlayerInitLate (player)
   end
 end)
