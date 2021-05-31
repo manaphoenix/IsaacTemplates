@@ -1,5 +1,5 @@
 local registry = include("ItemRegistry")
-local mod = include("CallbackHandler.lua")
+local item = {}
 
 -- SEE Items.xml for the other half of what you need to do for this item!
 
@@ -13,7 +13,7 @@ local function TriggerEffect(player)
   end
 end
 
-mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function(_, player)
+local function Post_Player_Update(_, player)
   if (player == nil or not player:HasCollectible(registry.Exodus)) then return end
   -- this update is ran even on the main menu ... so we have to check if player even exists.
 
@@ -31,6 +31,10 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function(_, player)
   if (player:GetActiveCharge() ~= player:GetData()["ExodusCharge"]) then
     player:SetActiveCharge(player:GetData()["ExodusCharge"])
   end
-end)
+end
 
-return mod:GetCallbacks()
+function item:Init(mod)
+  mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, Post_Player_Update)
+end
+
+return item

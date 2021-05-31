@@ -1,10 +1,7 @@
 <items gfxroot="gfx/Items/" version="1">
-	<!-- elysium item !-->
-  <passive gfx="elysium.png" description="Life anew" name="Elysium" quality="1" />
-
-	<!-- hermes boots !-->
-  <passive cache="speed" gfx="Hermes_Boots.png" description="Whoosh!" name="Hermes Boots" quality="1" />
+  <!-- hermes boots !-->
+  <passive cache="speed" gfx="Hermes_Boots.png" description="Whoosh!" name="Hermes Boots" quality="1"/>
 
   <!-- Exodus !-->
-  <active description="Penned up bull" gfx="Exodus.png" maxcharges="5" name="Exodus" chargetype="special" />
+  <active description="Penned up bull" gfx="Exodus.png" maxcharges="5" name="Exodus" chargetype="special"/>
 </items>
