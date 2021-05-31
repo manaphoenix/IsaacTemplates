@@ -206,6 +206,7 @@ end
 -- CODE --
 local config = Isaac.GetItemConfig()
 local game = Game()
+local pool = game:GetItemPool()
 local function IsTainted(player)
   if (player:GetPlayerType() ~= char and player:GetPlayerType() ~= taintedChar) then return nil end
 
@@ -372,9 +373,9 @@ local function postPlayerInitLate(player)
 
   if (stats.pill.default ~= 0 and not taint) or (stats.pill.tainted ~= 0 and taint) then
     if (not taint) then
-      player:SetPill(0, stats.pill.default)
+      player:SetPill(0, pool:ForceAddPillEffect(stats.pill.default))
     else
-      player:SetPill(0, stats.pill.tainted)
+      player:SetPill(0, pool:ForceAddPillEffect(stats.pill.tainted))
     end
   end
 
