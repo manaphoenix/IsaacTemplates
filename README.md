@@ -19,3 +19,5 @@ There is a version number in the top right of your Guide on the index.html page 
 When posting bugs please provide that number :)
 
 You cannot mod unless you have a legitimate Steam copy of the game.
+
+The latest release will never show as updated, this is because a bot handles the upload. Instead there is a version number in the top right of the index.html of the guide.
