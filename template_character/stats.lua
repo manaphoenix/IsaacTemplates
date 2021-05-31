@@ -29,14 +29,18 @@ stats.tainted = { -- stats of the tainted variant of your character.
 }
 
 --[[
-The way stats work all characters start with isaac's base.
-then you affect starting stats from there.
-fill in the above table as multipliers
-aka
+The way stats work in isaac is that all characters start with "Isaac's stats".
+Then you create a base by offsetting them from there.
+To add put a positive number.
+To subtract put a negative number.
 
-if you set damage to 1.00, then your character will start with 3.50 damage (the default)
-
-EXCEPTION: Luck in game is added or subtracted from :shrug:, so the number you put there is what you want your luck to be added or subtracted from 0 (the base)
+Base Stats:
+Speed: 1.00
+Firedelay: 2.73
+Damage: 3.50
+Range: 6.50
+Shotspeed: 1.00
+Luck: 0.00
 
 NOTE: Range is currently bugged in the API changing it will do nothing :(
 

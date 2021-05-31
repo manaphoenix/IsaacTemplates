@@ -220,41 +220,41 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
 
   if (cache & CacheFlag.CACHE_DAMAGE == CacheFlag.CACHE_DAMAGE) then
     if (not taint) then
-      player.Damage = player.Damage * stats.default.damage
+      player.Damage = player.Damage + stats.default.damage
     else
-      player.Damage = player.Damage * stats.tainted.damage
+      player.Damage = player.Damage + stats.tainted.damage
     end
   end
 
   if (cache & CacheFlag.CACHE_FIREDELAY == CacheFlag.CACHE_FIREDELAY) then
     if (not taint) then
-      player.MaxFireDelay = player.MaxFireDelay * stats.default.firedelay
+      player.MaxFireDelay = player.MaxFireDelay + stats.default.firedelay
     else
-      player.MaxFireDelay = player.MaxFireDelay * stats.tainted.firedelay
+      player.MaxFireDelay = player.MaxFireDelay + stats.tainted.firedelay
     end
   end
 
   if (cache & CacheFlag.CACHE_SHOTSPEED == CacheFlag.CACHE_SHOTSPEED) then
     if (not taint) then
-      player.ShotSpeed = player.ShotSpeed * stats.default.shotspeed
+      player.ShotSpeed = player.ShotSpeed + stats.default.shotspeed
     else
-      player.ShotSpeed = player.ShotSpeed * stats.tainted.shotspeed
+      player.ShotSpeed = player.ShotSpeed + stats.tainted.shotspeed
     end
   end
 
   if (cache & CacheFlag.CACHE_RANGE == CacheFlag.CACHE_RANGE) then
     if (not taint) then
-      player.TearHeight = player.TearHeight * stats.default.range
+      player.TearHeight = player.TearHeight + stats.default.range
     else
-      player.TearHeight = player.TearHeight * stats.tainted.range
+      player.TearHeight = player.TearHeight + stats.tainted.range
     end
   end
 
   if (cache & CacheFlag.CACHE_SPEED == CacheFlag.CACHE_SPEED) then
     if (not taint) then
-      player.MoveSpeed = player.MoveSpeed * stats.default.speed
+      player.MoveSpeed = player.MoveSpeed + stats.default.speed
     else
-      player.MoveSpeed = player.MoveSpeed * stats.tainted.speed
+      player.MoveSpeed = player.MoveSpeed + stats.tainted.speed
     end
   end
 
@@ -389,14 +389,14 @@ end
 
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
   local gameFrameCount = game:GetFrameCount()
-  if (gameFrameCount ~= 0 and player.ControllerIndex ~= Isaac.GetPlayer().ControllerIndex) then  
+  if (gameFrameCount ~= 0 and player.ControllerIndex ~= Isaac.GetPlayer().ControllerIndex) then
     postPlayerInitLate (player)
   end
 end)
 
 mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, IsContin)
   if IsContin then return end
-  
+
   postPlayerInitLate ()
 end)
 
