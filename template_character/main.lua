@@ -255,6 +255,40 @@ end
 -- used to automatically grab the tainted or default variant of a stat from stats.lua.
 -- based on the inputted player.
 
+local function FindVariant(Tainted)
+  local players = GetPlayers()
+  local variantFound = false
+  if (players) then
+    for _, player in ipairs(players) do
+      if (Tainted) then -- search for tainted only
+        if (IsTainted(player)) then
+          variantFound = true
+          return variantFound, player
+          break
+        end
+      else -- search for regular
+        if (not IsTainted(player)) then
+          variantFound = true
+          return variantFound, player
+          break
+        end
+      end
+    end
+    
+  end
+  return false, nil
+end
+-- use this function to automatically return if one of the current players is a specific variant of your character.
+-- also returns the player that is your variant (WARNING: returns the first one found, their could be multiple!)
+-- FindVariant(true) will return true if one of the players is a tainted version of your character, false otherwise
+-- FindVariant(false) will return true if one the players is a regular version of your character, false otherwise
+--[[
+Use:
+
+local tainted,player = FindVariant(true)
+player:Kill() -- lol
+]]
+
 -- Character Code
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
   if not (IsChar(player)) then return end
