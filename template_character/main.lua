@@ -207,6 +207,7 @@ end
 local config = Isaac.GetItemConfig()
 local game = Game()
 local pool = game:GetItemPool()
+local iscontin = true -- a hacky check for if the game is continued.
 
 -- Utility Functions
 local function IsChar(player)
@@ -359,7 +360,7 @@ local function postPlayerInitLate(player)
 end
 
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
-  if GetPtrHash(player) ~= GetPtrHash(Isaac.GetPlayer()) then
+  if not iscontin then
   postPlayerInitLate (player)
 end
 end)
@@ -367,7 +368,12 @@ end)
 mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, IsContin)
 if IsContin then return end
 
+iscontin = false
 postPlayerInitLate ()
+end)
+
+mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function()
+iscontin = true
 end)
 
 ::EndOfFile::
