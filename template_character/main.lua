@@ -264,17 +264,15 @@ local function FindVariant(Tainted)
         if (IsTainted(player)) then
           variantFound = true
           return variantFound, player
-          break
         end
       else -- search for regular
         if (not IsTainted(player)) then
           variantFound = true
           return variantFound, player
-          break
         end
       end
     end
-    
+
   end
   return false, nil
 end
@@ -285,7 +283,7 @@ end
 --[[
 Use:
 
-local tainted,player = FindVariant(true)
+local tainted, player = FindVariant(true)
 player:Kill() -- lol
 ]]
 
@@ -354,7 +352,6 @@ end
 local function postPlayerInitLate(player)
   local player = player or Isaac.GetPlayer()
   if not (IsChar(player)) then return end
-  local taint = IsTainted(player)
   -- Costume
   AddCostumes(GetCorrectStat(stats.costume, player), player)
 
