@@ -207,197 +207,167 @@ end
 local config = Isaac.GetItemConfig()
 local game = Game()
 local pool = game:GetItemPool()
-local function IsTainted(player)
-  if (player:GetPlayerType() ~= char and player:GetPlayerType() ~= taintedChar) then return nil end
 
-  if player:GetPlayerType() == char then return false end
-
+-- Utility Functions
+local function IsChar(player)
+  if (player == nil) then return nil end
+  local ptype = player:GetPlayerType()
+  if (ptype ~= char and ptype ~= taintedChar) then return false end
   return true
 end
+-- this function will return if the player is one of your characters.
+-- returns true if it is a character of yours, false if it isn't, and nil if the player doesn't exist.
 
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
-  if (player:GetPlayerType() ~= char and player:GetPlayerType() ~= taintedChar) then return end
+
+local function IsTainted(player)
+  if (player == nil) then return nil end
+  local ptype = player:GetPlayerType()
+  if (ptype ~= char and ptype ~= taintedChar) then return nil end
+  if (ptype == char) then return false end
+  return true
+end
+-- returns whether the inputted character is a tainted variant of your character.
+-- returns true if is tainted, false if not, and nil for any other reason. (like it not being ur character at all)
+
+local function GetPlayers()
+  local players = {}
+  for i = 0, game:GetNumPlayers() - 1 do
+    local player = Isaac.GetPlayer(i)
+    local ptype = player:GetPlayerType()
+    if (ptype == char or ptype == taintedChar) then
+      table.insert(players, player)
+    end
+  end
+  return #players > 0 and players or nil
+end
+-- will return a table of all players that are your character (or nil if none are)
+-- use this to get the players when the function your using doesn't give it to you.
+
+local function GetCorrectStat(tab, player)
   local taint = IsTainted(player)
+  if (taint) then
+    return tab.tainted
+  else
+    return tab.default
+  end
+end
+-- used to automatically grab the tainted or default variant of a stat from stats.lua.
+-- based on the inputted player.
+
+-- Character Code
+mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
+  if not (IsChar(player)) then return end
+
+  local playerStat = GetCorrectStat(stats, player)
 
   if (cache & CacheFlag.CACHE_DAMAGE == CacheFlag.CACHE_DAMAGE) then
-    if (not taint) then
-      player.Damage = player.Damage + stats.default.damage
-    else
-      player.Damage = player.Damage + stats.tainted.damage
-    end
+    player.Damage = player.Damage + playerStat.damage
   end
 
   if (cache & CacheFlag.CACHE_FIREDELAY == CacheFlag.CACHE_FIREDELAY) then
-    if (not taint) then
-      player.MaxFireDelay = player.MaxFireDelay + stats.default.firedelay
-    else
-      player.MaxFireDelay = player.MaxFireDelay + stats.tainted.firedelay
-    end
+    player.MaxFireDelay = player.MaxFireDelay + playerStat.firedelay
   end
 
   if (cache & CacheFlag.CACHE_SHOTSPEED == CacheFlag.CACHE_SHOTSPEED) then
-    if (not taint) then
-      player.ShotSpeed = player.ShotSpeed + stats.default.shotspeed
-    else
-      player.ShotSpeed = player.ShotSpeed + stats.tainted.shotspeed
-    end
+    player.ShotSpeed = player.ShotSpeed + playerStat.shotspeed
   end
 
   if (cache & CacheFlag.CACHE_RANGE == CacheFlag.CACHE_RANGE) then
-    if (not taint) then
-      player.TearHeight = player.TearHeight + stats.default.range
-    else
-      player.TearHeight = player.TearHeight + stats.tainted.range
-    end
+    player.TearHeight = player.TearHeight + playerStat.range
   end
 
   if (cache & CacheFlag.CACHE_SPEED == CacheFlag.CACHE_SPEED) then
-    if (not taint) then
-      player.MoveSpeed = player.MoveSpeed + stats.default.speed
-    else
-      player.MoveSpeed = player.MoveSpeed + stats.tainted.speed
-    end
+    player.MoveSpeed = player.MoveSpeed + playerStat.speed
   end
 
   if (cache & CacheFlag.CACHE_LUCK == CacheFlag.CACHE_LUCK) then
-    if (not taint) then
-      player.Luck = player.Luck + stats.default.luck
-    else
-      player.Luck = player.Luck + stats.tainted.luck
-    end
+    player.Luck = player.Luck + playerStat.luck
   end
 
   if (cache & CacheFlag.CACHE_FLYING == CacheFlag.CACHE_FLYING) then
-    if (not taint) then
-      if (stats.default.flying) then
-        player.CanFly = true
-      end
-    else
-      if (stats.tainted.flying) then
-        player.CanFly = true
-      end
+    if (playerStat.flying) then
+      player.CanFly = true
     end
   end
 
   if (cache & CacheFlag.CACHE_TEARFLAG == CacheFlag.CACHE_TEARFLAG) then
-    if (not taint) then
-      player.TearFlags = player.TearFlags | stats.default.tearflags
-    else
-      player.TearFlags = player.TearFlags | stats.tainted.tearflags
-    end
+    player.TearFlags = player.TearFlags | playerStat.tearflags
   end
 
   if (cache & CacheFlag.CACHE_TEARCOLOR == CacheFlag.CACHE_TEARCOLOR) then
-    if (not taint) then
-      player.TearColor = stats.default.tearcolor
-    else
-      player.TearColor = stats.tainted.tearcolor
-    end
+    player.TearColor = playerStat.tearcolor
   end
 end)
 
-local function AddCostume(AppliedCostume, player)
-  if (type(AppliedCostume) == "table") then
-    for i = 1, #AppliedCostume do
-      local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. AppliedCostume[i] .. ".anm2")
-      if (cost ~= -1) then
-        player:AddNullCostume(cost)
-      else
-        print("Could not find gfx/characters/" .. AppliedCostume[i] .. ".anm2!")
-      end
-    end
-    return
-  end
-  local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. AppliedCostume .. ".anm2")
+local function AddCostume(CostumeName, player) -- actually adds the costume.
+  local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. CostumeName .. ".anm2")
   if (cost ~= -1) then
     player:AddNullCostume(cost)
-  else
-    if (AppliedCostume ~= "") then
-      print("Could not find gfx/characters/" .. AppliedCostume .. ".anm2!")
+  end
+end
+
+local function AddCostumes(AppliedCostume, player) -- costume logic
+  if (type(AppliedCostume) == "table") then
+    for i = 1, #AppliedCostume do
+      AddCostume(AppliedCostume[i], player)
     end
+  else
+    AddCostume(AppliedCostume, player)
   end
 end
 
 local function postPlayerInitLate(player)
   local player = player or Isaac.GetPlayer()
-  if (player:GetPlayerType() ~= char and player:GetPlayerType() ~= taintedChar) then return end
+  if not (IsChar(player)) then return end
   local taint = IsTainted(player)
   -- Costume
-  if (not taint) then
-    AddCostume(stats.costume.default, player)
-  else
-    AddCostume(stats.costume.tainted, player)
-  end
+  AddCostumes(GetCorrectStat(stats.costume, player), player)
 
-  if (#stats.items.default > 0 or #stats.items.tainted) then
-    if (not taint) then
-      for i, v in ipairs(stats.items.default) do
-        player:AddCollectible(v[1])
-        if (v[2]) then
-          local ic = config:GetCollectible(v[1])
-          player:RemoveCostume(ic)
-        end
+  local items = GetCorrectStat(stats.items, player)
+  if (#items > 0) then
+    for i, v in ipairs(items) do
+      player:AddCollectible(v[1])
+      if (v[2]) then
+        local ic = config:GetCollectible(v[1])
+        player:RemoveCostume(ic)
       end
-      if (player:GetActiveItem() and stats.charge.default ~= -1) then
-        if (stats.charge.default == true) then
-          player:FullCharge()
-        else
-          player:SetActiveCharge(stats.charge.default)
-        end
-      end
-    else
-      for i, v in ipairs(stats.items.tainted) do
-        player:AddCollectible(v[1])
-        if (v[2]) then
-          local ic = config:GetCollectible(v[1])
-          player:RemoveCostume(ic)
-        end
-      end
-      if (player:GetActiveItem() and stats.charge.tainted ~= -1) then
-        if (stats.charge.tainted == true) then
-          player:FullCharge()
-        else
-          player:SetActiveCharge(stats.charge.tainted)
-        end
+    end
+    local charge = GetCorrectStat(stats.charge, player)
+    if (player:GetActiveItem() and charge ~= -1) then
+      if (charge == true) then
+        player:FullCharge()
+      else
+        player:SetActiveCharge(charge)
       end
     end
   end
 
-  if (REPENTANCE and ((stats.trinket.default ~= 0 and not taint) or (stats.trinket.tainted ~= 0 and taint))) then
-    if (not taint) then
-      player:AddTrinket(stats.trinket.default, true)
-    else
-      player:AddTrinket(stats.trinket.tainted, true)
-    end
+  local trinket = GetCorrectStat(stats.trinket, player)
+  if (trinket ~= 0) then
+    player:AddTrinket(trinket, true)
   end
 
-  if (stats.pill.default ~= 0 and not taint) or (stats.pill.tainted ~= 0 and taint) then
-    if (not taint) then
-      player:SetPill(0, pool:ForceAddPillEffect(stats.pill.default))
-    else
-      player:SetPill(0, pool:ForceAddPillEffect(stats.pill.tainted))
-    end
+  local pill = GetCorrectStat(stats.pill, player)
+  if (pill ~= 0) then
+    player:SetPill(0, pool:ForceAddPillEffect(pill))
   end
 
-  if (stats.card.default ~= 0 and not taint) or (stats.card.tainted ~= 0 and taint) then
-    if (not taint) then
-      player:SetCard(0, stats.card.default)
-    else
-      player:SetCard(0, stats.card.tainted)
-    end
+  local card = GetCorrectStat(stats.card, player)
+  if (card ~= 0) then
+    player:SetCard(0, card)
   end
 end
 
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
   if GetPtrHash(player) ~= GetPtrHash(Isaac.GetPlayer()) then
-    postPlayerInitLate (player)
-  end
+  postPlayerInitLate (player)
+end
 end)
 
 mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, IsContin)
-  if IsContin then return end
+if IsContin then return end
 
-  postPlayerInitLate ()
+postPlayerInitLate ()
 end)
 
 ::EndOfFile::
