@@ -1,4 +1,7 @@
 <items gfxroot="gfx/Items/" version="1">
+  <!-- Elysium !-->
+  <active cache="luck" description="Something about temporary?" gfx="Elysium.png" maxcharges="3" name="Elysium"/>
+
   <!-- hermes boots !-->
   <passive cache="speed" gfx="Hermes_Boots.png" description="Whoosh!" name="Hermes Boots" quality="1"/>
 
