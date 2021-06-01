@@ -2,6 +2,7 @@
 A collection of mod templates for The Binding of Isaac: Rebirth Repentance.
 
 **Each folder is a mod, they have nothing to do with one another.**
+**DOCS IS NOT A MOD, it is the GitHub page for this repo.**
 
 you can get the latest release of any template [here](https://github.com/manaphoenix/IsaacTemplates/releases/tag/latest)
 
