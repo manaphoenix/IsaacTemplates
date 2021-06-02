@@ -25,7 +25,7 @@ local tainted = stats.tainted
 CONFIG (THIS WHERE YOU CHANGE STUFF)
 ]]
 
-stats.ModName = "Test" -- Replace this with a unique ModName
+stats.ModName = "ModName" -- Replace this with a unique ModName
 
 --[[
 REGULAR CHARACTER SETUP
