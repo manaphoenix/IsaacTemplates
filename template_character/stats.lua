@@ -1,10 +1,130 @@
-local stats = {}
+--[[
+DO NOT CHANGE SCROLL DOWN TO CONFIG
+]]
+local mt = {
+  __index = {
+    items = {},
+    costume = "",
+    trinket = 0,
+    card = 0,
+    pill = 0,
+    charge = -1,
+    name = ""
+  }
+}
+local stats = {
+  default = {},
+  tainted = {}
+}
+setmetatable(stats.default, mt)
+setmetatable(stats.tainted, mt)
+local character = stats.default
+local tainted = stats.tainted
 
-stats.playerName = "Alpha" -- the name of your character (from the players.xml file)
-stats.taintedName = "Omega" -- set this to nil if your tainted character doens't use a different name
-stats.ModName = "ModName" -- Replace this with a unique ModName
+--[[
+CONFIG (THIS WHERE YOU CHANGE STUFF)
+]]
 
-stats.default = { -- Stats of your regular characters
+stats.ModName = "Test" -- Replace this with a unique ModName
+
+--[[
+REGULAR CHARACTER SETUP
+]]
+character.name = "Alpha" -- the name of your character (from the players.xml file)
+character.stats = {
+  damage = 2.00,
+  firedelay = 1.00,
+  shotspeed = 1.00,
+  range = 1.00,
+  speed = 1.00,
+  tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE,
+  tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0),
+  flying = false,
+  luck = 1.00
+}
+--[[
+These are the base stats of your character OFFSET FROM Isaac's Default Stats.
+Meaning if you put Damage as 2.00 it will ADD 2 MORE damage from 3.50 (The Base)
+making it a total of 5.50.
+Put negatives to subtract from base stats.
+
+Base Stats:
+Speed: 1.00
+Firedelay: 2.73
+Damage: 3.50
+Range: 6.50
+Shotspeed: 1.00
+Luck: 0.00
+
+NOTE: Range is currently bugged in the API changing it will do nothing :(
+set tearflags to TearFlags.TEAR_NORMAL if you don't want your character to have any innate tear effects.
+]]
+
+
+character.costume = "character_alpha_cat_ears"
+--[[
+Put the name of the costume file here.
+If you have multiple, you need to make it a "table"
+like this:
+{"costume 1","costume 2"}
+
+If you do not have or want a costume for this character put "".
+
+NOTE: your anm2 must be in ".\resources\gfx\characters" or it will not be found.
+]]
+
+character.items = {
+  {CollectibleType.COLLECTIBLE_SAD_ONION},
+  {CollectibleType.COLLECTIBLE_CRICKETS_HEAD, true}
+}
+--[[
+  Fill in the above table with all of the items you want your character to start with.
+  you can add a comma, and put "true" if you want to remove the costume that comes with that item.
+  
+  IF you do not want to add any items to this character here, just put
+  character.items = {}
+  
+  Format:
+  {COLLECTIBLETYPE, REMOVECOSTUME}
+]]
+
+character.trinket = TrinketType.TRINKET_SWALLOWED_PENNY
+--[[
+  Use the above line to give the character a starting trinket.
+  If you do not want a starting trinket, put 0
+]]
+
+character.card = Card.CARD_FOOL
+--[[
+  Use the above line to give the character a starting Card.
+  If you do not want a starting card, put 0
+  NOTE: Exclusive, you cannot give both a card and a pill
+]]
+
+character.pill = 0
+--[[
+  Use the above line to give the character a starting Pill.
+  If you do not want a starting Pill, put 0
+  NOTE: Exclusive, you cannot give both a card and a pill
+]]
+
+character.charge = -1
+--[[
+Use the above line to give your starting active item a default charge
+set to -1 for no charge.
+set to a number for specific charges
+set to true for full charge :)
+
+If you do not have an active item, just leave at -1 :)
+]]
+
+--[[
+TAINTED CHARACTER SETUP
+
+Now do it all again for your tainted character :)
+]]
+tainted.name = "Omega"
+tainted.stats = {
   damage = 2.00,
   firedelay = 1.00,
   shotspeed = 1.00,
@@ -16,36 +136,23 @@ stats.default = { -- Stats of your regular characters
   luck = 1.00
 }
 
-stats.tainted = { -- stats of the tainted variant of your character.
-  damage = 5.00,
-  firedelay = 1.00,
-  shotspeed = 1.00,
-  range = 1.00,
-  speed = 1.00,
-  tearflags = TearFlags.TEAR_ECOLI,
-  tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0),
-  flying = false,
-  luck = 1.00
-}
+tainted.costume = ""
+
+tainted.items = {}
+
+tainted.trinket = TrinketType.TRINKET_SWALLOWED_PENNY
+
+tainted.card = Card.CARD_FOOL
+
+tainted.pill = 0
+
+tainted.charge = -1
+
 
 --[[
-The way stats work in isaac is that all characters start with "Isaac's stats".
-Then you create a base by offsetting them from there.
-To add put a positive number.
-To subtract put a negative number.
-
-Base Stats:
-Speed: 1.00
-Firedelay: 2.73
-Damage: 3.50
-Range: 6.50
-Shotspeed: 1.00
-Luck: 0.00
-
-NOTE: Range is currently bugged in the API changing it will do nothing :(
-
-set tearflags to TearFlags.TEAR_NORMAL if you don't want your character to have any innate tear effects
-for tearcolor the first 4 numbers are the color of the base tear, and the last 3 numbers are for the "overlay" tear color
+MORE INFO:
+-- tear color info
+for tearcolor the first 4 numbers are the color of the base tear, and the last 3 numbers are for shifting the first 3.
 default value is (1,1,1,1,0,0,0)
 
 color is R,G,B,A,R0,G0,B0
@@ -57,92 +164,24 @@ Red offset
 Green offset
 Blue Offset
 
-offset values are input directly as 0-255 instead of being normalized.
+Offset values are from -inf to inf.
+what "Shifting" or "Offsetting" actually does is manipulate the intensity of the RGB values.
+if you don't know what that means, I highly suggest leaving it at 0,0,0 (or ya know play with it :shrug: it won't hurt anything)
 
 the first four numbers are normalized, basically to get a normalized RGB value take the RGB value from 0-255 and divide by 255. thats the normalized number.
-]]
-stats.costume = {
-  default = "character_alpha_cat_ears",
-  tainted = ""
-}
---[[
-for costumes if you have one just type the name of the file without the .anm2 extension.
-if you have multiple make it a table like this:
 
-{"costume 1","costume 2"}
+-- Links
+Vanilla Items: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType/
+Trinkets: (https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType/)
+Cards: (https://wofsauge.github.io/IsaacDocs/rep/enums/Card/)
+Pills: (https://wofsauge.github.io/IsaacDocs/rep/enums/PillColor/)
 
-you must do the {} and separate each costume by a comma like above.
- 
-if you have no costume just put "".
-
-NOTE: your anm2 must be in ".\resources\gfx\characters" or it will not be found.
-]]
-
-stats.items = {
-  default = {
-    --{item1, true},
-    --{item2, false}
-  },
-  tainted = {
-    --{item1, true},
-    --{item2, false}
-  }
-}
-
-stats.trinket = {
-  default = TrinketType.TRINKET_SWALLOWED_PENNY,
-  tainted = TrinketType.TRINKET_SWALLOWED_PENNY
-}
-stats.card = {
-  default = Card.CARD_FOOL,
-  tainted = Card.CARD_FOOL
-}
-stats.pill = {
-  default = 0,
-  tainted = 0
-}
-stats.charge = {
-  default = -1,
-  tainted = -1
-}
---[[
-Fill in the above with the items you want your character to start with.
-separated by a comma (like above, only not commented out using the '--')
-the items are given to you in the order they put into the table, from top to bottom
-that way items that are specific to when you get them work correctly :)
-
-NOTE items that drop items like chaos or squeezy will CRASH the game. DO NOT USE.
-
-the second statement is if you want the item to render its costume. put true to remove it.
-
-for vanilla items you can use the CollectibleType Enum
-(https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType/)
-
-example: CollectibleType.COLLECTIBLE_BROTHER_BOBBY
-
-for your own modded items, you use
+-- Modded Items
+-- Name refers to what it is in the items.xml file.
 Isaac.GetItemIdByName("CUSTOMITEM")
-the Name is whatever you used in the Items.xml file
-
-trinket is what trinket the player should start with.
-if you don't want a trinket just set it to 0
-
-pill and card is what card/pill/rune etc.. the player should start with.
-if you don't want one set it 0
-ONLY ONE CAN BE USED set the other to 0!
-
-trinkets: (https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType/)
-cards: (https://wofsauge.github.io/IsaacDocs/rep/enums/Card/)
-pills: (https://wofsauge.github.io/IsaacDocs/rep/enums/PillColor/)
-
-another way to get these ids is to go to the wiki, the you should see a 3 numbers separated by a period
-the last number is the ID
-(https://bindingofisaacrebirth.fandom.com/wiki/)
-
-the charge variable is for how many charges you want your active item of choice to start with.
-set to -1 for no charge.
-set to a number for specific charges
-set to true for full charge :)
+Isaac.GetPillEffectByName("CUSTOMPILL")
+Isaac.GetCardIdByName("cardHudName")
+Isaac.GetTrinketIdByName("trinketName")
 ]]
 
 return stats

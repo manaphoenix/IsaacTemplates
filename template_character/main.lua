@@ -1,8 +1,6 @@
 -- Imports --
 local stats = include("stats")
 local imports = include("includes")
-local char = -1
-local taintedChar = -1
 
 do
   -- Stupid Person Checking
@@ -12,11 +10,9 @@ do
   local x = 0
 
   local function out(...)
-    local s = ""
-    local args = table.pack(...)
+    local s, args = "", table.pack(...)
     for i = 1, args.n do
-      local t = args[i] or nil
-      s = s .. tostring(t) .. " "
+      s = s .. tostring(args[i] or nil) .. " "
     end
     table.insert(str, s)
   end
@@ -29,155 +25,116 @@ do
     end
   end
 
-  local function checkForTable(tab, name, def)
-    if (not tab) then
-      out("Missing table:", name)
-      return false
-    end
-    if (not tab.default) then
-      out("missing default field for", name)
-      return false
-    elseif (def and tab.default == def) then
-      out("default field returned nil for", name)
-      return false
-    end
-    if (not tab.tainted) then
-      out("missing tainted field for", name)
-      return false
-    elseif (def and tab.tainted == def) then
-      out("tainted field returned nil for", name)
-      return false
-    end
-    return true
-  end
-
-  if (not checkForTable(stats, "stats")) then
-    goto tablechecker
-  else
-    local tab = stats.default
-    if not (tab.damage
-      and tab.firedelay and
-      tab.shotspeed and
-      tab.range and
-      tab.tearflags and
-      tab.tearcolor and
-      tab.flying ~= nil and
-    tab.luck) then
-      out("incomplete stats table for default")
-    end
-    tab = stats.tainted
-    if not (tab.damage
-      or tab.firedelay and
-      tab.shotspeed and
-      tab.range and
-      tab.tearflags and
-      tab.tearcolor and
-      tab.flying ~= nil and
-    tab.luck) then
-      out("incomplete stats table for default")
+  -- Utilities
+  local function checkName(name, tainted)
+    if (not name) then
+      out("No character name found!")
+    else
+      local c = Isaac.GetPlayerTypeByName(name, tainted)
+      if (c == -1) then
+        out("No Character Found by the name of", name)
+        out("Double check your players.xml file!")
+      end
     end
   end
 
-  if (not stats.ModName) then
-    out("No Mod Name found!")
-  elseif (stats.ModName:match("ModName")) then
+  local function costume(costume)
+    local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. costume .. ".anm2")
+    if (cost == -1) then
+      out("No costume found by the name of", costumes)
+    end
+  end
+
+  local function checkCostume(costumes)
+    if costumes == "" then return end
+
+    if type(costumes) == "table" then
+      for i = 1, #costumes do
+        costume(costumes[i])
+      end
+    else
+      costume(costumes)
+    end
+  end
+
+  local function checkItems(items)
+    if (#items > 0) then
+      for i = 1, #items do
+        local item = items[i]
+        if type(item) ~= "table" then
+          out("Item Entry #", i, " is not in the correct format!")
+          out("Please make sure its in {ITEMID, REMOVECOSTUME}")
+        else
+          if (item[1] == -1) then
+            out("Item Entry #", i, " is not found!")
+            out("This is in the modded item format")
+            out("Double check your items.xml and stats.lua to ensure the name matches")
+          end
+        end
+      end
+    end
+  end
+
+  local function checkGeneric(val, name, def)
+    if val == nil then
+      out("Invalid Entry for", name, "Are you sure your typing it right?")
+    end
+    if def and val == -1 then
+      out("Entry", name, " is not found!")
+      out("This is in the modded format")
+      out("Double check your spelling it right!")
+    end
+  end
+
+  -- Default
+  out("Regular Character Checker:")
+
+  local character = stats.default
+
+  checkName(character.name, false)
+
+  checkCostume(character.costume)
+
+  checkItems(character.items)
+
+  checkGeneric(character.trinket, "trinket", - 1)
+
+  checkGeneric(character.card, "card", - 1)
+
+  checkGeneric(character.pill, "pill", - 1)
+
+  checkGeneric(character.charge, "charge")
+
+  str = #str == 1 and {} or str
+
+  -- Tainted
+  out("Tainted Character Checker:")
+
+  character = stats.tainted
+
+  checkName(character.name, true)
+
+  checkCostume(character.costume)
+
+  checkItems(character.items)
+
+  checkGeneric(character.trinket, "trinket", - 1)
+
+  checkGeneric(character.card, "card", - 1)
+
+  checkGeneric(character.pill, "pill", - 1)
+
+  checkGeneric(character.charge, "charge")
+
+  str = #str == 1 and {} or str
+
+  -- Mod Name Check
+
+  if (stats.ModName:match("ModName")) then
     out("Mod Name must be unique!")
   end
 
-  if (not stats.playerName) then
-    out("No player name specified!")
-  else
-    char = Isaac.GetPlayerTypeByName(stats.playerName, false)
-    taintedChar = Isaac.GetPlayerTypeByName(stats.taintedName or stats.playerName, true)
-    if (char == -1) then
-      out("Character Not Found:", stats.playerName)
-    end
-    if (taintedChar == -1) then
-      out("Tainted Character Not Found:", (stats.taintedName or stats.playerName))
-    end
-  end
-
-  -- costume
-
-  if (checkForTable(stats.costume, "costume")) then
-    if stats.costume.default ~= "" then
-      if (type(stats.costume.default) == "table") then
-        for i = 1, #stats.costume.default do
-          local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. stats.costume.default[i] .. ".anm2")
-          if (cost == -1) then
-            out("Costume not found:", stats.costume.default[i])
-          end
-        end
-      else
-        local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. stats.costume.default .. ".anm2")
-        if (cost == -1) then
-          out("Costume not found:", stats.costume.default)
-        end
-      end
-    end
-    if stats.costume.tainted ~= "" then
-      if (type(stats.costume.tainted) == "table") then
-        for i = 1, #stats.costume.tainted do
-          local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. stats.costume.tainted[i] .. ".anm2")
-          if (cost == -1) then
-            out("Costume not found:", stats.costume.tainted[i])
-          end
-        end
-      else
-        local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. stats.costume.tainted .. ".anm2")
-        if (cost == -1) then
-          out("Costume not found:", stats.costume.tainted)
-        end
-      end
-    end
-  end
-
-  --TODO more item checks
-  if (checkForTable(stats.items, "items")) then
-    if (#stats.items.default > 0) then
-      if (type(stats.items.default) ~= "table") then
-        out("default items is not a table!")
-      else
-        for i = 1, #stats.items.default do
-          if (type(stats.items.default[i]) ~= "table") then
-            out("invalid table entry at index:", i, "in default table")
-          else
-            local item = stats.items.default[i][1]
-            if (item == -1) then
-              out("item index:", i, "is returning nil for default")
-            end
-          end
-        end
-      end
-    end
-    if (#stats.items.tainted > 0) then
-      if (type(stats.items.tainted) ~= "table") then
-        out("tainted items is not a table!")
-      else
-        for i = 1, #stats.items.tainted do
-          if (type(stats.items.tainted[i]) ~= "table") then
-            out("invalid table entry at index:", i, "in tainted table")
-          else
-            local item = stats.items.tainted[i][1]
-            if (item == -1) then
-              out("item index:", i, "is returning nil for tainted")
-            end
-          end
-        end
-      end
-    end
-  end
-
-  checkForTable(stats.trinket, "trinket", - 1)
-
-  checkForTable(stats.card, "card", - 1)
-
-  checkForTable(stats.pill, "pill", - 1)
-
-  checkForTable(stats.charge, "charge")
-
   -- checker
-  ::tablechecker::
 
   if (#str > 0) then
     local s = {
@@ -202,12 +159,13 @@ if (type(imports) == "table") then
   imports:Init(mod)
 end
 
-
 -- CODE --
 local config = Isaac.GetItemConfig()
 local game = Game()
 local pool = game:GetItemPool()
 local iscontin = true -- a hacky check for if the game is continued.
+local char = Isaac.GetPlayerTypeByName(stats.default.name, false)
+local taintedChar = Isaac.GetPlayerTypeByName(stats.tainted.name, true)
 
 -- Utility Functions
 local function IsChar(player)
@@ -218,7 +176,6 @@ local function IsChar(player)
 end
 -- this function will return if the player is one of your characters.
 -- returns true if it is a character of yours, false if it isn't, and nil if the player doesn't exist.
-
 
 local function IsTainted(player)
   if (player == nil) then return nil end
@@ -244,13 +201,11 @@ end
 -- will return a table of all players that are your character (or nil if none are)
 -- use this to get the players when the function your using doesn't give it to you.
 
-local function GetCorrectStat(tab, player)
+local function GetPlayerStatTable(player)
   local taint = IsTainted(player)
-  if (taint) then
-    return tab.tainted
-  else
-    return tab.default
-  end
+  if (taint == nil) then return nil end
+
+  return (taint and stats.tainted) or stats.default
 end
 -- used to automatically grab the tainted or default variant of a stat from stats.lua.
 -- based on the inputted player.
@@ -291,7 +246,7 @@ player:Kill() -- lol
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
   if not (IsChar(player)) then return end
 
-  local playerStat = GetCorrectStat(stats, player)
+  local playerStat = GetPlayerStatTable(player).stats
 
   if (cache & CacheFlag.CACHE_DAMAGE == CacheFlag.CACHE_DAMAGE) then
     player.Damage = player.Damage + playerStat.damage
@@ -317,10 +272,8 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
     player.Luck = player.Luck + playerStat.luck
   end
 
-  if (cache & CacheFlag.CACHE_FLYING == CacheFlag.CACHE_FLYING) then
-    if (playerStat.flying) then
-      player.CanFly = true
-    end
+  if (cache & CacheFlag.CACHE_FLYING == CacheFlag.CACHE_FLYING and playerStat.flying) then
+    player.CanFly = true
   end
 
   if (cache & CacheFlag.CACHE_TEARFLAG == CacheFlag.CACHE_TEARFLAG) then
@@ -352,10 +305,11 @@ end
 local function postPlayerInitLate(player)
   local player = player or Isaac.GetPlayer()
   if not (IsChar(player)) then return end
+  local statTable = GetPlayerStatTable(player)
   -- Costume
-  AddCostumes(GetCorrectStat(stats.costume, player), player)
+  AddCostumes(statTable.costume, player)
 
-  local items = GetCorrectStat(stats.items, player)
+  local items = statTable.items
   if (#items > 0) then
     for i, v in ipairs(items) do
       player:AddCollectible(v[1])
@@ -364,7 +318,7 @@ local function postPlayerInitLate(player)
         player:RemoveCostume(ic)
       end
     end
-    local charge = GetCorrectStat(stats.charge, player)
+    local charge = statTable.charge
     if (player:GetActiveItem() and charge ~= -1) then
       if (charge == true) then
         player:FullCharge()
@@ -374,17 +328,17 @@ local function postPlayerInitLate(player)
     end
   end
 
-  local trinket = GetCorrectStat(stats.trinket, player)
+  local trinket = statTable.trinket
   if (trinket ~= 0) then
     player:AddTrinket(trinket, true)
   end
 
-  local pill = GetCorrectStat(stats.pill, player)
+  local pill = statTable.pill
   if (pill ~= 0) then
     player:SetPill(0, pool:ForceAddPillEffect(pill))
   end
 
-  local card = GetCorrectStat(stats.card, player)
+  local card = statTable.card
   if (card ~= 0) then
     player:SetCard(0, card)
   end
