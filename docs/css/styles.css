@@ -191,4 +191,8 @@ footer p a {
     text-align: center;
     float: none;
   }
+  
+  h1 {
+      margin: 80px 0px;
+  }
 }
