@@ -1,7 +1,7 @@
 $(function() {
-  $("#navigation").load("nav.html");
-  $("#footer").load("footer.html");
-  $("#header").load("header.html", function() {
+  $("#navigation").load("/IsaacTemplates/nav.html");
+  $("#footer").load("/IsaacTemplates/footer.html");
+  $("#header").load("/IsaacTemplates/header.html", function() {
     $("#menu")[0].addEventListener("click", function() {
       this.classList.toggle("active");
       var content = $("#navigation")[0];
