@@ -109,7 +109,7 @@ nav ul li a:hover {
 
 .main {
   flex: 1 0 auto;
-  background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.9) 0 100%), url("../images/bg.png");
+  background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.9) 0 100%), url("/IsaacTemplates/images/bg.png");
   background-repeat: no-repeat;
   background-size: cover;
   padding: 10px 20px;
