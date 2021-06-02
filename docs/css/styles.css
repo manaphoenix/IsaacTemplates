@@ -14,23 +14,43 @@
   font-style: normal;
 }
 
-html {
-  height: 100%;
-  width: 100%;
+svg[data-icon='radix-icons:hamburger-menu'] {
+   font-size: 20px;
 }
 
 * {
-  padding: 0px;
-  margin: 0px;
+  margin: 0;
+  padding: 0;
   font-family: "PF Tempesta Seven Condensed";
-  text-shadow: 0 0 3px #000, 0 0 3px #000;
   color: #c7b299;
+  text-shadow: 0 0 3px #000, 0 0 3px #000;
 }
 
-/* body darkmode */
-body {
-  background: #000;
+*, :after, :before {
+  box-sizing: inherit;
+}
+
+html, body {
+  width: 100%;
   height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 20px;
+  text-align: left;
+  display: block;
+  flex-shrink: 0;
+  background: #36393f;
+  font-size: 20px;
+}
+
+header a {
+    margin-right: 20px;
 }
 
 h1 {
@@ -38,7 +58,89 @@ h1 {
   font-size: 60px;
 }
 
-/* links */
+.container {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: row;
+}
+
+nav {
+  background-color: #202225;
+  text-decoration: none;
+  text-align: center;
+  color: #8e8f8e;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0px 100px;
+  text-align: left;
+}
+
+nav ul li {
+  padding: 5px 0px;
+  display: block;
+}
+
+nav ul li a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  font-size: 14px;
+}
+
+nav ul li a:link {
+  color: #818181;
+}
+
+nav ul li a:visited {
+  color: #818181;
+}
+
+nav ul li a:hover {
+  text-decoration: none;
+  color: #f1f1f1;
+}
+
+.main {
+  flex: 1 0 auto;
+  background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.9) 0 100%), url("../images/bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 10px 20px;
+}
+
+.main ul, ol {
+  margin: 10px 20px;
+}
+
+h1, hr {
+    margin: 20px 0px;
+}
+
+footer {
+  flex-shrink: 0;
+  background: #36393f;
+  text-align: center;
+}
+
+.footerLeftContainer {
+  text-align: left;
+  padding: 10px;
+  float: left;
+}
+
+.footerRightContainer {
+  text-align: right;
+  padding: 10px;
+  float: right;
+}
+
 a:link {
   color: #00FFFF;
 }
@@ -47,149 +149,14 @@ a:visited {
   color: #00FF99;
 }
 
-h1 {
-    margin: 20px 0px;
-}
-
-hr {
-    margin: 20px 0px;
-}
-
-ol {
-    margin: 10px 20px;
-}
-
-ul {
-    margin: 10px 20px;
-}
-
-footer {
-    margin: 10px 20px;
-}
-
-footer p a {
-  background: url('https://api.iconify.design/akar-icons:github-fill.svg') no-repeat center center / contain;
-}
-
-/* Fixed sidenav, full height */
-.sidenav {
-  margin: 0;
-  padding: 0;
-  overflow: auto;
-  height: 100%;
-  width: 0px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-/* Style the sidenav links and the dropdown button */
-.sidenav a, .dropdown-btn {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 14px;
-  color: #818181;
-  display: block;
-  border: none;
-  background: none;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  outline: none;
-}
-
-/* On mouse-over */
-.sidenav a:hover, .dropdown-btn:hover {
-  color: #f1f1f1;
-}
-
-/* Position and style the close button (top right corner) */
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-/* The button used to open the sidebar */
-.openbtn {
-  font-size: 20px;
-  cursor: pointer;
-  background-color: #111;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  margin: 0px 0px 20px;
-  position: fixed;
-  top: 0;
-  right: 0;
-}
-
-.openbtn:hover {
-  background-color: #444;
-}
-
-/* Main content */
-.main {
-  min-height: 100%;
-  min-width: 98%;
-  margin-left: 20px;
-  /* Same as the width of the sidenav */
-  font-size: 14px;
-  /* Increased text to enable scrolling */
-  padding: 0px 10px;
-  transition: margin-left .5s;
-
-  background-image: linear-gradient(to bottom right, rgba(0,0,0, 0.9) 0 100%), url("../images/bg.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-/* Add an active class to the active dropdown button */
-.active {
-  background-color: green;
-  color: white;
-}
-
-/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
-.dropdown-container {
-  display: none;
-  background-color: #262626;
-  padding-left: 16px;
-  text-align: center;
-}
-
-/* Optional: Style the caret down icon */
-.fa-caret-down {
-  float: right;
-  padding-right: 8px;
-}
-
-@media screen and (max-width: 700px) {
-  .sidenav {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-
-  .sidenav a {
-    float: left;
-  }
-
-  div.main {
-    margin-left: 20px;
-  }
-}
-
 @media screen and (max-width: 400px) {
-  .sidenav a {
+  nav ul li a {
     text-align: center;
     float: none;
+  }
+  
+  nav ul li a {
+    padding: 6px 8px 6px 4px;
   }
   
   h1 {

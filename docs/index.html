@@ -2,78 +2,48 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<title>Template Character Mod</title>
-	<link rel="stylesheet" href="css/styles.css" media="screen" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Isaac Templates</title>
+  <link rel="stylesheet" type="text/css" title="main stylesheet" href="/css/styles.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 </head>
 
-<body onload="toggleNav()">
-	<div id="mySidenav" class="sidenav">
-		<a href="#">Home</a>
-		<button class="dropdown-btn">Character Template
-			<i class="fa fa-caret-down"></i>
-		</button>
-		<div class="dropdown-container">
-			<a href="https://github.com/manaphoenix/IsaacTemplates/releases/download/latest/template_character.zip">Download</a>
-		</div>
-		<button class="dropdown-btn">Item Template
-			<i class="fa fa-caret-down"></i>
-		</button>
-		<div class="dropdown-container">
-			<a href="https://github.com/manaphoenix/IsaacTemplates/releases/download/latest/template_item.zip">Download</a>
-		</div>
-		<button class="dropdown-btn">Tutorials
-			<i class="fa fa-caret-down"></i>
-		</button>
-		<div class="dropdown-container">
-			<a href="tutorials/uploading.html">Uploading to the Workshop</a>
-		</div>
-		<a href="https://github.com/manaphoenix/IsaacTemplates">Github</a>
-	</div>
-
-	<!-- Page content -->
-	<div id="main" class="main">
-		<button class="openbtn" onclick="toggleNav()">Open Navigation</button>
-		<h1>Intro</h1>
-	</div>
-
-	<script>
-		var tog = true;
-
-		function toggleNav() {
-			var nav = document.getElementById("mySidenav");
-			var main = document.getElementById("main");
-			var btn = document.getElementsByClassName("openbtn")[0];
-			if (tog) {
-				nav.style.width = "250px";
-				btn.innerHTML = "Close Navigation"
-				main.style.marginLeft = "250px";
-			} else {
-				btn.innerHTML = "Open Navigation"
-				nav.style.width = "0";
-				main.style.marginLeft = "0";
-			}
-			tog = !tog
-		}
-
-		//* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-		var dropdown = document.getElementsByClassName("dropdown-btn");
-		var i;
-
-		for (i = 0; i < dropdown.length; i++) {
-			dropdown[i].addEventListener("click", function() {
-				this.classList.toggle("active");
-				var dropdownContent = this.nextElementSibling;
-				if (dropdownContent.style.display === "block") {
-					dropdownContent.style.display = "none";
-				} else {
-					dropdownContent.style.display = "block";
-				}
-			});
-		}
-	</script>
+<body>
+  <header>
+		<a href=#>
+			<span class="iconify" data-icon="radix-icons:hamburger-menu" data-inline="false"></span>
+		</a>
+		Isaac Templates
+	</header>
+  <div class="container">
+    <nav>
+      Navigation
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="https://github.com/manaphoenix/IsaacTemplates">Github</a></li>
+        <li><a href="/tutorials/uploading.html">Uploading</a></li>
+      </ul>
+    </nav>
+    <section class="main">
+      <h1>Landing page</h1>
+      <p>Hello people of this universe</p>
+    </section>
+  </div>
+  <footer>
+    <div class="footerLeftContainer">
+      Author: Manaphoenix<br>
+      <span class="iconify" data-icon="akar-icons:github-fill" data-inline="false"></span> <a href="#">My Github</a><br>
+      <span class="iconify" data-icon="cib:steam" data-inline="false"></span> <a href="#">My Steam</a>
+    </div>
+    <div class="footerRightContainer">
+      <br>
+      <span class="iconify" data-icon="logos:discord" data-inline="false"></span> <a href="#">Isaac Discord</a><br>
+      <span class="iconify" data-icon="logos:discord" data-inline="false"></span> <a href="#">Isaac Modding Discord</a>
+    </div>
+  </footer>
+  <script src="/main.js" type="text/javascript"></script>
 </body>
 
 </html>
