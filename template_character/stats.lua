@@ -172,9 +172,9 @@ the first four numbers are normalized, basically to get a normalized RGB value t
 
 -- Links
 Vanilla Items: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType/
-Trinkets: (https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType/)
-Cards: (https://wofsauge.github.io/IsaacDocs/rep/enums/Card/)
-Pills: (https://wofsauge.github.io/IsaacDocs/rep/enums/PillColor/)
+Trinkets: https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType/
+Cards: https://wofsauge.github.io/IsaacDocs/rep/enums/Card/
+Pills: https://wofsauge.github.io/IsaacDocs/rep/enums/PillEffect/
 
 -- Modded Items
 -- Name refers to what it is in the items.xml file.
