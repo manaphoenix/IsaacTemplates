@@ -49,7 +49,10 @@ header {
   font-size: 20px;
 }
 
-header a {
+header button {
+    border: none;
+    background: none;
+    cursor: pointer;
     margin-right: 20px;
 }
 
@@ -62,6 +65,7 @@ h1 {
   flex: 1 0 auto;
   display: flex;
   flex-direction: row;
+  background: #36393f;
 }
 
 nav {
@@ -69,22 +73,25 @@ nav {
   text-decoration: none;
   text-align: center;
   color: #8e8f8e;
+  display: block;
+  overflow: hidden;
 }
 
 nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0px 100px;
+  list-style: none inside none;
+  margin: 0px 80px;
   text-align: left;
+  padding: 0;
 }
 
 nav ul li {
   padding: 5px 0px;
-  display: block;
+  text-align: left;
 }
 
 nav ul li a {
-  padding: 6px 8px 6px 16px;
+  margin: 0;
+  padding: 0;
   text-decoration: none;
   border: none;
   background: none;
