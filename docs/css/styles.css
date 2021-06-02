@@ -47,6 +47,30 @@ a:visited {
   color: #00FF99;
 }
 
+h1 {
+    margin: 20px 0px;
+}
+
+hr {
+    margin: 20px 0px;
+}
+
+ol {
+    margin: 10px 20px;
+}
+
+ul {
+    margin: 10px 20px;
+}
+
+footer {
+    margin: 10px 20px;
+}
+
+footer p a {
+  background: url('https://api.iconify.design/akar-icons:github-fill.svg') no-repeat center center / contain;
+}
+
 /* Fixed sidenav, full height */
 .sidenav {
   margin: 0;
@@ -113,13 +137,12 @@ a:visited {
 /* Main content */
 .main {
   min-height: 100%;
-  min-width: 100%;
-  margin-left: 0px;
+  min-width: 98%;
+  margin-left: 20px;
   /* Same as the width of the sidenav */
   font-size: 14px;
   /* Increased text to enable scrolling */
   padding: 0px 10px;
-  float: left;
   transition: margin-left .5s;
 
   background-image: linear-gradient(to bottom right, rgba(0,0,0, 0.9) 0 100%), url("../images/bg.png");
@@ -159,7 +182,7 @@ a:visited {
   }
 
   div.main {
-    margin-left: 0;
+    margin-left: 20px;
   }
 }
 

@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title>Template Character Mod</title>
 	<link rel="stylesheet" href="../css/styles.css" media="screen" />
+	<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 </head>
 
 <body>
@@ -37,63 +38,118 @@
 	<!-- Page content -->
 	<div id="main" class="main">
 		<button class="openbtn" onclick="toggleNav()">Open Navigation</button>
-		<h1>Uploading</h1>
+		<h1>Uploading A Mod</h1>
 		<p>
-			Ok, now is a good time to double check you have everything in order.
-			<br><br>
-			then we need to create a thumbnail for the workshop "THIS DOES NOT GO IN THE MOD FOLDER" it is only used by the workshop
-			and uploading it would just take up space.
-			<br><br>
-			the thumbnail (which is what you see when scrolling past) is a 268x268 image, however, you can probably just do like 512x512 and let it down scale/crop it
-			<br><br>
-			the big image you get when you click onto the actual mod page is basically just a 16:9 ratio image, I would suggest atleast 1920x1080.
-			<br><br>
-			these are mostly up to you, but below is some suggestions/helpful tips if you have never done this before.
-			<br><br>
-			for the thumbnail image you should aim to show off the main part of your mod (in which case the character), without making it too busy.
-			for example, a druid type character against a forest will be very poor, as literally everything is green.
-			instead for a druid do something like a zoom in of him sitting on a log, with the camera angle towards the sky to give good contrast.
-			<br><br>
-			now for the big image you want to show off what your mod is all about, so maybe load up the game with your character and take multiple pictures
-			from the main menu, to your character in action. you can add multiple of these types of images to your mod, so don't be afraid
-			you can also add things like videos if you have something on youtube uploaded.
-			<br><br>
-			now once you have at least a thumbnail finished go the tools folder in Isaac and open the ModUploader
-			once again select your mods metadata.xml only this time well be doing the things we didn't bother with last time
-			<br><br>
-			so...
-			for change notes I highly recommend for your 1.0 release you simply put "Initial Commmit" or something like that.
-			then click the change button and find your thumbnail image (Not the big ones, you do that on the workshop page)
-			finally if you didn't already set your tags.
-			<br><br>
-			if you want you can set the intial visibility to "Private" which means no one will see it.
-			<br><br>
-			<b>IMPORTANT</b><br>
-			Make sure to remove this guide folder from your mod before uploading (it still works in other folders, so just move the entire README folder somewhere else)
-			<br><br>
-			then push Upload Mod.
-			<br><br>
-			once it finishes close the tool (Don't bother with the view mod button, it opens in a browser which is very not useful)
-			then open Steam, find Isaac and click "Workshop"
-			go under the "Browse" section and click "Subscribed Items"
-			at the top of that page you can change it to "By YOUR STEAM NAME" ex "by manaphoenix"
-			click that and it will reload the page, and you can now see your mod that you uploaded.
-			click that and lets setup the rest of the things.
+			Uploading a mod isn't terribly difficult; but, there is a few steps you need to do before uploading.
 		</p>
-		<hr></hr>
+		<ol>
+			<li>Create a Thumbnail Image</li>
+			<li>Create a Workshop Image</li>
+			<li>Do Manual Edits to metadata.xml</li>
+		</ol>
+		<p>
+		<h3>Important: Images created for the workshop DO NOT need to be put into the Mod folder</h3>
+		The images used by the workshop are in no way used by the mod. So we have no reason to put them into the mods folder.
+		You still can if you want to though.<br>
+		The Thumbnail Image (which is what you see when scrolling past) is a 268x268 image; however, you can just make a 512x512 and let the workshop crop it.<br>
+		The Workshop image is what you get when click into the actual mod page. It is a 16:9 Ratio Image, I would suggest at least 1920 x 1080.<br>
+		If you have never made images like this before, here are some general suggestions.
+		</p>
+		<ul>
+			<li>Use the thumbnail image to highlight or show off the main part of your mod. A character mod for example may make a blown up version of their character portrait for the thumbnail.</li>
+			<li>Avoid using high contrasting backgrounds. If the picture doesn't have a focal point, peoples eyes won't know what to look at and will just end up not looking at all.
+				A bad example of this is assume someone made a druid type character, for their thumbnail they put them in a dense tropical forest. Well the druid is already heavily green, and so is tropical the forest.
+				This means the character will more or less blend in and our eyes may not even notice the character let alone focus on it. Instead what that person should do is focus on something like the druid sitting
+				on a stump, that way you can still be in the forest, but the background is a different color from the main character.</li>
+			<li>Use the Workshop iamge to show off what your mod is all about. Examples of this is cool synergies, one of the cool new bosses, or the unique mechanic of an item or character.
+				you can add multiple of these types of images, so don't be afraid to take multiple.</li>
+			<li>You can also make gifs (animated pictures) thumbnail/workshop images!</li>
+			<li>Youtube videos work in the workshop images section too!</li>
+		</ul>
+		<p>
+			Once you have at least the thumbnail image complete, we can move onto the next step!<br>
+			We <i>may</i> need to do a few things manually in the metadata.xml file. This is dependant on you though, so you may not need to do this at all!<br>
+			So open up your mod's folder, and open the metadata.xml file.<br>
+			inside there is two lines that you may need to change here.
+		</p>
+		<ol>
+			<li>The "Directory" line should be named the same way your folder is. It should already be like that unless you renamed your folder through making your mod.</li>
+			<li>The "Name" line should be named whatever you want your mod to be called. It will automatically default to the folder name.</li>
+		</ol>
+		<p>
+			Once done it's time to open the Mod uploader tool and do actually upload the mod.<br>
+			To navigate to the mod uploader tool you can find it in your Isaac install/tools/ModUploader/<br>
+			If you don't know how to get to your Isaac install do this.
+		</p>
+		<ol>
+			<li>Open Steam</li>
+			<li>Right click "The Binding of Isaac: Rebirth"</li>
+			<li>Go Down to "Manage"</li>
+			<li>Click "Browse local files"</li>
+			<li>It will open your file explorer straight to your Isaac Install</li>
+		</ol>
+		<p>
+			Inside the uploader tool hit the "Choose Mod..." button and then open the metadata.xml file of your mod.<br>
+			There is multiple things you can change in here.
+		</p>
+		<ul>
+			<li>Change Notes. This is where you should put what you have changed when you update you mod. for initial upload, it is recommened to put <b>Initial Upload</b> or something similar.</li>
+			<li>Mod Description. This is where you put the Description for your mod that will appear on the workshop page. It is recommened to do this in another editor first and paste it in.
+				Steam has its own formatting codes you can use to do certain things like: bold, italic, headers. See <a href="https://steamcommunity.com/comment/Recommendation/formattinghelp">Here</a></li>
+			<li>Tags. This is the mod categories that you can classify your mod under. Be sure to click all that apply!</li>
+			<li>Visibility. By default its Public, this changes who can see your mod page. You can set it to Private if you want to make more changes before letting people actually see your mod if you want.</li>
+			<li>Thumbnail Image. This is for uploading your thumbnail image, hit the Change button, and find your thumbnail image. You don't need to apply this every time you update, just if you want to change it again</li>
+		</ul>
+		<p>
+			When you're done changing things. Hit "Upload Mod".<br>
+			Down below in the small box, it will tell you when its finished.<br>
+			When it is finished, close the Mod Uploader. Don't bother with the "View Mod" button, it opens in your browser which isn't very useful.<br>
+			Instead we want to go to your mod page through steam<br>
+		</p>
+		<ol>
+			<li>Open Steam</li>
+			<li>Click on Isaac</li>
+			<li>Click "Workshop"</li>
+			<li>Under the "Browse" dropdown on the workshop page, Hit "Subscribed Items"</li>
+			<li>at the top of that page you can find a radio control for "By YOURNAME" or "YOUR favorite's". Change it to "BY YOURNAME".</li>
+			<li>The mod(s) you have made will now show up</li>
+			<li>Click the mod you just uploaded</li>
+			<li>Now you can change things from here</li>
+		</ol>
+		<hr>
+		</hr>
 		<h1>Workshop</h1>
 		<p>
-			On the right side when you will see Owner Controls
-			<br><br>
-			if you have more images you can add/remove that from "Add/edit images & videos"
-			<br><br>
-			what is recommended you do at least tho is go down to "Add/Remove Required DLC" and select the DLC that your mod needs to run
-			(MODDING only if you have mininum AB+, but be sure to also select Repentance if your mod uses stuff from it)
-			<br><br>
-			once done, the only thing you may need to change is the Visibility back to Public, and there you go you did it!
-			don't forget to post in #promotion in the discord if your part of the isaac modding discord 😉
+			On the right side of the Workshop page is a menu called "Owner Controls".<br>
+			Each control lets you do something different. Let's go over them all!
+		</p>
+		<ul>
+			<li>Edit title & description. This lets you edit the name and description of your mod. <b> DO NOT change it like this, use the Mod Uploader tool!
+					The reason is when you go to update your mod the Mod Uploader tool will overwrite anything you change back to the Original text that you inputted using the tool the first time.</li>
+			<li>Add/edit images & videos. This let's you attach Workshop Images (like the big one(s) you made), along with youtube videos, and even sketchfab (if for some reason you have one).</li>
+			<li>Add/remove Contributors. This menu let's you add or remove contributors from your mod page. NOTE: They have to be on your friends list!</li>
+			<li>Edit Links. This button is about your mod; instead,it lets you link to your other platforms like Youtube and Twitter. They show on the left side of the mod page when added.</li>
+			<li>Allow Comments. Simple checkbox of whether the Comment Section is Enabled for your mod page. Unchecking this will both hide all comments already made, and disallow new comments from being made!</li>
+			<li>Delete. <b>Scary button!</b> This button will delete your mod off the steam workshop forever <i>That's a very long time.</i></li>
+			<li>Add/Remove Required DLC. This lets you add DLC from the game as required to make your mod work. It is common courtesy to add At least Afterbirth+ as a required DLC; since that DLC is needed to mod Isaac,
+				but be sure to add Repentance too if this mod is made for Repentance!</li>
+			<li>Add/Remove Required Items. This lets you add other mods on the workshop as a requirement for your mod to work.
+				Note: You must either be subscribed to it, have it favorited, or be the publisher of it, to add the item</li>
+				<li>Change Visibility. This lets you change between the different kinds of visibilities your mod page has, Be sure to set to this public if you initially set it to private when uploading your mod. 
+					Also double check when you reopen the mod uploader that it is switched to public again, or else the next time you update it, your mod will go "poof" again.</li>
+		</ul>
+		<p>
+			Congratulations. You have uploaded your first mod! Be sure to post about it in the Isaac Discord (#modding-general) or In the Isaac Modding Discord (#promotion) if you are a part of those!
 		</p>
 	</div>
+	
+	<footer>
+		<p>Author: Manaphoenix</p>
+		<p><span class="iconify" data-icon="akar-icons:github-fill" data-inline="false"></span> <a href="#">My Github</a></p>
+		<p><span class="iconify" data-icon="cib:steam" data-inline="false"></span> <a href="#">My Steam</a></p>
+		<p><span class="iconify" data-icon="logos:discord" data-inline="false"></span> <a href="#">Isaac Discord</a></p>
+		<p><span class="iconify" data-icon="logos:discord" data-inline="false"></span> <a href="#">Isaac Modding Discord</a></p>
+	</footer>
 
 	<script>
 		var tog = true;
@@ -108,8 +164,8 @@
 				main.style.marginLeft = "250px";
 			} else {
 				btn.innerHTML = "Open Navigation"
-				nav.style.width = "0";
-				main.style.marginLeft = "0";
+				nav.style.width = "0px";
+				main.style.marginLeft = "20px";
 			}
 			tog = !tog
 		}
