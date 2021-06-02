@@ -102,7 +102,7 @@ character.trinket = TrinketType.TRINKET_SWALLOWED_PENNY
 --[[
 	Use the above line to give the character a starting trinket.
 	If you do not want a starting trinket, put
-	character.trinket = TrinketType.TRINKET_NULL.
+	character.trinket = TrinketType.TRINKET_NULL
 
 	You can find a list of avaliable TrinketType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType/?q=trinket
 ]]
@@ -112,7 +112,7 @@ character.card = Card.CARD_FOOL
 	Use the above line to give the character a starting Card.
 	
 	If you do not want a starting Card, put
-	character.card = Card.CARD_NULL.
+	character.card = Card.CARD_NULL
 
 	You can find a list of avaliable Cards here: https://wofsauge.github.io/IsaacDocs/rep/enums/Card/?q=card
 
@@ -122,7 +122,7 @@ character.card = Card.CARD_FOOL
 character.pill = false
 --[[
 	Use the above line to give the character a starting Pill.
-	If you do not want a starting Pill, put PILLEFFECT_NULL
+	If you do not want a starting Pill, put false
 
 	You can find a list of avaliable PillEffect's here: https://wofsauge.github.io/IsaacDocs/rep/enums/PillEffect/?q=pill
 
