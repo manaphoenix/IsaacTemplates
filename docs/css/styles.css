@@ -14,6 +14,11 @@
   font-style: normal;
 }
 
+html {
+  height: 100%;
+  width: 100%;
+}
+
 * {
   padding: 0px;
   margin: 0px;
@@ -22,29 +27,10 @@
   color: #c7b299;
 }
 
-html {
-  height: 100%;
-}
-
 /* body darkmode */
 body {
   background: #000;
-}
-
-body::after {
-  content: "";
-  background:  url("../images/bg.png");
-  opacity: 0.1;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;   
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  filter: grayscale(1);
+  height: 100%;
 }
 
 h1 {
@@ -126,6 +112,8 @@ a:visited {
 
 /* Main content */
 .main {
+  min-height: 100%;
+  min-width: 100%;
   margin-left: 0px;
   /* Same as the width of the sidenav */
   font-size: 14px;
@@ -133,6 +121,10 @@ a:visited {
   padding: 0px 10px;
   float: left;
   transition: margin-left .5s;
+
+  background-image: linear-gradient(to bottom right, rgba(0,0,0, 0.9) 0 100%), url("../images/bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* Add an active class to the active dropdown button */
