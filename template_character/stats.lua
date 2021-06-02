@@ -119,7 +119,7 @@ character.card = Card.CARD_FOOL
 	NOTE: Exclusive, you cannot give both a Card and a Pill
 ]]
 
-character.pill = PillEffect.PILLEFFECT_NULL
+character.pill = false
 --[[
 	Use the above line to give the character a starting Pill.
 	If you do not want a starting Pill, put PILLEFFECT_NULL
@@ -165,7 +165,7 @@ tainted.trinket = TrinketType.TRINKET_SWALLOWED_PENNY
 
 tainted.card = Card.CARD_FOOL
 
-tainted.pill = 0
+tainted.pill = false
 
 tainted.charge = -1
 

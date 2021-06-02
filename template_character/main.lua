@@ -334,7 +334,7 @@ local function postPlayerInitLate(player)
   end
 
   local pill = statTable.pill
-  if (pill ~= 0) then
+  if (pill ~= false) then
     player:SetPill(0, pool:ForceAddPillEffect(pill))
   end
 
