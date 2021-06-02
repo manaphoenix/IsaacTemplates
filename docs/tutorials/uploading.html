@@ -11,7 +11,7 @@
 
 <body>
 
-	<div class="sidenav">
+	<div id="mySidenav" class="sidenav">
 		<a href="../index.html">Home</a>
 		<button class="dropdown-btn">Character Template
 			<i class="fa fa-caret-down"></i>
@@ -35,7 +35,8 @@
 	</div>
 
 	<!-- Page content -->
-	<div class="main">
+	<div id="main" class="main">
+		<button class="openbtn" onclick="toggleNav()">Open Navigation</button>
 		<h1>Uploading</h1>
 		<p>
 			Ok, now is a good time to double check you have everything in order.
@@ -79,6 +80,7 @@
 			click that and it will reload the page, and you can now see your mod that you uploaded.
 			click that and lets setup the rest of the things.
 		</p>
+		<hr></hr>
 		<h1>Workshop</h1>
 		<p>
 			On the right side when you will see Owner Controls
@@ -94,6 +96,24 @@
 	</div>
 
 	<script>
+		var tog = true;
+
+		function toggleNav() {
+			var nav = document.getElementById("mySidenav");
+			var main = document.getElementById("main");
+			var btn = document.getElementsByClassName("openbtn")[0];
+			if (tog) {
+				nav.style.width = "250px";
+				btn.innerHTML = "Close Navigation"
+				main.style.marginLeft = "250px";
+			} else {
+				btn.innerHTML = "Open Navigation"
+				nav.style.width = "0";
+				main.style.marginLeft = "0";
+			}
+			tog = !tog
+		}
+
 		//* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
 		var dropdown = document.getElementsByClassName("dropdown-btn");
 		var i;

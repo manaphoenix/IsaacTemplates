@@ -1,13 +1,55 @@
+/* @font-face kit by Fonts2u (https://fonts2u.com) */
+@font-face {
+  font-family: "UpheavalPro";
+  src: url("UpheavalPro.eot?") format("eot"), url("UpheavalPro.woff") format("woff"), url("UpheavalPro.ttf") format("truetype"), url("UpheavalPro.svg#UpheavalPro-Regular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* @font-face kit by Fonts2u (https://fonts2u.com) */
+@font-face {
+  font-family: "PF Tempesta Seven Condensed";
+  src: url("pf_tempesta_seven_condensed.eot?") format("eot"), url("pf_tempesta_seven_condensed.woff") format("woff"), url("pf_tempesta_seven_condensed.ttf") format("truetype"), url("pf_tempesta_seven_condensed.svg#PFTempestaSevenCondensed") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
-    padding: 0px;
-    margin: 0px;
+  padding: 0px;
+  margin: 0px;
+  font-family: "PF Tempesta Seven Condensed";
+  text-shadow: 0 0 3px #000, 0 0 3px #000;
+  color: #c7b299;
+}
+
+html {
+  height: 100%;
 }
 
 /* body darkmode */
 body {
-  padding: 40px;
-  background-color: #36393f;
-  color: white;
+  background: #000;
+}
+
+body::after {
+  content: "";
+  background:  url("../images/bg.png");
+  opacity: 0.1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: grayscale(1);
+}
+
+h1 {
+  font-family: "UpheavalPro";
+  font-size: 60px;
 }
 
 /* links */
@@ -21,8 +63,11 @@ a:visited {
 
 /* Fixed sidenav, full height */
 .sidenav {
+  margin: 0;
+  padding: 0;
+  overflow: auto;
   height: 100%;
-  width: 30%;;
+  width: 0px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -36,12 +81,12 @@ a:visited {
 .sidenav a, .dropdown-btn {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 14px;
   color: #818181;
   display: block;
   border: none;
   background: none;
-  width:100%;
+  width: 100%;
   text-align: left;
   cursor: pointer;
   outline: none;
@@ -52,11 +97,42 @@ a:visited {
   color: #f1f1f1;
 }
 
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* The button used to open the sidebar */
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  margin: 0px 0px 20px;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
 /* Main content */
 .main {
-  margin-left: 240px; /* Same as the width of the sidenav */
-  font-size: 20px; /* Increased text to enable scrolling */
+  margin-left: 0px;
+  /* Same as the width of the sidenav */
+  font-size: 14px;
+  /* Increased text to enable scrolling */
   padding: 0px 10px;
+  float: left;
+  transition: margin-left .5s;
 }
 
 /* Add an active class to the active dropdown button */
@@ -77,4 +153,27 @@ a:visited {
 .fa-caret-down {
   float: right;
   padding-right: 8px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidenav {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .sidenav a {
+    float: left;
+  }
+
+  div.main {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .sidenav a {
+    text-align: center;
+    float: none;
+  }
 }

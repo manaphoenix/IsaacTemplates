@@ -10,8 +10,7 @@
 </head>
 
 <body>
-
-	<div class="sidenav">
+	<div id="mySidenav" class="sidenav">
 		<a href="#">Home</a>
 		<button class="dropdown-btn">Character Template
 			<i class="fa fa-caret-down"></i>
@@ -35,12 +34,30 @@
 	</div>
 
 	<!-- Page content -->
-	<div class="main">
+	<div id="main" class="main">
+		<button class="openbtn" onclick="toggleNav()">Open Navigation</button>
 		<h1>Intro</h1>
-		
 	</div>
 
 	<script>
+		var tog = true;
+
+		function toggleNav() {
+			var nav = document.getElementById("mySidenav");
+			var main = document.getElementById("main");
+			var btn = document.getElementsByClassName("openbtn")[0];
+			if (tog) {
+				nav.style.width = "250px";
+				btn.innerHTML = "Close Navigation"
+				main.style.marginLeft = "250px";
+			} else {
+				btn.innerHTML = "Open Navigation"
+				nav.style.width = "0";
+				main.style.marginLeft = "0";
+			}
+			tog = !tog
+		}
+
 		//* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
 		var dropdown = document.getElementsByClassName("dropdown-btn");
 		var i;
