@@ -44,6 +44,7 @@ character.stats = {
   flying = false, --boolean
   luck = 1.00 -- float
 }
+
 --[[
 	Replace these stats with the values you want, make sure you use the correct type.
 
@@ -98,7 +99,7 @@ character.items = {
 	You can find a list of avaliable CollectibleType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType/?q=coll
 ]]
 
-character.trinket = TrinketType.TRINKET_SWALLOWED_PENNY
+character.trinket = TrinketType.TRINKET_NULL
 --[[
 	Use the above line to give the character a starting trinket.
 	If you do not want a starting trinket, put
@@ -168,7 +169,6 @@ tainted.card = Card.CARD_FOOL
 tainted.pill = false
 
 tainted.charge = -1
-
 
 --[[
 	--MORE INFO:--
