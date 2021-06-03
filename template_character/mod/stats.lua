@@ -12,6 +12,11 @@ local mt = {
     name = ""
   }
 }
+mt.__index.AddItem = function(id, costume)
+  costume = costume or false
+  table.insert(mt.__index.items, {id, costume})
+end
+
 local stats = {
   default = {},
   tainted = {}
@@ -26,7 +31,7 @@ local tainted = stats.tainted
 	Try looking at MORE_INFO at the bottom of the page if you get stuck :)
 ]]
 
-stats.ModName = "ModName" -- Replace ModName with a unique mod name.
+stats.ModName = "Test" -- Replace ModName with a unique mod name.
 
 --[[
 	REGULAR CHARACTER SETUP
@@ -82,19 +87,20 @@ character.costume = "character_alpha_cat_ears"
 	NOTE: your anm2 must be in ".\resources\gfx\characters" or it will not be found.
 ]]
 
-character.items = {
-  {CollectibleType.COLLECTIBLE_SAD_ONION},
-  {CollectibleType.COLLECTIBLE_CRICKETS_HEAD, true}
-}
+character.AddItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and give me the costume.
+character.AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, false) -- I want Sad Onion and give me the costume.
+character.AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, true) -- I want Sad Onion and remove the costume
 --[[
-	Fill in the above table with all of your character's starting items.
-	you can add a comma, and put "true" if you want to remove the costume that comes with that item.
-	  
-	IF you do not want to add any items to this character, put
-	character.items = {}
-	  
-	For each item, use this format:
-	{int COLLECTIBLETYPE, boolean REMOVECOSTUME}
+  For every item you want to add to your character repeat this line.
+  character.AddItem(ItemID, RemoveCostume)
+  
+  ItemID is the item ID you want to add, you can use the CollectibleType Enum to make this easier (like shown in the example)
+  
+  RemoveCostume is if you want to remove that items' costume.
+  Put true if you want to remove it.
+  Put false or just don't include it if you want to keep the costume.
+  
+  If you do not want to add any items to this character, just remove all of these lines.
 	  
 	You can find a list of avaliable CollectibleType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType/?q=coll
 ]]
@@ -160,8 +166,6 @@ tainted.stats = {
 
 tainted.costume = ""
 
-tainted.items = {}
-
 tainted.trinket = TrinketType.TRINKET_SWALLOWED_PENNY
 
 tainted.card = Card.CARD_FOOL
@@ -169,6 +173,8 @@ tainted.card = Card.CARD_FOOL
 tainted.pill = false
 
 tainted.charge = -1
+
+tainted.AddItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and give me the costume.
 
 --[[
 	--MORE INFO:--

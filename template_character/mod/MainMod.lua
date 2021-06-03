@@ -83,7 +83,7 @@
           local item = items[i]
           if type(item) ~= "table" then
             out("Item Entry #", i, " is not in the correct format!")
-            out("Please make sure its in {ITEMID, REMOVECOSTUME}")
+            out("Please make sure its in the format AddItem(ITEMID, REMOVECOSTUME)")
           else
             if (item[1] == -1) then
               out("Item Entry #", i, " is not found!")
