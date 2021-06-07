@@ -13,7 +13,6 @@ if (ogerr) then
   local sp = Sprite()
   sp:Load("gfx/ui/main menu/bestiarymenu.anm2")
   sp:Play("Idle")
-
   local function GetScreenSize() -- By Kilburn himself.
     local room = Game():GetRoom()
     local pos = Isaac.WorldToScreen(zero) - room:GetRenderScrollOffset() - Game().ScreenShakeOffset

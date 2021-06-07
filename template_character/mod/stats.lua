@@ -12,9 +12,9 @@ local mt = {
     name = ""
   }
 }
-mt.__index.AddItem = function(id, costume)
+function mt.__index:AddItem(id, costume)
   costume = costume or false
-  table.insert(mt.__index.items, {id, costume})
+  table.insert(self.items, {id, costume})
 end
 
 local stats = {
@@ -26,12 +26,15 @@ setmetatable(stats.tainted, mt)
 local character = stats.default
 local tainted = stats.tainted
 
+character.items = {}
+tainted.items = {}
+
 --[[
 	CONFIG (THIS WHERE YOU CAN CHANGE STUFF)
 	Try looking at MORE_INFO at the bottom of the page if you get stuck :)
 ]]
 
-stats.ModName = "Test" -- Replace ModName with a unique mod name.
+stats.ModName = "ModName" -- Replace ModName with a unique mod name.
 
 --[[
 	REGULAR CHARACTER SETUP
@@ -87,12 +90,12 @@ character.costume = "character_alpha_cat_ears"
 	NOTE: your anm2 must be in ".\resources\gfx\characters" or it will not be found.
 ]]
 
-character.AddItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and give me the costume.
-character.AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, false) -- I want Sad Onion and give me the costume.
-character.AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, true) -- I want Sad Onion and remove the costume
+character:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and give me the costume.
+character:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, false) -- I want Sad Onion and give me the costume.
+character:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, true) -- I want Sad Onion and remove the costume
 --[[
   For every item you want to add to your character repeat this line.
-  character.AddItem(ItemID, RemoveCostume)
+  character:AddItem(ItemID, RemoveCostume)
   
   ItemID is the item ID you want to add, you can use the CollectibleType Enum to make this easier (like shown in the example)
   
@@ -174,7 +177,7 @@ tainted.pill = false
 
 tainted.charge = -1
 
-tainted.AddItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and give me the costume.
+tainted:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and give me the costume.
 
 --[[
 	--MORE INFO:--
