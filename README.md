@@ -1,5 +1,6 @@
 # Isaac Templates
-A collection of mod templates for The Binding of Isaac: Rebirth Repentance.
+A collection of mod templates for The Binding of Isaac: Rebirth.
+**THESE TEMPLATES ARE FOR REPENTANCE ONLY**
 
 **Each folder is a mod, they have nothing to do with one another.**
 **DOCS IS NOT A MOD, it is the GitHub page for this repo.**
