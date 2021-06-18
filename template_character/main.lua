@@ -72,8 +72,12 @@ if (ogerr) then
     out("Holding R works")
   else
     out("Unexpected error occured, please open log.txt!")
+	out("")
+	out(ogerr)
   end
+  Isaac.DebugString("-- START OF CHARACTER TEMPLATE ERROR --")
   Isaac.DebugString(ogerr)
+  Isaac.DebugString("-- END OF CHARACTER TEMPLATE ERROR --")
   
   local room = Game():GetRoom()
   
