@@ -58,17 +58,21 @@ if (ogerr) then
   end)
 
   local str = ogerr:match(".-(%w+%.lua:%d+:.%w+.*)")
-  local file = str:match("%w+%.lua")
-  local line = str:match(":(%d+):")
-  local err = str:match(":%d+: (.*)")
-  out("Character Template has hit an error:")
-  out("File:", file)
-  out("Line:", line)
-  out("Error:", err)
-  out("For full error report, open log.txt")
-  out("")
-  out("Reload the mod, then start a new run")
-  out("Holding R works")
+  if (str) then
+    local file = str:match("%w+%.lua")
+    local line = str:match(":(%d+):")
+    local err = str:match(":%d+: (.*)")
+    out("Character Template has hit an error:")
+    out("File:", file)
+    out("Line:", line)
+    out("Error:", err)
+    out("For full error report, open log.txt")
+    out("")
+    out("Reload the mod, then start a new run")
+    out("Holding R works")
+  else
+    out("Unexpected error occured, please open log.txt!")
+  end
   Isaac.DebugString(ogerr)
   
   local room = Game():GetRoom()
