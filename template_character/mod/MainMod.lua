@@ -61,7 +61,7 @@ do
   local function costume(costume)
     local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. costume .. ".anm2")
     if (cost == -1) then
-      out("No costume found by the name of", costumes)
+      out("No costume found by the name of", costume)
     end
   end
 
