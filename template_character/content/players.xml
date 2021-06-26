@@ -7,6 +7,10 @@
 	bSkinParent="Alpha"/>
 </players>
 <!--
+	IMPORTANT:
+	THE BASE GAME DOES NOT USE DIFFERENT CHARACTER NAMES FOR THE TAINTED AND NON-TAINTED VARIANT OF A CHARACTER.
+	THIS TEMPLATE SIMPLY OFFERS TO THE ABILITY TO DO SO. IT IS HIGHLY RECOMMENDED TO NAME BOTH CHARACTERS THE SAME THING!
+
 	this xml is pre-setup for you, but I will still explain what everything does.
 	
 	the root <players> is what the game uses to tell the game that this is a list of players.

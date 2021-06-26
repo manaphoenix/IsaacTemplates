@@ -153,6 +153,10 @@ do
   if (stats.ModName:match("ModName")) then
     out("Mod Name must be unique!")
   end
+  
+  if (stats.default.name == "Alpha" or stats.tainted.name == "Omega") then
+    out("You must change the character name(s)!")
+  end
 
   -- checker
 
