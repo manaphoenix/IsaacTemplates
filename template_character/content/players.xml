@@ -1,9 +1,9 @@
 <players nameimageroot="gfx/ui/boss/" portraitroot="gfx/ui/stage/" root="gfx/characters/costumes/">
 	<player hp="2" bombs="1" name="Alpha"
-	nameimage="playername_template.png" portrait="playerportrait_template.png" skin="character_template.png" skincolor="-1"
+	nameimage="playername_template.png" portrait="playerportrait_template.png" skin="character_template.png" skinColor="-1"
 	/>
 	<player hp="2" bombs="1" name="Omega"
-	nameimage="playername_template_b.png" portrait="playerportrait_template_b.png" skin="character_template_b.png" skincolor="-1"
+	nameimage="playername_template_b.png" portrait="playerportrait_template_b.png" skin="character_template_b.png" skinColor="-1"
 	bSkinParent="Alpha"/>
 </players>
 <!--
