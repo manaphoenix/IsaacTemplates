@@ -58,6 +58,7 @@ if (ogerr) then
   end)
 
   local str = ogerr:match(".-(%w+%.lua:%d+:.%w+.*)")
+  local stat = require("mod/stats.lua")
   if (str) then
     local file = str:match("%w+%.lua")
     local line = str:match(":(%d+):")
@@ -70,6 +71,10 @@ if (ogerr) then
     out("")
     out("Reload the mod, then start a new run")
     out("Holding R works")
+    out("")
+    if (stat) then
+      out("Mod Name: " .. stat.ModName)
+    end
   else
     out("Unexpected error occured, please open log.txt!")
 	out("")

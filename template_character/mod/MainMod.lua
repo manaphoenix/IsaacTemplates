@@ -167,6 +167,7 @@ do
     for i = 1, #str do
       table.insert(s, str[i])
     end
+    table.insert(str, "ModName: " .. stats.ModName)
     str = s
 
     local mod = RegisterMod("TemplateCharacterError", 1)
