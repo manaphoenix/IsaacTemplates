@@ -71,7 +71,7 @@ character.stats = {
 
 	Tear Flags:
 	For multiple tear effects, you must seperate each tear flag using the '|' (bitwise or) symbol.
-	You can find a list of TearFlags here: https://wofsauge.github.io/IsaacDocs/rep/enums/TearFlags/?q=tear
+	You can find a list of TearFlags here: https://wofsauge.github.io/IsaacDocs/rep/enums/TearFlags.html?h=tears
 	Write tearflags = TearFlags.TEAR_NORMAL, if you don't want your character to have any innate tear effects.
 
 	NOTE: Range is currently bugged in the API, changing it will do nothing :(
@@ -105,7 +105,7 @@ character:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, true) -- I want Sad Oni
   
   If you do not want to add any items to this character, just remove all of these lines.
 	  
-	You can find a list of avaliable CollectibleType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType/?q=coll
+	You can find a list of avaliable CollectibleType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType?q=coll
 ]]
 
 character.trinket = TrinketType.TRINKET_NULL
@@ -114,7 +114,7 @@ character.trinket = TrinketType.TRINKET_NULL
 	If you do not want a starting trinket, put
 	character.trinket = TrinketType.TRINKET_NULL
 
-	You can find a list of avaliable TrinketType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType/?q=trinket
+	You can find a list of avaliable TrinketType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType?q=trinket
 ]]
 
 character.card = Card.CARD_FOOL
@@ -124,7 +124,7 @@ character.card = Card.CARD_FOOL
 	If you do not want a starting Card, put
 	character.card = Card.CARD_NULL
 
-	You can find a list of avaliable Cards here: https://wofsauge.github.io/IsaacDocs/rep/enums/Card/?q=card
+	You can find a list of avaliable Cards here: https://wofsauge.github.io/IsaacDocs/rep/enums/Card?q=card
 
 	NOTE: Exclusive, you cannot give both a Card and a Pill
 ]]
@@ -134,7 +134,7 @@ character.pill = false
 	Use the above line to give the character a starting Pill.
 	If you do not want a starting Pill, put false
 
-	You can find a list of avaliable PillEffect's here: https://wofsauge.github.io/IsaacDocs/rep/enums/PillEffect/?q=pill
+	You can find a list of avaliable PillEffect's here: https://wofsauge.github.io/IsaacDocs/rep/enums/PillEffect?q=pill
 
 	NOTE: Exclusive, you cannot give both a card and a pill
 ]]
@@ -201,10 +201,10 @@ tainted:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and g
 	
 	--Item Info:--
 	For vanilla items, here are links to vanilla Enumerators:
-	Vanilla Items: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType/
-	Trinkets: https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType/
-	Cards: https://wofsauge.github.io/IsaacDocs/rep/enums/Card/
-	Pills: https://wofsauge.github.io/IsaacDocs/rep/enums/PillColor/
+	Vanilla Items: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType.html
+	Trinkets: https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType.html
+	Cards: https://wofsauge.github.io/IsaacDocs/rep/enums/Card.html
+	Pills: https://wofsauge.github.io/IsaacDocs/rep/enums/PillColor.html
 
 	For modded items, use these functions instead:
 	Isaac.GetItemIdByName("CUSTOMITEM")
