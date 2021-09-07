@@ -1,6 +1,6 @@
 -- Imports --
-local stats = include("mod/stats")
-local imports = include("mod/includes")
+local stats = require("mod/stats")
+local imports = require("mod/imports")
 
 do
   -- Stupid Person Checking
@@ -153,7 +153,7 @@ do
   if (stats.ModName:match("ModName")) then
     out("Mod Name must be unique!")
   end
-  
+
   if (stats.default.name == "Alpha" or stats.tainted.name == "Omega") then
     out("You must change the character name(s)!")
   end
