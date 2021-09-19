@@ -152,6 +152,7 @@ do
 
   if (stats.ModName:match("ModName")) then
     out("Mod Name must be unique!")
+    out("Check line 37 of stats.lua")
   end
 
   if (stats.default.name == "Alpha" or stats.tainted.name == "Omega") then
