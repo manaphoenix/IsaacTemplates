@@ -1,180 +1,136 @@
 -- Imports --
-local stats = require("mod/stats")
-local imports = require("mod/imports")
+local modName, path, loadFile, stats, imports, useCustomErrorChecker = table.unpack(...)
 
 do
-  -- Stupid Person Checking
-  local f = Font()
-  f:Load("font/terminus.fnt")
-  local str = {}
-  local x = 0
-  local zero = Vector.Zero
+  if (useCustomErrorChecker) then
+    local errorChecker = loadFile("lib/cerror")
 
-  local sp = Sprite()
-  sp:Load("gfx/ui/main menu/bestiarymenu.anm2")
-  sp:Play("Idle")
-
-  local function GetScreenSize() -- By Kilburn himself.
-    local room = Game():GetRoom()
-    local pos = Isaac.WorldToScreen(zero) - room:GetRenderScrollOffset() - Game().ScreenShakeOffset
-
-    local rx = pos.X + 60 * 26 / 40
-    local ry = pos.Y + 140 * (26 / 40)
-
-    return rx * 2 + 13 * 26, ry * 2 + 7 * 26
-  end
-
-  posx, posy = GetScreenSize()
-
-  local pos = Vector(posx / 4, - 20)
-
-  local function out(...)
-    local s, args = "", table.pack(...)
-    for i = 1, args.n do
-      s = s .. tostring(args[i] or nil) .. " "
-    end
-    table.insert(str, s)
-  end
-
-  local function render()
-    x = 45
-    sp:RenderLayer(1, pos)
-    for i = 1, #str do
-      f:DrawStringScaled(str[i], posx / 3, x, 0.5, 0.5, KColor(1.0, 0.58039215686275, 0.58039215686275, 1), 0, true)
-      x = x + 8
-    end
-  end
-
-  -- Utilities
-  local function checkName(name, tainted)
-    if (not name) then
-      out("No character name found!")
-    else
-      local c = Isaac.GetPlayerTypeByName(name, tainted)
-      if (c == -1) then
-        out("No Character Found by the name of", name)
-        out("Double check your players.xml file!")
+    -- Utilities
+    local function checkName(name, tainted)
+      if (not name) then
+        errorChecker.out("No character name found!")
+      else
+        local c = Isaac.GetPlayerTypeByName(name, tainted)
+        if (c == -1) then
+          errorChecker.out("No Character Found by the name of", name)
+          errorChecker.out("Double check your players.xml file!")
+        end
       end
     end
-  end
 
-  local function costume(costume)
-    local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. costume .. ".anm2")
-    if (cost == -1) then
-      out("No costume found by the name of", costume)
-    end
-  end
-
-  local function checkCostume(costumes)
-    if costumes == "" then return end
-
-    if type(costumes) == "table" then
-      for i = 1, #costumes do
-        costume(costumes[i])
+    local function costume(costume)
+      local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. costume .. ".anm2")
+      if (cost == -1) then
+        errorChecker.out("No costume found by the name of", costume)
       end
-    else
-      costume(costumes)
     end
-  end
 
-  local function checkItems(items)
-    if (#items > 0) then
-      for i = 1, #items do
-        local item = items[i]
-        if type(item) ~= "table" then
-          out("Item Entry #", i, " is not in the correct format!")
-          out("Please make sure its in the format AddItem(ITEMID, REMOVECOSTUME)")
-        else
-          if (item[1] == -1) then
-            out("Item Entry #", i, " is not found!")
-            out("This is in the modded item format")
-            out("Double check your items.xml and stats.lua to ensure the name matches")
+    local function checkCostume(costumes)
+      if costumes == "" then return end
+
+      if type(costumes) == "table" then
+        for i = 1, #costumes do
+          costume(costumes[i])
+        end
+      else
+        costume(costumes)
+      end
+    end
+
+    local function checkItems(items)
+      if (#items > 0) then
+        for i = 1, #items do
+          local item = items[i]
+          if type(item) ~= "table" then
+            errorChecker.out("Item Entry #", i, " is not in the correct format!")
+            errorChecker.out("Please make sure its in the format AddItem(ITEMID, REMOVECOSTUME)")
+          else
+            if (item[1] == -1) then
+              errorChecker.out("Item Entry #", i, " is not found!")
+              errorChecker.out("This is in the modded item format")
+              errorChecker.out("Double check your items.xml and stats.lua to ensure the name matches")
+            end
           end
         end
       end
     end
-  end
 
-  local function checkGeneric(val, name, def)
-    if val == nil then
-      out("Invalid Entry for", name, "Are you sure your typing it right?")
+    local function checkGeneric(val, name, def)
+      if val == nil then
+        errorChecker.out("Invalid Entry for", name, "Are you sure your typing it right?")
+      end
+      if def and val == -1 then
+        errorChecker.out("Entry", name, "is not found!")
+        errorChecker.out("This is in the modded format")
+        errorChecker.out("Double check your spelling it right!")
+      end
     end
-    if def and val == -1 then
-      out("Entry", name, "is not found!")
-      out("This is in the modded format")
-      out("Double check your spelling it right!")
+
+    -- Default
+    errorChecker.out("Regular Character Checker:")
+
+    local character = stats.default
+
+    checkName(character.name, false)
+
+    checkCostume(character.costume)
+
+    checkItems(character.items)
+
+    checkGeneric(character.trinket, "trinket", - 1)
+
+    checkGeneric(character.card, "card", - 1)
+
+    checkGeneric(character.pill, "pill", - 1)
+
+    checkGeneric(character.charge, "charge")
+    
+    if (errorChecker.getErrors() == 1) then
+      errorChecker.clearErrors()
     end
-  end
 
-  -- Default
-  out("Regular Character Checker:")
+    -- Tainted
+    errorChecker.out("Tainted Character Checker:")
 
-  local character = stats.default
+    character = stats.tainted
 
-  checkName(character.name, false)
+    checkName(character.name, true)
 
-  checkCostume(character.costume)
+    checkCostume(character.costume)
 
-  checkItems(character.items)
+    checkItems(character.items)
 
-  checkGeneric(character.trinket, "trinket", - 1)
+    checkGeneric(character.trinket, "trinket", - 1)
 
-  checkGeneric(character.card, "card", - 1)
+    checkGeneric(character.card, "card", - 1)
 
-  checkGeneric(character.pill, "pill", - 1)
+    checkGeneric(character.pill, "pill", - 1)
 
-  checkGeneric(character.charge, "charge")
-
-  str = #str == 1 and {} or str
-
-  -- Tainted
-  out("Tainted Character Checker:")
-
-  character = stats.tainted
-
-  checkName(character.name, true)
-
-  checkCostume(character.costume)
-
-  checkItems(character.items)
-
-  checkGeneric(character.trinket, "trinket", - 1)
-
-  checkGeneric(character.card, "card", - 1)
-
-  checkGeneric(character.pill, "pill", - 1)
-
-  checkGeneric(character.charge, "charge")
-
-  str = #str == 1 and {} or str
-
-  -- Mod Name Check
-
-  if (stats.ModName:match("ModName")) then
-    out("Mod Name must be unique!")
-    out("Check line 37 of stats.lua")
-  end
-
-  if (stats.default.name == "Alpha" or stats.tainted.name == "Omega") then
-    out("You must change the character name(s)!")
-  end
-
-  -- checker
-
-  if (#str > 0) then
-    local s = {
-      "Template Character PreCheck hit an Error:"
-    }
-    for i = 1, #str do
-      table.insert(s, str[i])
+    checkGeneric(character.charge, "charge")
+    
+    if (errorChecker.getErrors() == 1) then
+      errorChecker.clearErrors()
     end
-    table.insert(str, "ModName: " .. stats.ModName)
-    str = s
 
-    local mod = RegisterMod("TemplateCharacterError", 1)
-    mod:AddCallback(ModCallbacks.MC_POST_RENDER, render)
+    if (stats.default.name == "Alpha" or stats.tainted.name == "Omega") then
+      errorChecker.out("You must change the character name(s)!")
+    end
 
-    mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, IsContin)
+    -- checker
+
+    if (errorChecker.getErrors() > 0) then
+      errorChecker.addTitle(modName .. " PreCheck hit an Error:")
+
+      errorChecker.mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, IsContin)
+        local room = Game():GetRoom()
+
+        for i = 0, 8 do
+          room:RemoveDoor(i)
+        end
+
+        Game():GetHUD():SetVisible(false)
+      end)
+
       local room = Game():GetRoom()
 
       for i = 0, 8 do
@@ -182,17 +138,9 @@ do
       end
 
       Game():GetHUD():SetVisible(false)
-    end)
 
-    local room = Game():GetRoom()
-
-    for i = 0, 8 do
-      room:RemoveDoor(i)
+      goto EndOfFile
     end
-
-    Game():GetHUD():SetVisible(false)
-
-    goto EndOfFile
   end
 end
 

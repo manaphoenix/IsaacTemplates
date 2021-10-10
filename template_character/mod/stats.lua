@@ -34,8 +34,6 @@ tainted.items = {}
 	Try looking at MORE_INFO at the bottom of the page if you get stuck :)
 ]]
 
-stats.ModName = "ModName" -- Replace ModName with a unique mod name.
-
 --[[
 	REGULAR CHARACTER SETUP
 ]]
