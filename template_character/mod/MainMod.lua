@@ -146,7 +146,7 @@ end
 
 
 -- Init --
-local mod = RegisterMod(stats.ModName, 1)
+local mod = RegisterMod(modName, 1)
 
 if (type(imports) == "table") then
   imports:Init(mod)
