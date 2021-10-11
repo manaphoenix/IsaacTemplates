@@ -13,7 +13,8 @@ end
 local status, ogerr = pcall(function()
   local stats = loadFile("mod/stats")
   local imports = loadFile("mod/imports")
-  loadFile("mod/MainMod",{modName, path, loadFile, stats, imports, useCustomErrorChecker})
+--  loadFile("mod/MainMod",{modName, path, loadFile, stats, imports, useCustomErrorChecker})
+error("Temp Error")
 end)
 
 if (ogerr) then
@@ -41,11 +42,15 @@ if (ogerr) then
       errorChecker.out("Line:", line)
       errorChecker.out("Error:", err)
       errorChecker.out("For full error report, open log.txt")
+      errorChecker.out("Log Root: C:\\Users\\<YOUR USER>\\Documents\\")
+      errorChecker.out("My Games\\Binding of Isaac Repentance\\log.txt")
       errorChecker.out("")
       errorChecker.out("Reload the mod, then start a new run")
       errorChecker.out("Holding R works")
     else
       errorChecker.out("Unexpected error occured, please open log.txt!")
+      errorChecker.out("Log Root: C:\\Users\\<YOUR USER>\\Documents\\")
+      errorChecker.out("My Games\\Binding of Isaac Repentance\\log.txt")
       errorChecker.out("")
       errorChecker.out(ogerr)
     end
@@ -64,6 +69,7 @@ if (ogerr) then
     error()
   else
     Isaac.ConsoleOutput(modName .. " has hit an error, see Log.txt for more info\n")
+    Isaac.ConsoleOutput("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt")
     Isaac.DebugString("-- START OF " .. modName:upper() .. " ERROR --")
     Isaac.DebugString(ogerr)
     Isaac.DebugString("-- END OF " .. modName:upper() .. " ERROR --")
