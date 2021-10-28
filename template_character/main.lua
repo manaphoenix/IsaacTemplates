@@ -19,6 +19,7 @@ end)
 if (ogerr) then
   if (useCustomErrorChecker) then
     local errorChecker = loadFile("lib/cerror")
+    errorChecker.registerError()
 
     errorChecker.mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, IsContin)
       local room = Game():GetRoom()

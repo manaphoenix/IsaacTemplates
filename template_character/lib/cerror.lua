@@ -69,8 +69,10 @@ local function render()
   end
 end
 
-local mod = RegisterMod("TemplateCharacterError", 1)
-module.mod = mod
-mod:AddCallback(ModCallbacks.MC_POST_RENDER, render)
+function module.registerError()
+  local mod = RegisterMod("TemplateCharacterError", 1)
+  module.mod = mod
+  mod:AddCallback(ModCallbacks.MC_POST_RENDER, render)
+end
 
 return module

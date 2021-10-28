@@ -119,6 +119,7 @@ do
     -- checker
 
     if (errorChecker.getErrors() > 0) then
+      errorChecker.registerError()
       errorChecker.addTitle(modName .. " PreCheck hit an Error:")
 
       errorChecker.mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, IsContin)
