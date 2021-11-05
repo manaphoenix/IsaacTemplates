@@ -1,6 +1,4 @@
 -- This file control the custom error checker.
-local args = {...}
-print(args[1])
 local module = {}
 local f = Font()
 f:Load("font/terminus.fnt")
@@ -24,9 +22,9 @@ local function GetScreenSize() -- By Kilburn himself.
     return rx * 2 + 13 * 26, ry * 2 + 7 * 26
 end
 
-posx, posy = GetScreenSize()
+Posx, Posy = GetScreenSize()
 
-local pos = Vector(posx / 4, -20)
+local pos = Vector(Posx / 4, -20)
 
 function module.out(...)
     local s, args = "", table.pack(...)
@@ -52,7 +50,7 @@ local function render()
     x = 45
     sp:RenderLayer(1, pos)
     for i = 1, #str do
-        f:DrawStringScaled(str[i], posx / 3, x, 0.5, 0.5, col, 0, true)
+        f:DrawStringScaled(str[i], Posx / 3, x, 0.5, 0.5, col, 0, true)
         x = x + 8
     end
 end
