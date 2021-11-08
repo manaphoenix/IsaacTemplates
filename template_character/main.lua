@@ -27,8 +27,6 @@ if (ogerr) then
             local room = Game():GetRoom()
 
             for i = 0, 8 do room:RemoveDoor(i) end
-
-            Game():GetHUD():SetVisible(false)
         end)
 
         local str = errorChecker.formatError(ogerr)
@@ -37,22 +35,21 @@ if (ogerr) then
             local file = str:match("%w+%.lua")
             local line = str:match(":(%d+):")
             local err = str:match(":%d+: (.*)")
-            errorChecker.out(modName .. " has hit an error:")
-            errorChecker.out("File:", file)
-            errorChecker.out("Line:", line)
-            errorChecker.out("Error:", err)
-            errorChecker.out("For full error report, open log.txt")
-            errorChecker.out("Log Root: C:\\Users\\<YOUR USER>\\Documents\\")
-            errorChecker.out("My Games\\Binding of Isaac Repentance\\log.txt")
-            errorChecker.out("")
-            errorChecker.out("Reload the mod, then start a new run")
-            errorChecker.out("Holding R works")
+            errorChecker.setMod(modName)
+            errorChecker.setFile(file)
+            errorChecker.setLine(line)
+            errorChecker.printError("Error:", err)
+            errorChecker.printError("")
+            errorChecker.printError("For full error report, open log.txt")
+            errorChecker.printError("")
+            errorChecker.printError("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt")
+            errorChecker.printError("")
+            errorChecker.printError("Reload the mod, then start a new run, Holding R works")
         else
-            errorChecker.out("Unexpected error occured, please open log.txt!")
-            errorChecker.out("Log Root: C:\\Users\\<YOUR USER>\\Documents\\")
-            errorChecker.out("My Games\\Binding of Isaac Repentance\\log.txt")
-            errorChecker.out("")
-            errorChecker.out(ogerr)
+            errorChecker.printError("Unexpected error occured, please open log.txt!")
+            errorChecker.printError("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt")
+            errorChecker.printError("")
+            errorChecker.printError(ogerr)
         end
         Isaac.DebugString("-- START OF " .. modName:upper() .. " ERROR --")
         Isaac.DebugString(ogerr)
@@ -61,8 +58,6 @@ if (ogerr) then
         local room = Game():GetRoom()
 
         for i = 0, 8 do room:RemoveDoor(i) end
-
-        Game():GetHUD():SetVisible(false)
 
         error()
     else

@@ -9,12 +9,12 @@ do
         -- Utilities
         local function checkName(name, tainted)
             if (not name) then
-                errorChecker.out("No character name found!")
+                errorChecker.printError("No character name found!")
             else
                 local c = Isaac.GetPlayerTypeByName(name, tainted)
                 if (c == -1) then
-                    errorChecker.out("No Character Found by the name of", name)
-                    errorChecker.out("Double check your players.xml file!")
+                    errorChecker.printError("No Character Found by the name of", name)
+                    errorChecker.printError("Double check your players.xml file!")
                 end
             end
         end
@@ -23,7 +23,7 @@ do
             local cost = Isaac.GetCostumeIdByPath(
                              "gfx/characters/" .. costume .. ".anm2")
             if (cost == -1) then
-                errorChecker.out("No costume found by the name of", costume)
+                errorChecker.printError("No costume found by the name of", costume)
             end
         end
 
@@ -42,15 +42,15 @@ do
                 for i = 1, #items do
                     local item = items[i]
                     if type(item) ~= "table" then
-                        errorChecker.out("Item Entry #", i,
+                        errorChecker.printError("Item Entry #", i,
                                          " is not in the correct format!")
-                        errorChecker.out(
+                        errorChecker.printError(
                             "Please make sure its in the format AddItem(ITEMID, REMOVECOSTUME)")
                     else
                         if (item[1] == -1) then
-                            errorChecker.out("Item Entry #", i, " is not found!")
-                            errorChecker.out("This is in the modded item format")
-                            errorChecker.out(
+                            errorChecker.printError("Item Entry #", i, " is not found!")
+                            errorChecker.printError("This is in the modded item format")
+                            errorChecker.printError(
                                 "Double check your items.xml and stats.lua to ensure the name matches")
                         end
                     end
@@ -60,18 +60,18 @@ do
 
         local function checkGeneric(val, name, def)
             if val == nil then
-                errorChecker.out("Invalid Entry for", name,
+                errorChecker.printError("Invalid Entry for", name,
                                  "Are you sure your typing it right?")
             end
             if def and val == -1 then
-                errorChecker.out("Entry", name, "is not found!")
-                errorChecker.out("This is in the modded format")
-                errorChecker.out("Double check your spelling it right!")
+                errorChecker.printError("Entry", name, "is not found!")
+                errorChecker.printError("This is in the modded format")
+                errorChecker.printError("Double check your spelling it right!")
             end
         end
 
         -- Default
-        errorChecker.out("Regular Character Checker:")
+        errorChecker.printError("Regular Character Checker:")
 
         local character = stats.default
 
@@ -89,12 +89,12 @@ do
 
         checkGeneric(character.charge, "charge")
 
-        if (errorChecker.getErrors() == 1) then
+        if (errorChecker.getErrorCount() == 1) then
             errorChecker.clearErrors()
         end
 
         -- Tainted
-        errorChecker.out("Tainted Character Checker:")
+        errorChecker.printError("Tainted Character Checker:")
 
         character = stats.tainted
 
@@ -112,35 +112,32 @@ do
 
         checkGeneric(character.charge, "charge")
 
-        if (errorChecker.getErrors() == 1) then
+        if (errorChecker.getErrorCount() == 1) then
             errorChecker.clearErrors()
         end
 
         if (stats.default.name == "Alpha" or stats.tainted.name == "Omega") then
-            errorChecker.out("You must change the character name(s)!")
+            errorChecker.printError("You must change the character(s) name from the default!")
+            errorChecker.printError("Name: " .. stats.default.name)
+            errorChecker.printError("Name: " .. stats.tainted.name)
         end
 
         -- checker
-
-        if (errorChecker.getErrors() > 0) then
+        if (errorChecker.getErrorCount() > 0) then
             errorChecker.registerError()
-            errorChecker.addTitle(modName .. " PreCheck hit an Error:")
+            errorChecker.setMod(modName)
+            errorChecker.setFile("stats.lua")
 
             errorChecker.mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED,
                                          function(_, IsContin)
                 local room = Game():GetRoom()
 
                 for i = 0, 8 do room:RemoveDoor(i) end
-
-                Game():GetHUD():SetVisible(false)
             end)
 
             local room = Game():GetRoom()
 
             for i = 0, 8 do room:RemoveDoor(i) end
-
-            Game():GetHUD():SetVisible(false)
-
             goto EndOfFile
         end
     end

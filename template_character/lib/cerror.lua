@@ -1,15 +1,32 @@
 -- This file control the custom error checker.
 local module = {}
-local f = Font()
-f:Load("font/terminus.fnt")
-local str = {}
-local x = 0
+local errors = {}
+local xOffset = 0
 local zero = Vector.Zero
-local col = KColor(1.0, 0.58039215686275, 0.58039215686275, 1)
+local errCol = KColor(0.847058824, 0.31372549, 0.31372549, 1)
+local warnCol = KColor(0.584313725, 0.858823529, 0.490196078, 1)
+local wrapLen = 33
+local noteWrap = 18
+local HUD = Game():GetHUD()
+local notes = {Mod = "", File = "", Line = ""}
 
-local sp = Sprite()
-sp:Load("gfx/ui/main menu/bestiarymenu.anm2")
-sp:Play("Idle")
+local text = Font()
+text:Load("font/terminus.fnt")
+
+local bg = Sprite()
+bg:Load("gfx/ui/genericpopup.anm2")
+bg:Play("Idle")
+
+local mainPaper = Sprite()
+mainPaper:Load("gfx/ui/main menu/bestiarymenu.anm2")
+mainPaper:Play("Idle")
+mainPaper.Offset = Vector(-23, -56)
+
+local sidePaper = Sprite()
+sidePaper:Load("gfx/ui/main menu/challengemenu.anm2")
+sidePaper:Play("Idle")
+sidePaper.Offset = Vector(-148 / 2, -841 / 2)
+sidePaper.Scale = Vector(0.5, 0.5)
 
 local function GetScreenSize() -- By Kilburn himself.
     local room = Game():GetRoom()
@@ -24,41 +41,99 @@ end
 
 Posx, Posy = GetScreenSize()
 
-local pos = Vector(Posx / 4, -20)
+local errorPos = Vector(Posx / 2, 40)
+local notePos = Vector(Posx / 8, 40)
+local errorOffset = errorPos.X
+local noteOffset = Posx / 7.75
+local scale = Vector(0.75, 0.75)
 
-function module.out(...)
+function module.printError(...)
     local s, args = "", table.pack(...)
     for i = 1, args.n do s = s .. tostring(args[i] or nil) .. " " end
-    table.insert(str, s)
+
+    local wrap = module.wordWrap(s)
+    for i = 1, #wrap do table.insert(errors, wrap[i]) end
 end
+
+function module.wordWrap(txt, useNote)
+    local wrap = {}
+    local cur = ""
+    local tChars = 0
+    local wrapper = useNote and noteWrap or wrapLen
+    for match in txt:gmatch(".-%s") do
+        tChars = tChars + match:len()
+        if (cur:len() + match:len()) < wrapper then
+            cur = cur .. match
+        else
+            table.insert(wrap, cur)
+            cur = match
+        end
+    end
+    local endStr = txt:sub(tChars + 1)
+    if (cur:len() + endStr:len()) < wrapper then
+        cur = cur .. endStr
+    else
+        table.insert(wrap, cur)
+        cur = endStr
+    end
+    table.insert(wrap, cur)
+    return wrap
+end
+
+function module.truncate(txt, useNote)
+    local wrapper = useNote and noteWrap or wrapLen
+    if (txt:len() > wrapper) then
+        return txt:sub(1, wrapper - 3) .. "..."
+    else
+        return txt
+    end
+end
+
+function module.setHUD(state) HUD:SetVisible(state) end
 
 function module.formatError(err) return err:match(".-(%w+%.lua:%d+:.%w+.*)") end
 
-function module.getErrors() return #str end
+function module.getErrorCount() return #errors end
 
-function module.clearErrors() str = {} end
-
-function module.addTitle(inp)
-    local s = {}
-    for i = 1, #str do table.insert(s, str[i]) end
-    str = {}
-    str[1] = inp
-    for i = 1, #s do str[i + 1] = s[i] end
+function module.clearErrors()
+    errors = {};
+    notes = {Mod = "", File = "", Line = ""}
+    module.setHUD(true)
 end
 
+function module.setMod(inp) notes.Mod = inp end
+
+function module.setFile(inp) notes.File = inp end
+
+function module.setLine(inp) notes.Line = inp end
+
 local function render()
-    x = 45
-    sp:RenderLayer(1, pos)
-    for i = 1, #str do
-        f:DrawStringScaled(str[i], Posx / 3, x, 0.5, 0.5, col, 0, true)
-        x = x + 8
+    xOffset = 40
+    bg:RenderLayer(0, zero)
+    mainPaper:RenderLayer(1, errorPos)
+    sidePaper:RenderLayer(29, notePos)
+    for i = 1, #errors do
+        text:DrawStringScaled(errors[i], errorOffset, xOffset, scale.X, scale.Y,
+                              errCol, 0, true)
+        xOffset = xOffset + 10
+    end
+    xOffset = 45
+    for i, v in pairs(notes) do
+        if (v:len() > 0) then
+            local str = i .. ": " .. v
+            str = module.truncate(str, true)
+            text:DrawStringScaled(str, noteOffset, xOffset, scale.X, scale.Y,
+                                  warnCol, 0, true)
+            xOffset = xOffset + 10
+        end
     end
 end
 
 function module.registerError()
-    local mod = RegisterMod("TemplateCharacterError", 1)
+    local mod = RegisterMod("CustomErrorChecker", 1)
     module.mod = mod
     mod:AddCallback(ModCallbacks.MC_POST_RENDER, render)
+    module.setHUD(false)
 end
 
 return module
