@@ -5,36 +5,94 @@
 	<meta charset="utf-8">
 	<title>Template Character Mod</title>
 	<link rel="stylesheet" href="../css/sidenav.css" media="screen" />
+	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 </head>
+<script>
+	function openSlideMenu() {
+		document.getElementById('menu').style.width = '250px';
+		document.getElementById('content').style.marginLeft = '250px';
+	}
+
+	function closeSideMenu() {
+		document.getElementById('menu').style.width = '0px';
+		document.getElementById('content').style.marginLeft = '0px';
+	}
+</script>
+
 
 <body>
+	<div id="content">
+		<nav id="menu" class="nav">
+			<a href="#" class="close" onclick="closeSideMenu()">
+				<i class="fas fa-times"></i>
+			</a>
+			<a href="../index.html">Intro</a>
+			<a href="Playername.html">Playername Image</a>
+			<a href="StagePortrait.html">Stage Portrait</a>
+			<a href="CharacterCostume.html">Character Costume</a>
+			<a href="PlayersXML.html">Players.xml</a>
+			<a href="CharacterMenu.html">Character menu</a>
+			<a href="DeathPortraits.html">Death Portraits</a>
+			<a href="CoopMenu.html">Coop Menu</a>
+			<a href="MainLua.html">Main.lua</a>
+			<a href="Metadata.html">Metadata</a>
+			<a href="Uploading.html">Uploading</a>
+			<a href="Workshop.html">Workshop</a>
+		</nav>
 
-	<!-- Side navigation -->
-	<nav class="sidenav">
-		<a href="../index.html">Intro</a>
-		<a href="Playername.html">Playername Image</a>
-		<a href="StagePortrait.html">Stage Portrait</a>
-		<a href="CharacterCostume.html">Character Costume</a>
-		<a href="PlayersXML.html">Players.xml</a>
-		<a href="CharacterMenu.html">Character menu</a>
-		<a href="DeathPortraits.html">Death Portraits</a>
-		<a href="CoopMenu.html">Coop Menu</a>
-		<a href="MainLua.html">Main.lua</a>
-		<a href="Metadata.html">Metadata</a>
-		<a href="Uploading.html">Uploading</a>
-		<a href="Workshop.html">Workshop</a>
-	</nav>
+		<header>
+			<span class="slide">
+				<a href="#" onclick="openSlideMenu()">
+					<i class="fas fa-bars"></i>
+				</a>
+			</span>
+			<h1>Character Template ReadMe</h1>
+		</header>
+		<section class="tripSection">
+			<figure>
+				<img src="../images/AlphaMainMenu.png" alt="Main Menu">
+				<figcaption>some caption</figcaption>
+			</figure>
+			<figure>
+				<img src="../images/AlphaMainMenu.png" alt="Main Menu">
+				<figcaption>some caption</figcaption>
+			</figure>
+			<figure>
+				<img src="../images/AlphaMainMenu.png" alt="Main Menu">
+				<figcaption>some caption</figcaption>
+			</figure>
+		</section>
+		<section class="sectionContent">
+			<h1>Coop Select Menu</h1>
+			<p>
+				yet again, like all the others, open coop menu.png and coop menu b.png replace my heads with
+				yours.<br><br>
 
-	<!-- Page content -->
-	<div class="main">
-		<h1>Coop Select Menu</h1>
-		<p>
-			yet again, like all the others, open coop menu.png and coop menu b.png replace my heads with yours.<br><br>
-
-			then open coop menu.anm2 and coop menu alt.anm2 and add your characters name + picture.
-		</p>
+				then open coop menu.anm2 and coop menu alt.anm2 and add your characters name + picture.
+			</p>
+		</section>
+		<footer>
+			<div>
+				<label>Author: Manaphoenix</label>
+				<label>
+					<i class="fab fa-github"></i>
+					<a href="https://github.com/manaphoenix">Github</a>
+				</label>
+				<label>
+					<i class="fab fa-steam"></i>
+					<a href="https://steamcommunity.com/id/manaphoenix/">Steam</a>
+				</label>
+				<label>
+					<i class="fab fa-discord"></i>
+					<a href="https://discord.gg/isaac">Isaac Discord</a>
+				</label>
+				<label>
+					<i class="fab fa-discord"></i>
+					<a href="https://discord.com/invite/JMaktQd">Isaac Modding Discord</a>
+				</label>
+			</div>
+		</footer>
 	</div>
-
 </body>
 
 </html>
