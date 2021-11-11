@@ -250,7 +250,7 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
     end
 
     if (cache & CacheFlag.CACHE_RANGE == CacheFlag.CACHE_RANGE) then
-        player.TearHeight = player.TearHeight + playerStat.range
+        player.TearRange = player.TearRange + playerStat.range
     end
 
     if (cache & CacheFlag.CACHE_SPEED == CacheFlag.CACHE_SPEED) then
