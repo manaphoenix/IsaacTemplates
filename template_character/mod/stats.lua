@@ -67,8 +67,6 @@ character.stats = {
 	For multiple tear effects, you must seperate each tear flag using the '|' (bitwise or) symbol.
 	You can find a list of TearFlags here: https://wofsauge.github.io/IsaacDocs/rep/enums/TearFlags.html?h=tears
 	Write tearflags = TearFlags.TEAR_NORMAL, if you don't want your character to have any innate tear effects.
-
-	NOTE: Range is currently bugged in the API, changing it will do nothing :(
 ]]
 
 character.costume = "character_alpha_cat_ears"
