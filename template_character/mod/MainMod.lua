@@ -159,7 +159,8 @@ local game = Game()
 local pool = game:GetItemPool()
 local iscontin = true -- a hacky check for if the game is continued.
 local char = Isaac.GetPlayerTypeByName(stats.default.name, false)
-local taintedChar = Isaac.GetPlayerTypeByName(stats.tainted.name, true) or char
+local taintedChar = Isaac.GetPlayerTypeByName(stats.tainted.name, true)
+taintedChar = taintedChar == -1 and char or taintedChar
 
 -- Utility Functions
 local function IsChar(player)
