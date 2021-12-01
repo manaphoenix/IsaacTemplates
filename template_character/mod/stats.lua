@@ -145,6 +145,8 @@ character.charge = -1
 
 	Now do it all again for your tainted character :)
 ]]
+tainted.enabled = true -- set this to false if you don't want a tainted character.
+
 tainted.name = "Omega"
 tainted.stats = {
     damage = 2.00,

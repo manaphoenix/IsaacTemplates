@@ -94,32 +94,37 @@ do
         end
 
         -- Tainted
-        errorChecker.printError("Tainted Character Checker:")
+        if (stats.tainted.enabled) then
+            errorChecker.printError("Tainted Character Checker:")
 
-        character = stats.tainted
+            character = stats.tainted
 
-        checkName(character.name, true)
+            checkName(character.name, true)
 
-        checkCostume(character.costume)
+            checkCostume(character.costume)
 
-        checkItems(character.items)
+            checkItems(character.items)
 
-        checkGeneric(character.trinket, "trinket", -1)
+            checkGeneric(character.trinket, "trinket", -1)
 
-        checkGeneric(character.card, "card", -1)
+            checkGeneric(character.card, "card", -1)
 
-        checkGeneric(character.pill, "pill", -1)
+            checkGeneric(character.pill, "pill", -1)
 
-        checkGeneric(character.charge, "charge")
+            checkGeneric(character.charge, "charge")
+            
 
-        if (errorChecker.getErrorCount() == 1) then
-            errorChecker.clearErrors()
+            if (errorChecker.getErrorCount() == 1) then
+                errorChecker.clearErrors()
+            end
         end
 
-        if (stats.default.name == "Alpha" or stats.tainted.name == "Omega") then
+        if (stats.default.name == "Alpha" or (stats.tainted.name == "Omega" and stats.tainted.enabled)) then
             errorChecker.printError("You must change the character(s) name from the default!")
             errorChecker.printError("Name: " .. stats.default.name)
-            errorChecker.printError("Name: " .. stats.tainted.name)
+            if (stats.tainted.enabled) then
+                errorChecker.printError("Name: " .. stats.tainted.name)
+            end
         end
 
         -- checker
@@ -154,7 +159,7 @@ local game = Game()
 local pool = game:GetItemPool()
 local iscontin = true -- a hacky check for if the game is continued.
 local char = Isaac.GetPlayerTypeByName(stats.default.name, false)
-local taintedChar = Isaac.GetPlayerTypeByName(stats.tainted.name, true)
+local taintedChar = Isaac.GetPlayerTypeByName(stats.tainted.name, true) or char
 
 -- Utility Functions
 local function IsChar(player)
