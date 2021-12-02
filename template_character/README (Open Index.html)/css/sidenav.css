@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:800');
 
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+}
+
 body {
   position: relative;
   font-family: 'Alegreya Sans', sans-serif;
@@ -23,12 +29,13 @@ section {
 }
 
 footer {
+  display: flex;
   background: #2f3136;
   padding: 30px 20px;
-  display: flex;
-  position: absolute;
-  width: 100%;
+  position:absolute;
   bottom: 0;
+  width:100%;
+  height:20px;   /* Height of the footer */
 }
 
 /* links */
@@ -52,6 +59,16 @@ header span a {
 header h1 {
   margin: auto;
   padding: 0;
+}
+
+title {
+  display: block;
+  font-weight: bolder;
+  font-size: xx-large;
+}
+
+p {
+  font-size: 1.5rem;
 }
 
 .nav {
@@ -110,7 +127,7 @@ header h1 {
 }
 
 .sectionContent {
-  padding: 0 0 80px 20px;
+  padding: 0 0 40px 20px;
 }
 
 .footerLeftSide {
@@ -131,4 +148,9 @@ footer div label {
   transition: margin-left 0.7s;
   overflow: hidden;
   width: 100%;
+  min-height:100%;
+  position:relative;
+  padding-bottom:60px;   /* Height of the footer */
 }
+
+
