@@ -33,8 +33,9 @@
 			<a href="PlayersXML.html">Players.xml</a>
 			<a href="CharacterMenu.html">Character menu</a>
 			<a href="DeathPortraits.html">Death Portraits</a>
+			<a href="AnimationEditor.html">Animation Editor</a>
 			<a href="CoopMenu.html">Coop Menu</a>
-			<a href="MainLua.html">Main.lua</a>
+			<a href="StatsLua.html">Stats.lua</a>
 			<a href="Metadata.html">Metadata</a>
 			<a href="Uploading.html">Uploading</a>
 			<a href="Workshop.html">Workshop</a>
@@ -50,49 +51,35 @@
 			<h1>Character Template ReadMe</h1>
 		</header>
 		<section class="tripSection">
-			<figure>
-				<img src="../images/AlphaMainMenu.png" alt="Main Menu">
-				<figcaption>some caption</figcaption>
-			</figure>
-			<figure>
-				<img src="../images/AlphaMainMenu.png" alt="Main Menu">
-				<figcaption>some caption</figcaption>
-			</figure>
-			<figure>
-				<img src="../images/AlphaMainMenu.png" alt="Main Menu">
-				<figcaption>some caption</figcaption>
-			</figure>
+
 		</section>
 		<section class="sectionContent">
 			<h1>Metadata.xml</h1>
-			<p>
-				<b>Your almost there!</b><br><br>
+			<p>Your almost to the finish line!</p>
+			<p>by now you should have tried loading up your game to test your mod out. When you did it the first time
+				you may have noticed that a <code>metadata.xml</code> file was generated.</p>
+			<p>If you haven't already what you need to do is delete that file, rename your character template folder to
+				whatever name you want your mod to be named, and launch the game to genearted a new metadata.</p>
 
-				The first thing you want to do is rename the folder to whatever you want for your mod.
-				<ul>
-					<li>NO SPACES</li>
-					<li>Use underscores _ for spaces</li>
-					<li>only lowercase characters</li>
-				</ul>
-				<b>Note</b>
-				Loading order is entirely based on alphabetical ordering. Keep this in mind if your using another mod.
+
+			<b class="important">
+				Important to know: Loading order is entirely based on alphabetical ordering. Keep this in mind if
+				your making use of another mod in your own.
+			</b>
+			<p>
+				This means that the higher on the list the mod is in the mod list in-game, it will load before the
+				things lower than it.
+				likewise, this means things lower in the list will always win if more than one mod is trying to load the
+				same thing.
 			</p>
 			<p>
-				Now open the metadata.xml and rename the <b>&lt;directory&gt;</b> line with whatever you named the
-				folder<br>
-				<b>DO NOT CHANGE ANYTHING ELSE</b>
+				Now we need to open the ModUploader tool. You can find this tool inside the Isaac Directory.
 			</p>
 			<p>
-				once done save and close the metadata.xml file.
-				now to actually update and do the rest, go to your isaac install directory...
-				<br><br>
-				go to the tools folder
-				then ModUploader folder
-				and open the ModUploader.exe
-				<br><br>
 				once open click the "Choose Mod..."
-				browse to your mod folder and choose the metadata.xml
-				<br><br>
+				browse to your mod folder and choose the <code>metadata.xml</code>
+			</p>
+			<p>
 				now you can change everything to your hearts galore.
 				don't hit upload or worry about the thumbnail image, or "change notes" section yet.
 				once your done close the uploader, it will save what you did.

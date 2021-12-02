@@ -33,8 +33,9 @@
 			<a href="PlayersXML.html">Players.xml</a>
 			<a href="CharacterMenu.html">Character menu</a>
 			<a href="DeathPortraits.html">Death Portraits</a>
+			<a href="AnimationEditor.html">Animation Editor</a>
 			<a href="CoopMenu.html">Coop Menu</a>
-			<a href="MainLua.html">Main.lua</a>
+			<a href="StatsLua.html">Stats.lua</a>
 			<a href="Metadata.html">Metadata</a>
 			<a href="Uploading.html">Uploading</a>
 			<a href="Workshop.html">Workshop</a>
@@ -51,16 +52,8 @@
 		</header>
 		<section class="tripSection">
 			<figure>
-				<img src="../images/AlphaMainMenu.png" alt="Main Menu">
-				<figcaption>some caption</figcaption>
-			</figure>
-			<figure>
-				<img src="../images/AlphaMainMenu.png" alt="Main Menu">
-				<figcaption>some caption</figcaption>
-			</figure>
-			<figure>
-				<img src="../images/AlphaMainMenu.png" alt="Main Menu">
-				<figcaption>some caption</figcaption>
+				<img src="../images/AlphaMainMenu.png" alt="Character Menu">
+				<figcaption>Working Character Menu</figcaption>
 			</figure>
 		</section>
 		<section class="sectionContent">
@@ -69,60 +62,13 @@
 				In this section we will be creating the main menu icon and text
 			</p>
 			<p>
-				The file we will need to change is in <b>\content\gfx</b>
-				<br>
-				Open <b>charactermenu.png</b> with your editor of choice.
+				The file we will need to change is in <code class="path">\content\gfx</code>
+				Open <code>charactermenu.png</code> with your editor of choice.
 			</p>
 			<p>
-				What you need to put in here is the picture of your character, and your character's name.<br>
-				<i>Remember that file I told you to keep an original copy of? you can use it here</i><br>
-				The color the website produced is actually wrong for this file, but by an amount you'd be hard pressed to be able to see.<br>
-				Still if you want to make it correct, change the text color to <b class="pagetext">#372b2d</b>
-				<br><br>
-				You will also need to do this for your tainted character; but, in <b>charactermenualt.png</b>
-			</p>
-			<h1>Animation Editor</h1>
-			<p>
-				<b>DEPSITE THIS BEING NEXT I SUGGEST DOING THE FIRST PART OF <a href="DeathPortraits.html">Death Portraits</a> FIRST</b>
-			</p>
-			<p>
-				Now we will need to link our character to the image we just created.<br>
-				To do this you will need to open the Animation Editor.<br>
-				You can find the Animation Editor in the tools folder of your Isaac install.<br>
-			</p>
-			<p>
-				My suggestion is to associate .anm2 files to this editor so its easier to open them in the future.<br>
-				To do this you will need to open the editor in Administrator.<br>
-				Go up to settings, and click the "Associate ..." line.<br><br>
-				you can then close the application if you wish, and just go to the folder where the anm2 file is and open them directly.<br>
-				if you do so, skip over this next line.
-			</p>
-			<p>
-				Once the editor is open, go up to File, and click Open.
-				then you will need to go <b>.\content\gfx</b>
-			</p>
-			<p>
-				open <b>charactermenu.anm2</b><br><br>
-				On the right side of the program you will see the animations that exist within this anm2.<br>
-				what you need to do is click on Alpha, hit duplicate, and name it whatever you character's name is in players.xml (including caps)<br>
-				Then delete Alpha.
-			</p>
-			<p>
-				With your character selected on the left side you should see the bottom panel called the "timeline".<br>
-				when you click one of those yellow squares with a dot it will let you edit that frame of the animation.<br>
-				the only frame you <b>Need</b> to edit is the "Name" frame.
-				just ensure your characters name is selected with the red bounding box.
-			</p>
-			<p>
-				Once your done save the file (Ctrl+S or File->Save). It will warn you about overwriting an existing file. hit accept.<br>
-				for your tainted character you will need to do the same thing but in the <b>charactermenualt.anm2</b> file
-			</p>
-			<p>
-				This same process is repeated for characterportraits.anm2 and characterportraitsalt.anm2, only the frame there you need to edit is the Portrait.
-			</p>
-			<p>
-				Example of a working Main Menu<br>
-				<img src="../images/AlphaMainMenu.png" />
+				What you need to put in here is the picture of your character, and your character name.</p>
+				<p>To create the text you can use the <a href="https://wofsauge.github.io/IsaacTools/text_generator.html">Isaac Text Tool</a> again.</p>
+				<p>you will also need to do this for your tainted character but in <code>charactermenualt.png</code>
 			</p>
 		</section>
 		<footer>

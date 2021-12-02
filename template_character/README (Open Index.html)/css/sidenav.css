@@ -26,6 +26,8 @@ header {
 
 section {
   background: #36393f;
+  width: 50%;
+  margin-left: 25%;
 }
 
 footer {
@@ -67,8 +69,29 @@ title {
   font-size: xx-large;
 }
 
+b {
+  font-size: 125%;
+}
+
 p {
   font-size: 1.5rem;
+}
+
+code {
+  text-align: left;
+  overflow-x: auto;
+  color: #3392ff;
+  border-radius: 3px;
+  background-color: #2f3136;
+}
+
+.important {
+  color: #B33A3A;
+}
+
+.path {
+  text-decoration: underline;
+  color: #abbde1;
 }
 
 .nav {

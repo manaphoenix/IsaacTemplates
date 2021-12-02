@@ -33,8 +33,9 @@
 			<a href="PlayersXML.html">Players.xml</a>
 			<a href="CharacterMenu.html">Character menu</a>
 			<a href="DeathPortraits.html">Death Portraits</a>
+			<a href="AnimationEditor.html">Animation Editor</a>
 			<a href="CoopMenu.html">Coop Menu</a>
-			<a href="MainLua.html">Main.lua</a>
+			<a href="StatsLua.html">Stats.lua</a>
 			<a href="Metadata.html">Metadata</a>
 			<a href="Uploading.html">Uploading</a>
 			<a href="Workshop.html">Workshop</a>
@@ -51,77 +52,62 @@
 		</header>
 		<section class="tripSection">
 			<figure>
-				<img src="../images/AlphaMainMenu.png" alt="Main Menu">
-				<figcaption>some caption</figcaption>
-			</figure>
-			<figure>
-				<img src="../images/AlphaMainMenu.png" alt="Main Menu">
-				<figcaption>some caption</figcaption>
-			</figure>
-			<figure>
-				<img src="../images/AlphaMainMenu.png" alt="Main Menu">
-				<figcaption>some caption</figcaption>
+				<img src="../images/AlphaInGame.png" alt="Character In-game">
+				<figcaption>In-Game Character with Costume</figcaption>
 			</figure>
 		</section>
 		<section class="sectionContent">
-			<h1>Character Skin</h1>
-			<p>
-				This section is about adding the base costume to your character (the characters' skin)
-			</p>
-			<p>
-				the file can be found in <b>.\resources\gfx\characters\costumes</b>
-			</p>
-			<p>
-				<h4>It's highly recommended to use my template and just edit it instead of trying to make your own!</h4>
-				If you do choose to make your own (you insane person you). The file needs to be a <b>512x512</b><br>
-				Save the file as <b>character_charactername.png</b> (lowercase the name).<br>
-				<br>
-				Do this again for your tainted character if you want them to look different.<br>
-				Save the file the same way as above if named differently.<br>
-				If named the same, just add "_b" to the end of the file.
-			</p>
+			<h1>Character Costume(s) and Character Skin</h1>
+			<p>In this section we will be working on the costume(s) for your character(s) and the Character(s) skin. We
+				will start with the skin.</p>
+			<p>The file we will be working on can be found in <code
+					class="path">.\resources\gfx\characters\costumes</code></p>
+			<p>I highly recommended to use my template and edit it instead of trying to make your own!</p>
+			<p>If you do decide to make your own, the file needs to be 512x512</p>
+			<p>When you are done save the file as <code>character_charactername.png</code></p>
+			<p>Now do this again for your tainted character (or just copy it if you want them to be the same) and name
+				it <code>character_charactername_b.png</code></p>
 			<h1>Character Costume</h1>
+			<p>Next we will create an overlay costume for the character (Like maggie's hair, or cain's eyepatch)</p>
+
 			<p>
-				This section is for creating an overlay costume for the character (like maggie's hair, or cain's
-				eyepatch)
+				If you do plan on making a costume, you will still need to delete some files.
+				<ul>
+					<li><code>costumes2.xml</code></li>
+					<li><code>character_alpha_cat_ears.anm2</code></li>
+					<li><code>character_cat_ears_template.png</code></li>
+				</ul>
 			</p>
+			<p>
+				Regardless if you do a costume or not be sure to delete the
+				<code>character_cat_ears_template_reference.psd</code> file
+				when your done using it (if you do).
+			</p>
+
 			<p>
 				Included in this template is a simple cat ears costume. along with its PSD reference I used to create
-				it.<br>
-				This template mod allows you to apply a costume for both the default and tainted character
-				separately.<br>
-				You must do the different file types in the same place I put them!<br>
-				anm2s in /character, pngs in /character/costume.
+				it.</p>
+			<p>
+				This template allows for applying costumes to the tainted and regular character separately.</p>
+			<p>
+				You must put all the different files I made in the same place as I put them.</p>
+			<p>
+				anm2s in <code class="path">\character</code> and pngs in <code class="path">\character\costumes</code>.
 			</p>
-			</p>
-			Creating a costume takes 4 steps.
+			<p>Creating a costume takes 4 steps.</p>
 			<ol>
-				<li>Make the costume frames in <b>.\resources\gfx\characters\costumes</b></li>
+				<li>Make the costume frames in <code class="path">.\resources\gfx\characters\costumes</code></li>
 				- you need 8 frames total, 1 for each each facing direction + 1 for each direction while firing
-				<li>Setup the anm2 in <b>.\resources\gfx\characters</b></li>
+				<li>Setup the anm2 in <code class="path">.\resources\gfx\characters</code></li>
 				- you can use the animation editor in the tools folder of the Isaac install (This is covered in <a
-					href="StagePortrait.html">Character menu</a>)
-				<li>Tell the game your costume exists by adding it to <b>costumes2.xml</b> found in <b>.\content</b>
+					href="CharacterMenu.html">Character menu</a>)
+				<li>Tell the game your costume exists by adding it to <code>costumes2.xml</code> found in
+					<b>.\content</b>
 				</li>
 				<li>Apply the costume in the stats.lua file</li>
 				</p>
-				<p>
-					If you do not have / want a costume, you can delete these files:
-					<ul>
-						<li>costumes2.xml</li>
-						<li>character_alpha_cat_ears.anm2</li>
-						<li>character_cat_ears_template.png</li>
-					</ul>
-					<br>
+			</ol>
 
-					Regardless if you do a costume or not be sure to delete the
-					<b>character_cat_ears_template_reference.psd</b> file
-					when your done using it (if you do).
-				</p>
-				<p>
-					Example of what both pieces together In-game will look like.<br>
-					<img src="../images/AlphaInGame.png" />
-				</p>
 		</section>
 		<footer>
 			<div>
