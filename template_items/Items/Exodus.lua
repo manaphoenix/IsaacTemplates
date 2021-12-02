@@ -8,8 +8,8 @@ local function TriggerEffect(player)
   player:GetData()["ExodusCharge"] = player:GetData()["ExodusCharge"] - 1
 
   local enemies = Isaac.FindInRadius(player.Position, 1000, EntityPartition.ENEMY)
-  for i, v in pairs(enemies) do
-    v:Kill()
+  for _, enemy in pairs(enemies) do
+    enemy:Kill()
   end
 end
 
