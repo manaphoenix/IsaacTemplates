@@ -16,7 +16,7 @@ local flawless = {
 	IsMiniBoss = false,
 	ContainedBosses = 0,
 	ContainedEnemies = 0,
-	Bosses = {}
+	Bosses = {},
 	TookDamage = false
 }
 
