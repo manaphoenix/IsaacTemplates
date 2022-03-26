@@ -1,29 +1,43 @@
-/* The sidebar menu */
-.sidenav {
-  height: 100%;
-  /* Full-height: remove this if you want "auto" height */
-  width: 240px;
-  /* Set the width of the sidebar */
-  position: fixed;
-  /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1;
-  /* Stay on top */
-  top: 0;
-  /* Stay at the top */
-  left: 0;
-  background-color: #2f3136;
-  /* Black */
-  overflow-x: hidden;
-  /* Disable horizontal scroll */
-  padding-top: 20px;
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:800');
+
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
 }
 
-/* body darkmode */
 body {
-  padding: 25px;
+  position: relative;
+  font-family: 'Alegreya Sans', sans-serif;
+  overflow-x: hidden;
   background-color: #36393f;
   color: white;
   font-size: 25px;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+header {
+  height: 100px;
+  background: #2f3136;
+  display: flex;
+}
+
+section {
+  background: #36393f;
+  width: 50%;
+  margin-left: 25%;
+}
+
+footer {
+  display: flex;
+  background: #2f3136;
+  padding: 30px 20px;
+  position:absolute;
+  bottom: 0;
+  width:100%;
+  height:20px;   /* Height of the footer */
 }
 
 /* links */
@@ -35,34 +49,131 @@ a:visited {
   color: #00FF99;
 }
 
-/* The navigation menu links */
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #8e9297;
+header span {
+  margin: 30px;
+}
+
+header span a {
+  margin: 0;
+  padding: 0;
+}
+
+header h1 {
+  margin: auto;
+  padding: 0;
+}
+
+title {
   display: block;
+  font-weight: bolder;
+  font-size: xx-large;
 }
 
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
+b {
+  font-size: 125%;
+}
+
+p {
+  font-size: 1.5rem;
+}
+
+code {
+  text-align: left;
+  overflow-x: auto;
+  color: #3392ff;
+  border-radius: 3px;
+  background-color: #2f3136;
+}
+
+.important {
+  color: #B33A3A;
+}
+
+.path {
+  text-decoration: underline;
+  color: #abbde1;
+}
+
+.nav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #2f3136;
+  opacity: .9;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.7s;
+}
+
+.nav a {
+  display: block;
+  padding: 10px 30px;
+  font-size: 25px;
+  text-decoration: none;
+  color: #8e9297;
+}
+
+.nav a:hover {
   color: #fffff3;
+  transition: 0.4s;
 }
 
-/* Style page content */
-.main {
-  margin-left: 240px;
-  /* Same as the width of the sidebar */
-  padding: 0px 10px;
+.nav .close {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  margin-left: 0px;
+  font-size: 30px;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .sidenav {
-    padding-top: 15px;
-  }
-
-  .sidenav a {
-    font-size: 18px;
-  }
+.slide a {
+  color: #000;
+  font-size: 36px;
 }
+
+.tripSection {
+  padding: 20px;
+  display: flex;
+}
+
+.tripSection figure {
+  margin: auto;
+  text-align: center;
+  width: 200px;
+}
+
+.tripSection figure img {
+  width: 200px;
+}
+
+.sectionContent {
+  padding: 0 0 40px 20px;
+}
+
+.footerLeftSide {
+  margin-left: auto;
+  padding: 0px 20px;
+}
+
+footer div {
+  display: flex;
+}
+
+footer div label {
+  padding: 0;
+  margin: 0px 20px;
+}
+
+#content {
+  transition: margin-left 0.7s;
+  overflow: hidden;
+  width: 100%;
+  min-height:100%;
+  position:relative;
+  padding-bottom:60px;   /* Height of the footer */
+}
+
+

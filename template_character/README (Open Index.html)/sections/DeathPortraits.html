@@ -5,59 +5,85 @@
 	<meta charset="utf-8">
 	<title>Template Character Mod</title>
 	<link rel="stylesheet" href="../css/sidenav.css" media="screen" />
+	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 </head>
+<script>
+	function openSlideMenu() {
+		document.getElementById('menu').style.width = '250px';
+		document.getElementById('content').style.marginLeft = '250px';
+	}
+
+	function closeSideMenu() {
+		document.getElementById('menu').style.width = '0px';
+		document.getElementById('content').style.marginLeft = '0px';
+	}
+</script>
+
 
 <body>
+	<div id="content">
+		<nav id="menu" class="nav">
+			<a href="#" class="close" onclick="closeSideMenu()">
+				<i class="fas fa-times"></i>
+			</a>
+			<a href="../index.html">Intro</a>
+			<a href="Playername.html">Playername Image</a>
+			<a href="StagePortrait.html">Stage Portrait</a>
+			<a href="CharacterCostume.html">Character Costume</a>
+			<a href="PlayersXML.html">Players.xml</a>
+			<a href="CharacterMenu.html">Character menu</a>
+			<a href="DeathPortraits.html">Death Portraits</a>
+			<a href="AnimationEditor.html">Animation Editor</a>
+			<a href="CoopMenu.html">Coop Menu</a>
+			<a href="StatsLua.html">Stats.lua</a>
+			<a href="Metadata.html">Metadata</a>
+			<a href="Uploading.html">Uploading</a>
+			<a href="Workshop.html">Workshop</a>
+			<a href="FAQ.html">FAQ</a>
+		</nav>
 
-	<!-- Side navigation -->
-	<nav class="sidenav">
-		<a href="../index.html">Intro</a>
-		<a href="Playername.html">Playername Image</a>
-		<a href="StagePortrait.html">Stage Portrait</a>
-		<a href="CharacterCostume.html">Character Costume</a>
-		<a href="PlayersXML.html">Players.xml</a>
-		<a href="CharacterMenu.html">Character menu</a>
-		<a href="DeathPortraits.html">Death Portraits</a>
-		<a href="CoopMenu.html">Coop Menu</a>
-		<a href="MainLua.html">Main.lua</a>
-		<a href="Metadata.html">Metadata</a>
-		<a href="Uploading.html">Uploading</a>
-		<a href="Workshop.html">Workshop</a>
-	</nav>
-
-	<!-- Page content -->
-	<div class="main">
-		<h1>Death Portraits</h1>
-		<p>
-			This is mostly like <a href="CharacterMenu.html">Character menu</a>, open <b>death portraits.png</b> with your editor
-			remove what I put in there and replace it with your content.
-		</p>
-		<p>
-			you do not need to do anything for the tainted character unless you're like me and made the character have a different name
-			on the tainted side OMEGA instead of ALPHA. If you did just make sure to put your tainted character's name in there too.
-		</p>
-		<h1>Death Portraits anm2</h1>
-		<b>If you skipped the second part of <a href="CharacterMenu.html">Character menu</a> now go back and do that and this section at the same time</b>
-		<p>
-			Ok, now we just need to do the death screen anm2, so open <b>death screen.anm2</b><br>
-			Duplicate Alpha, renaming it your characters name.<br>
-			Then delete Alpha.<br>
-		</p>
-		<p>
-			Now this is where it's a little different, the only thing you need to change in this file is the Name sprite.
-			If you want to change other things go ahead of course, but I won't be covering that.
-		</p>
-		<p>
-		Once your done save it.<br><br>
-
-		For your tainted character you need to do the same thing, but in <b>death screen alt.anm2</b>.
-		</p>
-		<p>
-			Example of a correctly working death screen<br>
-			<img src="../images/AlphaGameOver.png" />
-		</p>
+		<header>
+			<span class="slide">
+				<a href="#" onclick="openSlideMenu()">
+					<i class="fas fa-bars"></i>
+				</a>
+			</span>
+			<h1>Character Template ReadMe</h1>
+		</header>
+		<section class="tripSection">
+			<figure>
+				<img src="../images/AlphaGameOver.png" alt="GameOver Screen">
+				<figcaption>Game Over Screen</figcaption>
+			</figure>
+		</section>
+		<section class="sectionContent">
+			<h1>Death Portraits</h1>
+			<p>In this section we will be creating the <code>death portraits.png</code> file. It is a very similar process to the previous step so there isn't much to say here.</p>
+			<p>you can find this file in <code class="path">\content\gfx</code></p>
+			<p>If you want something different for your tainted character it also goes in this file, instead of its own.</p>
+		</section>
+		<footer>
+			<div>
+				<label>Author: Manaphoenix</label>
+				<label>
+					<i class="fab fa-github"></i>
+					<a href="https://github.com/manaphoenix">Github</a>
+				</label>
+				<label>
+					<i class="fab fa-steam"></i>
+					<a href="https://steamcommunity.com/id/manaphoenix/">Steam</a>
+				</label>
+				<label>
+					<i class="fab fa-discord"></i>
+					<a href="https://discord.gg/isaac">Isaac Discord</a>
+				</label>
+				<label>
+					<i class="fab fa-discord"></i>
+					<a href="https://discord.com/invite/JMaktQd">Isaac Modding Discord</a>
+				</label>
+			</div>
+		</footer>
 	</div>
-
 </body>
 
 </html>

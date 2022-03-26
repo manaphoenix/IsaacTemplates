@@ -5,65 +5,84 @@
 	<meta charset="utf-8">
 	<title>Template Character Mod</title>
 	<link rel="stylesheet" href="css/sidenav.css" media="screen" />
+	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 </head>
+<script>
+	function openSlideMenu() {
+		document.getElementById('menu').style.width = '250px';
+		document.getElementById('content').style.marginLeft = '250px';
+	}
+
+	function closeSideMenu() {
+		document.getElementById('menu').style.width = '0px';
+		document.getElementById('content').style.marginLeft = '0px';
+	}
+</script>
+
 
 <body>
-	<div style="float:right;color:red;font-size:16px;">
-		V1.5.0
+	<div id="content">
+		<nav id="menu" class="nav">
+			<a href="#" class="close" onclick="closeSideMenu()">
+				<i class="fas fa-times"></i>
+			</a>
+			<a href="index.html">Intro</a>
+			<a href="sections/Playername.html">Playername Image</a>
+			<a href="sections/StagePortrait.html">Stage Portrait</a>
+			<a href="sections/CharacterCostume.html">Character Costume</a>
+			<a href="sections/PlayersXML.html">Players.xml</a>
+			<a href="sections/CharacterMenu.html">Character menu</a>
+			<a href="sections/DeathPortraits.html">Death Portraits</a>
+			<a href="sections/AnimationEditor.html">Animation Editor</a>
+			<a href="sections/CoopMenu.html">Coop Menu</a>
+			<a href="sections/MainLua.html">Main.lua</a>
+			<a href="sections/Metadata.html">Metadata</a>
+			<a href="sections/Uploading.html">Uploading</a>
+			<a href="sections/Workshop.html">Workshop</a>
+			<a href="sections/FAQ.html">FAQ</a>
+		</nav>
+
+		<header>
+			<span class="slide">
+				<a href="#" onclick="openSlideMenu()">
+					<i class="fas fa-bars"></i>
+				</a>
+			</span>
+			<h1>Character Template ReadMe</h1>
+		</header>
+		<section class="tripSection">
+			
+		</section>
+		<section class="sectionContent">
+			<h1>Welcome to Template Character Mod</h1>
+			<p>This is the guide for the template that will take you step by step through what you need to do to create a character.</p>
+			<p>This guide is sorted into sections. Each section is not necessarily sorted in order they should or could be done, but each section does need to be completed.</p>
+			<p>To get started come up with a name for your character. Your tainted character should share the same name as your normal character.</p>
+		</section>
+		<footer>
+			<div>
+				<label>Author: Manaphoenix</label>
+				<label>
+					<i class="fab fa-github"></i>
+					<a href="https://github.com/manaphoenix">Github</a>
+				</label>
+				<label>
+					<i class="fab fa-steam"></i>
+					<a href="https://steamcommunity.com/id/manaphoenix/">Steam</a>
+				</label>
+				<label>
+					<i class="fab fa-discord"></i>
+					<a href="https://discord.gg/isaac">Isaac Discord</a>
+				</label>
+				<label>
+					<i class="fab fa-discord"></i>
+					<a href="https://discord.com/invite/JMaktQd">Isaac Modding Discord</a>
+				</label>
+			</div>
+			<div class="footerLeftSide">
+				<label>V2</label>
+			</div>
+		</footer>
 	</div>
-
-	<!-- Side navigation -->
-	<nav class="sidenav">
-		<a href="index.html">Intro</a>
-		<a href="sections/Playername.html">Playername Image</a>
-		<a href="sections/StagePortrait.html">Stage Portrait</a>
-		<a href="sections/CharacterCostume.html">Character Costume</a>
-		<a href="sections/PlayersXML.html">Players.xml</a>
-		<a href="sections/CharacterMenu.html">Character menu</a>
-		<a href="sections/DeathPortraits.html">Death Portraits</a>
-		<a href="sections/CoopMenu.html">Coop Menu</a>
-		<a href="sections/MainLua.html">Main.lua</a>
-		<a href="sections/Metadata.html">Metadata</a>
-		<a href="sections/Uploading.html">Uploading</a>
-		<a href="sections/Workshop.html">Workshop</a>
-	</nav>
-
-	<!-- Page content -->
-	<div class="main">
-		<h1>Intro</h1>
-		<h3>Welcome to the "Template Character Mod"</h3>
-		<p>
-			This is the ReadMe page. It will guide you through each step of what you need to do. As you go through this guide you may also find extra comments and instructions inside some of the files to further help you.
-			<br><br>
-			This guide is sorted into sections. The different sections can be found on the navigation bar on the left.
-			The sections are not necessarily sorted in order they should be or could be done, but rather are just done in a way that keeps what you need to do organized and sorted.
-			<br><br>
-			Before you begin you will want to come up with a name for both your character and tainted character.
-			The tainted character can have the same name as the regular character, just know it before you get started.
-			It will change how you do some things.
-		</p>
-		<h3>Extra Resources and Notes</h3>
-		<p>
-		<ul>
-			<li>All Image files in Isaac need to be a 32 bit depth PNG file.</li>
-			<li>Image instructions are generalized, as each image editor is slightly different.
-				You will need to figure out how to do certain things within your image editor of choice.</li>
-			<li>It is highly recommended to use an actual editor to edit these files. A good free one is <a href="https://notepad-plus-plus.org/">Notepad++</a></li>
-		</ul>
-		If you don't know how to get to your Isaac install, do this.
-		<ol>
-			<li>Open Steam</li>
-			<li>Right click the game</li>
-			<li>Go down to Manage</li>
-			<li>Click Browse Local Files</li>
-		</ol>
-		</p>
-		<p>
-		If you notice any bugs, or have any suggestions please reach out! I'm in both the Isaac Discord and Isaac Modding Discord.
-		You can also open a issue on Github :)
-		</p>
-	</div>
-
 </body>
-
 </html>
