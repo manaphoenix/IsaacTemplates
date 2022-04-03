@@ -7,7 +7,7 @@ A collection of mod templates for The Binding of Isaac: Rebirth.
 
 you can get the latest release of any template [here](https://github.com/manaphoenix/IsaacTemplates/releases/tag/latest)
 
-If you want to show your support, you can [here](https://ko-fi.com/manaphoenix)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V7V2BYH1S)
 
 *Does not include WIP templates*
 
