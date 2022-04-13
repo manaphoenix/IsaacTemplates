@@ -343,6 +343,31 @@ end)
 
 mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function() iscontin = true end)
 
+--[[
+    local game_started = false
+local is_continued = false
+
+
+mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, Is_Continued)
+    if (not Is_Continued) then
+        is_continued = false
+        post_player_init_late()
+    end
+    game_started = true
+end)
+
+mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function()
+    game_started = false
+end)
+
+mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_,player)
+    if (game_started == false) then return end
+    if (not is_continued) then
+        post_player_init_late(player)
+    end
+end)
+]]
+
 -- put your custom code here!
 
 ::EndOfFile::
