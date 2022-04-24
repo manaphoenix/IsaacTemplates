@@ -157,7 +157,8 @@ if (type(imports) == "table") then imports:Init(mod) end
 local config = Isaac.GetItemConfig()
 local game = Game()
 local pool = game:GetItemPool()
-local iscontin = true -- a hacky check for if the game is continued.
+local game_started = false -- a hacky check for if the game is continued.
+local is_continued = false -- a hacky check for if the game is continued.
 local char = Isaac.GetPlayerTypeByName(stats.default.name, false)
 local taintedChar = Isaac.GetPlayerTypeByName(stats.tainted.name, true)
 taintedChar = taintedChar == -1 and char or taintedChar
@@ -280,8 +281,7 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
 end)
 
 local function AddCostume(CostumeName, player) -- actually adds the costume.
-    local cost = Isaac.GetCostumeIdByPath(
-                     "gfx/characters/" .. CostumeName .. ".anm2")
+    local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. CostumeName .. ".anm2")
     if (cost ~= -1) then player:AddNullCostume(cost) end
 end
 
@@ -330,28 +330,11 @@ local function postPlayerInitLate(player)
     local card = statTable.card
     if (card ~= 0) then player:SetCard(0, card) end
 end
-mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
-    if not iscontin then postPlayerInitLate(player) end
-end)
-
-mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, IsContin)
-    if IsContin then return end
-
-    iscontin = false
-    postPlayerInitLate()
-end)
-
-mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function() iscontin = true end)
-
---[[
-    local game_started = false
-local is_continued = false
-
 
 mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, Is_Continued)
     if (not Is_Continued) then
         is_continued = false
-        post_player_init_late()
+        postPlayerInitLate()
     end
     game_started = true
 end)
@@ -363,10 +346,9 @@ end)
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_,player)
     if (game_started == false) then return end
     if (not is_continued) then
-        post_player_init_late(player)
+        postPlayerInitLate(player)
     end
 end)
-]]
 
 --[[
     // ModCallbacks.MC_POST_PEFFECT_UPDATE (4)
