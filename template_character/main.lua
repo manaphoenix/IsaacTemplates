@@ -13,8 +13,7 @@ end
 local _, ogerr = pcall(function()
     local stats = loadFile("mod/stats")
     local imports = loadFile("mod/imports")
-    loadFile("mod/MainMod",
-             {modName, path, loadFile, stats, imports, useCustomErrorChecker})
+    loadFile("mod/MainMod", {modName, path, loadFile, stats, imports, useCustomErrorChecker})
 end)
 
 if (ogerr) then

@@ -65,7 +65,7 @@ character.stats = {
 
 	Tear Flags:
 	For multiple tear effects, you must seperate each tear flag using the '|' (bitwise or) symbol.
-	You can find a list of TearFlags here: https://wofsauge.github.io/IsaacDocs/rep/enums/TearFlags.html?h=tears
+	You can find a list of TearFlags here: https://wofsauge.github.io/IsaacDocs/rep/enums/TearFlags.html
 	Write tearflags = TearFlags.TEAR_NORMAL, if you don't want your character to have any innate tear effects.
 ]]
 
@@ -96,7 +96,7 @@ character:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, true) -- I want Sad Oni
   
   If you do not want to add any items to this character, just remove all of these lines.
 	  
-	You can find a list of avaliable CollectibleType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType?q=coll
+	You can find a list of avaliable CollectibleType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType.html
 ]]
 
 character.trinket = TrinketType.TRINKET_NULL
@@ -105,7 +105,7 @@ character.trinket = TrinketType.TRINKET_NULL
 	If you do not want a starting trinket, put
 	character.trinket = TrinketType.TRINKET_NULL
 
-	You can find a list of avaliable TrinketType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType?q=trinket
+	You can find a list of avaliable TrinketType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType.html
 ]]
 
 character.card = Card.CARD_FOOL
@@ -115,7 +115,7 @@ character.card = Card.CARD_FOOL
 	If you do not want a starting Card, put
 	character.card = Card.CARD_NULL
 
-	You can find a list of avaliable Cards here: https://wofsauge.github.io/IsaacDocs/rep/enums/Card?q=card
+	You can find a list of avaliable Cards here: https://wofsauge.github.io/IsaacDocs/rep/enums/Card.html
 
 	NOTE: Exclusive, you cannot give both a Card and a Pill
 ]]
@@ -125,7 +125,7 @@ character.pill = false
 	Use the above line to give the character a starting Pill.
 	If you do not want a starting Pill, put false
 
-	You can find a list of avaliable PillEffect's here: https://wofsauge.github.io/IsaacDocs/rep/enums/PillEffect?q=pill
+	You can find a list of avaliable PillEffect's here: https://wofsauge.github.io/IsaacDocs/rep/enums/PillEffect.html
 
 	NOTE: Exclusive, you cannot give both a card and a pill
 ]]
