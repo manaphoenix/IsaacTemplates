@@ -2,8 +2,8 @@
 local useCustomErrorChecker = true -- should the custom error checker be used?
 
 -- file loc
-local _, err = pcall(require, "")
-local modName = err:match("/mods/(.*)/%.lua")
+local _, _err = pcall(require, "")
+local modName = _err:match("/mods/(.*)/%.lua")
 local path = "mods/" .. modName .. "/"
 
 local function loadFile(loc, ...)
@@ -22,10 +22,10 @@ if (ogerr) then
         errorChecker.registerError()
 
         errorChecker.mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED,
-            function(_, IsContin)
+            function()
                 local room = Game():GetRoom()
 
-                for i = 0, 8 do room:RemoveDoor(i) end
+                for i = 0, 8 do room:RemoveDoor(DoorSlot[i]) end
             end)
 
         local str = errorChecker.formatError(ogerr)
@@ -56,7 +56,7 @@ if (ogerr) then
 
         local room = Game():GetRoom()
 
-        for i = 0, 8 do room:RemoveDoor(i) end
+        for i = 0, 8 do room:RemoveDoor(DoorSlot[i]) end
 
         error()
     else
