@@ -19,11 +19,11 @@ do
             end
         end
 
-        local function costume(costume)
+        local function costume(costumeStr)
             local cost = Isaac.GetCostumeIdByPath(
-                "gfx/characters/" .. costume .. ".anm2")
+                "gfx/characters/" .. costumeStr .. ".anm2")
             if (cost == -1) then
-                errorChecker.printError("No costume found by the name of", costume)
+                errorChecker.printError("No costume found by the name of", costumeStr)
             end
         end
 
