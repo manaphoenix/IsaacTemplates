@@ -1,13 +1,13 @@
 <ItemPools>
-	<!--
-	<Pool Name="treasure">
-		<Item Name="Rock Tumbler" Weight="1" DecreaseBy="1" RemoveOn="0.1" />
-		<Item Name="Blessing of Mars" Weight="1" DecreaseBy="1" RemoveOn="0.1" />
-		<Item Name="Spicy Flower" Weight="1" DecreaseBy="1" RemoveOn="0.1" />
-	</Pool>
-	<Pool Name="shop">
-		<Item Name="Rock Tumbler" Weight="1" DecreaseBy="1" RemoveOn="0.1" />
-		<Item Name="Scale" Weight="1" DecreaseBy="1" RemoveOn="0.1" />
-	</Pool>
-	!-->
+  <!-- 
+    <Pool Name="treasure"> 
+      <Item Name="Rock Tumbler" Weight="1" DecreaseBy="1" RemoveOn="0.1" /> 
+      <Item Name="Blessing of Mars" Weight="1" DecreaseBy="1" RemoveOn="0.1" /> 
+      <Item Name="Spicy Flower" Weight="1" DecreaseBy="1" RemoveOn="0.1" /> 
+    </Pool> 
+    <Pool Name="shop"> 
+      <Item Name="Rock Tumbler" Weight="1" DecreaseBy="1" RemoveOn="0.1" /> 
+      <Item Name="Scale" Weight="1" DecreaseBy="1" RemoveOn="0.1" /> 
+    </Pool> 
+  !-->
 </ItemPools>

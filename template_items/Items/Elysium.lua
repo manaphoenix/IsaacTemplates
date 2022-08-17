@@ -20,7 +20,7 @@ local function UseItem(_, collecitble, rng, player)
 end
 
 local function NewRoom()
-  for i = 0, Game:GetNumPlayers()-1 do -- simple code to reset ElysiumUses for every player on a new room.
+  for i = 0, Game:GetNumPlayers() - 1 do -- simple code to reset ElysiumUses for every player on a new room.
     local player = Isaac.GetPlayer(i)
     player:GetData()["ElysiumUses"] = 0
   end
