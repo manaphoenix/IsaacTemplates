@@ -2,12 +2,12 @@
 
 name: CharacterTemplateWorkflow
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     paths:
-        - 'template_character/**'
+      - 'template_character/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -18,21 +18,16 @@ jobs:
   deployTemplateCharacter:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Archive Release
-      uses: thedoctor0/zip-release@master
-      with:
-        filename: 'template_character.zip'
-        directory: ./template_character/
-        exclusions: '*.git* /*node_modules/* .editorconfig /template_items/* *.md /template_character/'
-    - uses: ncipollo/release-action@v1
-      with:
-        tag: 'latest'
-        allowUpdates: true
-        artifacts: "./template_character/template_character.zip"
-        token: ${{ secrets.GITHUB_TOKEN }}
-    
-      
-    
-
-        
+      - uses: actions/checkout@master
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          filename: 'template_character.zip'
+          directory: ./template_character/
+          exclusions: '*.git* /*node_modules/* .editorconfig /template_items/* *.md /template_character/'
+      - uses: ncipollo/release-action@v1
+        with:
+          tag: 'latest'
+          allowUpdates: true
+          artifacts: './template_character/template_character.zip'
+          token: ${{ secrets.GITHUB_TOKEN }}
