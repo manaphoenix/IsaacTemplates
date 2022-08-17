@@ -1,7 +1,5 @@
 <costumes anm2root="gfx/characters/">
-	<costume anm2path="character_alpha_cat_ears.anm2" type="none" priority="99" />
+  <costume anm2path="character_alpha_cat_ears.anm2" type="none" priority="99"/>
 </costumes>
 
-<!--
-see (https://wofsauge.github.io/IsaacDocs/rep/xml/costumes2.html) for more info on the tags :)
-!-->
+<!-- see (https://wofsauge.github.io/IsaacDocs/rep/xml/costumes2.html) for more info on the tags :) !-->

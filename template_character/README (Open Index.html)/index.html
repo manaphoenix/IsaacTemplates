@@ -1,91 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-	<meta charset="utf-8">
-	<title>Template Character Mod</title>
-	<link rel="stylesheet" href="css/sidenav.css" media="screen" />
-	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-</head>
-<script>
-	function openSlideMenu() {
-		document.getElementById('menu').style.width = '250px';
-		document.getElementById('content').style.marginLeft = '250px';
-	}
+  <head>
+    <meta charset="utf-8">
+    <title>Template Character Mod</title>
+    <link rel="stylesheet" href="css/sidenav.css" media="screen"/>
+    <script defer="defer" src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  </head>
+  <script>
+    function openSlideMenu() {
+      document
+        .getElementById('menu')
+        .style
+        .width = '250px';
+      document
+        .getElementById('content')
+        .style
+        .marginLeft = '250px';
+    }
 
-	function closeSideMenu() {
-		document.getElementById('menu').style.width = '0px';
-		document.getElementById('content').style.marginLeft = '0px';
-	}
-</script>
+    function closeSideMenu() {
+      document
+        .getElementById('menu')
+        .style
+        .width = '0px';
+      document
+        .getElementById('content')
+        .style
+        .marginLeft = '0px';
+    }
+  </script>
 
+  <body>
+    <div id="content">
+      <nav id="menu" class="nav">
+        <a href="#" class="close" onclick="closeSideMenu()">
+          <i class="fas fa-times"></i>
+        </a>
+        <a href="index.html">Intro</a>
+        <a href="sections/Playername.html">Playername Image</a>
+        <a href="sections/StagePortrait.html">Stage Portrait</a>
+        <a href="sections/CharacterCostume.html">Character Costume</a>
+        <a href="sections/PlayersXML.html">Players.xml</a>
+        <a href="sections/CharacterMenu.html">Character menu</a>
+        <a href="sections/DeathPortraits.html">Death Portraits</a>
+        <a href="sections/AnimationEditor.html">Animation Editor</a>
+        <a href="sections/CoopMenu.html">Coop Menu</a>
+        <a href="sections/MainLua.html">Main.lua</a>
+        <a href="sections/Metadata.html">Metadata</a>
+        <a href="sections/Uploading.html">Uploading</a>
+        <a href="sections/Workshop.html">Workshop</a>
+        <a href="sections/FAQ.html">FAQ</a>
+      </nav>
 
-<body>
-	<div id="content">
-		<nav id="menu" class="nav">
-			<a href="#" class="close" onclick="closeSideMenu()">
-				<i class="fas fa-times"></i>
-			</a>
-			<a href="index.html">Intro</a>
-			<a href="sections/Playername.html">Playername Image</a>
-			<a href="sections/StagePortrait.html">Stage Portrait</a>
-			<a href="sections/CharacterCostume.html">Character Costume</a>
-			<a href="sections/PlayersXML.html">Players.xml</a>
-			<a href="sections/CharacterMenu.html">Character menu</a>
-			<a href="sections/DeathPortraits.html">Death Portraits</a>
-			<a href="sections/AnimationEditor.html">Animation Editor</a>
-			<a href="sections/CoopMenu.html">Coop Menu</a>
-			<a href="sections/MainLua.html">Main.lua</a>
-			<a href="sections/Metadata.html">Metadata</a>
-			<a href="sections/Uploading.html">Uploading</a>
-			<a href="sections/Workshop.html">Workshop</a>
-			<a href="sections/FAQ.html">FAQ</a>
-		</nav>
+      <header>
+        <span class="slide">
+          <a href="#" onclick="openSlideMenu()">
+            <i class="fas fa-bars"></i>
+          </a>
+        </span>
+        <h1>Character Template ReadMe</h1>
+      </header>
+      <section class="tripSection"></section>
+      <section class="sectionContent">
+        <h1>Welcome to Template Character Mod</h1>
+        <p>This is the guide for the template that will take you step by step through what you need to do to create a character.</p>
+        <p>This guide is sorted into sections. Each section is not necessarily sorted in order they should or could be done, but each section does need to be completed.</p>
+        <p>To get started come up with a name for your character. Your tainted character should share the same name as your normal character.</p>
+      </section>
+      <footer>
+        <div>
+          <label>Author: Manaphoenix</label>
+          <label>
+            <i class="fab fa-github"></i>
+            <a href="https://github.com/manaphoenix">Github</a>
+          </label>
+          <label>
+            <i class="fab fa-steam"></i>
+            <a href="https://steamcommunity.com/id/manaphoenix/">Steam</a>
+          </label>
+          <label>
+            <i class="fab fa-discord"></i>
+            <a href="https://discord.gg/isaac">Isaac Discord</a>
+          </label>
+          <label>
+            <i class="fab fa-discord"></i>
+            <a href="https://discord.gg/3eACyXaffZ">Modding of Isaac Discord</a>
+          </label>
+          <label>
+            <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+            <script type='text/javascript'>
+              kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'V7V2BYH1S');
+              kofiwidget2.draw();
+            </script>
+          </label>
+        </div>
+        <div class="footerLeftSide">
+          <label>V2</label>
+        </div>
+      </footer>
+    </div>
+  </body>
 
-		<header>
-			<span class="slide">
-				<a href="#" onclick="openSlideMenu()">
-					<i class="fas fa-bars"></i>
-				</a>
-			</span>
-			<h1>Character Template ReadMe</h1>
-		</header>
-		<section class="tripSection">
-			
-		</section>
-		<section class="sectionContent">
-			<h1>Welcome to Template Character Mod</h1>
-			<p>This is the guide for the template that will take you step by step through what you need to do to create a character.</p>
-			<p>This guide is sorted into sections. Each section is not necessarily sorted in order they should or could be done, but each section does need to be completed.</p>
-			<p>To get started come up with a name for your character. Your tainted character should share the same name as your normal character.</p>
-		</section>
-		<footer>
-			<div>
-				<label>Author: Manaphoenix</label>
-				<label>
-					<i class="fab fa-github"></i>
-					<a href="https://github.com/manaphoenix">Github</a>
-				</label>
-				<label>
-					<i class="fab fa-steam"></i>
-					<a href="https://steamcommunity.com/id/manaphoenix/">Steam</a>
-				</label>
-				<label>
-					<i class="fab fa-discord"></i>
-					<a href="https://discord.gg/isaac">Isaac Discord</a>
-				</label>
-				<label>
-					<i class="fab fa-discord"></i>
-					<a href="https://discord.gg/3eACyXaffZ">Modding of Isaac Discord</a>
-				</label>
-				<label>
-					<script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'V7V2BYH1S');kofiwidget2.draw();</script> 
-				</label>
-			</div>
-			<div class="footerLeftSide">
-				<label>V2</label>
-			</div>
-		</footer>
-	</div>
-</body>
 </html>

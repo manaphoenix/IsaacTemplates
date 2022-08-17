@@ -1,27 +1,27 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="5/18/2021 10:16:46 PM" Version="11" Fps="30"/>
-	<Content>
-		<Spritesheets>
-			<Spritesheet Path="CharacterMenu.png" Id="0"/>
-		</Spritesheets>
-		<Layers>
-			<Layer Name="Portrait" Id="0" SpritesheetId="0"/>
-		</Layers>
-		<Nulls/>
-		<Events/>
-	</Content>
-	<Animations DefaultAnimation="Alpha">
-		<Animation Name="Alpha" FrameNum="1" Loop="false">
-			<RootAnimation>
-				<Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
-			</RootAnimation>
-			<LayerAnimations>
-				<LayerAnimation LayerId="0" Visible="true">
-					<Frame XPosition="0" YPosition="0" XPivot="24" YPivot="24" XCrop="8" YCrop="940" Width="38" Height="57" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
-				</LayerAnimation>
-			</LayerAnimations>
-			<NullAnimations/>
-			<Triggers/>
-		</Animation>
-	</Animations>
+  <Info CreatedBy="Unknown" CreatedOn="5/18/2021 10:16:46 PM" Version="11" Fps="30"/>
+  <Content>
+    <Spritesheets>
+      <Spritesheet Path="CharacterMenu.png" Id="0"/>
+    </Spritesheets>
+    <Layers>
+      <Layer Name="Portrait" Id="0" SpritesheetId="0"/>
+    </Layers>
+    <Nulls/>
+    <Events/>
+  </Content>
+  <Animations DefaultAnimation="Alpha">
+    <Animation Name="Alpha" FrameNum="1" Loop="false">
+      <RootAnimation>
+        <Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+      </RootAnimation>
+      <LayerAnimations>
+        <LayerAnimation LayerId="0" Visible="true">
+          <Frame XPosition="0" YPosition="0" XPivot="24" YPivot="24" XCrop="8" YCrop="940" Width="38" Height="57" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+        </LayerAnimation>
+      </LayerAnimations>
+      <NullAnimations/>
+      <Triggers/>
+    </Animation>
+  </Animations>
 </AnimatedActor>

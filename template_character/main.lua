@@ -13,7 +13,7 @@ end
 local _, ogerr = pcall(function()
     local stats = loadFile("mod/stats")
     local imports = loadFile("mod/imports")
-    loadFile("mod/MainMod", {modName, path, loadFile, stats, imports, useCustomErrorChecker})
+    loadFile("mod/MainMod", { modName, path, loadFile, stats, imports, useCustomErrorChecker })
 end)
 
 if (ogerr) then
@@ -22,11 +22,11 @@ if (ogerr) then
         errorChecker.registerError()
 
         errorChecker.mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED,
-                                     function(_, IsContin)
-            local room = Game():GetRoom()
+            function(_, IsContin)
+                local room = Game():GetRoom()
 
-            for i = 0, 8 do room:RemoveDoor(i) end
-        end)
+                for i = 0, 8 do room:RemoveDoor(i) end
+            end)
 
         local str = errorChecker.formatError(ogerr)
 
@@ -61,7 +61,7 @@ if (ogerr) then
         error()
     else
         Isaac.ConsoleOutput(modName ..
-                                " has hit an error, see Log.txt for more info\n")
+            " has hit an error, see Log.txt for more info\n")
         Isaac.ConsoleOutput(
             "Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt")
         Isaac.DebugString("-- START OF " .. modName:upper() .. " ERROR --")

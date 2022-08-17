@@ -1,111 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-	<meta charset="utf-8">
-	<title>Template Character Mod</title>
-	<link rel="stylesheet" href="../css/sidenav.css" media="screen" />
-	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-</head>
-<script>
-	function openSlideMenu() {
-		document.getElementById('menu').style.width = '250px';
-		document.getElementById('content').style.marginLeft = '250px';
-	}
+  <head>
+    <meta charset="utf-8">
+    <title>Template Character Mod</title>
+    <link rel="stylesheet" href="../css/sidenav.css" media="screen"/>
+    <script defer="defer" src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  </head>
+  <script>
+    function openSlideMenu() {
+      document
+        .getElementById('menu')
+        .style
+        .width = '250px';
+      document
+        .getElementById('content')
+        .style
+        .marginLeft = '250px';
+    }
 
-	function closeSideMenu() {
-		document.getElementById('menu').style.width = '0px';
-		document.getElementById('content').style.marginLeft = '0px';
-	}
-</script>
+    function closeSideMenu() {
+      document
+        .getElementById('menu')
+        .style
+        .width = '0px';
+      document
+        .getElementById('content')
+        .style
+        .marginLeft = '0px';
+    }
+  </script>
 
+  <body>
+    <div id="content">
+      <nav id="menu" class="nav">
+        <a href="#" class="close" onclick="closeSideMenu()">
+          <i class="fas fa-times"></i>
+        </a>
+        <a href="../index.html">Intro</a>
+        <a href="Playername.html">Playername Image</a>
+        <a href="StagePortrait.html">Stage Portrait</a>
+        <a href="CharacterCostume.html">Character Costume</a>
+        <a href="PlayersXML.html">Players.xml</a>
+        <a href="CharacterMenu.html">Character menu</a>
+        <a href="DeathPortraits.html">Death Portraits</a>
+        <a href="AnimationEditor.html">Animation Editor</a>
+        <a href="CoopMenu.html">Coop Menu</a>
+        <a href="StatsLua.html">Stats.lua</a>
+        <a href="Metadata.html">Metadata</a>
+        <a href="Uploading.html">Uploading</a>
+        <a href="Workshop.html">Workshop</a>
+        <a href="FAQ.html">FAQ</a>
+      </nav>
 
-<body>
-	<div id="content">
-		<nav id="menu" class="nav">
-			<a href="#" class="close" onclick="closeSideMenu()">
-				<i class="fas fa-times"></i>
-			</a>
-			<a href="../index.html">Intro</a>
-			<a href="Playername.html">Playername Image</a>
-			<a href="StagePortrait.html">Stage Portrait</a>
-			<a href="CharacterCostume.html">Character Costume</a>
-			<a href="PlayersXML.html">Players.xml</a>
-			<a href="CharacterMenu.html">Character menu</a>
-			<a href="DeathPortraits.html">Death Portraits</a>
-			<a href="AnimationEditor.html">Animation Editor</a>
-			<a href="CoopMenu.html">Coop Menu</a>
-			<a href="StatsLua.html">Stats.lua</a>
-			<a href="Metadata.html">Metadata</a>
-			<a href="Uploading.html">Uploading</a>
-			<a href="Workshop.html">Workshop</a>
-			<a href="FAQ.html">FAQ</a>
-		</nav>
-
-		<header>
-			<span class="slide">
-				<a href="#" onclick="openSlideMenu()">
-					<i class="fas fa-bars"></i>
-				</a>
-			</span>
-			<h1>Character Template ReadMe</h1>
-		</header>
-		<section class="tripSection">
-			
-		</section>
-		<section class="sectionContent">
-			<title>Why is my image appearing as a messed up / black square?</title>
-			<p>This is because you need to save your image as a 32-bit (8bpc) png.</p>
-			<title>Is there any way to make my code easier to read?</title>
-			<p>Yes! Use a code editor to edit your code. A good free one is <a
-					href="https://notepad-plus-plus.org/">Notepad++</a></p>
-			<title>How do I get to where I have installed Isaac?</title>
-			<p>If you don't know how to get to your Isaac install, do this.</p>
-				<ol>
-					<li>Open Steam</li>
-					<li>Right click the game</li>
-					<li>Go down to Manage</li>
-					<li>Click Browse Local Files</li>
-				</ol>
-			<title>Help i've found a bug!!</title>
-			<p>Calm down! You can open an issue on the github page <a href="https://github.com/manaphoenix/IsaacTemplates/issues">here</a></p>
-			<title>I have a suggestion for the template.</title>
-			<p>Issues on the github page are just for that! you can find it <a href="https://github.com/manaphoenix/IsaacTemplates/issues">here</a></p>
-			<title>Can I use the default error checker?</title>
-			<p>Yes. You can disable my custom error checker in the <code>main.lua</code> file, at the very top just set the custom error checker variable to false!</p>
-			<title>What if I don't want to make a tainted Character?</title>
-			<p>Simple, in <code>stats.lua</code> set the enabled variable of the tainted character to false. then in <code>players.xml</code> just remove the second tainted character.</p>
-			<title>Imports.lua?</title>
-			<p>This is a file for adding in content from other files. In other words its for those who know what to do with it. If you don't need it just leave it be.</p>
-		</section>
-		<footer>
-			<div>
-				<label>Author: Manaphoenix</label>
-				<label>
-					<i class="fab fa-github"></i>
-					<a href="https://github.com/manaphoenix">Github</a>
-				</label>
-				<label>
-					<i class="fab fa-steam"></i>
-					<a href="https://steamcommunity.com/id/manaphoenix/">Steam</a>
-				</label>
-				<label>
-					<i class="fab fa-discord"></i>
-					<a href="https://discord.gg/isaac">Isaac Discord</a>
-				</label>
-				<label>
-					<i class="fab fa-discord"></i>
-					<a href="https://discord.gg/3eACyXaffZ">Modding of Isaac Discord</a>
-				</label>
-				<label>
-					<script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'V7V2BYH1S');kofiwidget2.draw();</script> 
-				</label>
-			</div>
-			<div class="footerLeftSide">
-				<label>V2</label>
-			</div>
-		</footer>
-	</div>
-</body>
+      <header>
+        <span class="slide">
+          <a href="#" onclick="openSlideMenu()">
+            <i class="fas fa-bars"></i>
+          </a>
+        </span>
+        <h1>Character Template ReadMe</h1>
+      </header>
+      <section class="tripSection"></section>
+      <section class="sectionContent">
+        <title>Why is my image appearing as a messed up / black square?</title>
+        <p>This is because you need to save your image as a 32-bit (8bpc) png.</p>
+        <title>Is there any way to make my code easier to read?</title>
+        <p>Yes! Use a code editor to edit your code. A good free one is
+          <a href="https://notepad-plus-plus.org/">Notepad++</a>
+        </p>
+        <title>How do I get to where I have installed Isaac?</title>
+        <p>If you don't know how to get to your Isaac install, do this.</p>
+        <ol>
+          <li>Open Steam</li>
+          <li>Right click the game</li>
+          <li>Go down to Manage</li>
+          <li>Click Browse Local Files</li>
+        </ol>
+        <title>Help i've found a bug!!</title>
+        <p>Calm down! You can open an issue on the github page
+          <a href="https://github.com/manaphoenix/IsaacTemplates/issues">here</a>
+        </p>
+        <title>I have a suggestion for the template.</title>
+        <p>Issues on the github page are just for that! you can find it
+          <a href="https://github.com/manaphoenix/IsaacTemplates/issues">here</a>
+        </p>
+        <title>Can I use the default error checker?</title>
+        <p>Yes. You can disable my custom error checker in the
+          <code>main.lua</code>
+          file, at the very top just set the custom error checker variable to false!</p>
+        <title>What if I don't want to make a tainted Character?</title>
+        <p>Simple, in
+          <code>stats.lua</code>
+          set the enabled variable of the tainted character to false. then in
+          <code>players.xml</code>
+          just remove the second tainted character.</p>
+        <title>Imports.lua?</title>
+        <p>This is a file for adding in content from other files. In other words its for those who know what to do with it. If you don't need it just leave it be.</p>
+      </section>
+      <footer>
+        <div>
+          <label>Author: Manaphoenix</label>
+          <label>
+            <i class="fab fa-github"></i>
+            <a href="https://github.com/manaphoenix">Github</a>
+          </label>
+          <label>
+            <i class="fab fa-steam"></i>
+            <a href="https://steamcommunity.com/id/manaphoenix/">Steam</a>
+          </label>
+          <label>
+            <i class="fab fa-discord"></i>
+            <a href="https://discord.gg/isaac">Isaac Discord</a>
+          </label>
+          <label>
+            <i class="fab fa-discord"></i>
+            <a href="https://discord.gg/3eACyXaffZ">Modding of Isaac Discord</a>
+          </label>
+          <label>
+            <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+            <script type='text/javascript'>
+              kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'V7V2BYH1S');
+              kofiwidget2.draw();
+            </script>
+          </label>
+        </div>
+        <div class="footerLeftSide">
+          <label>V2</label>
+        </div>
+      </footer>
+    </div>
+  </body>
 
 </html>

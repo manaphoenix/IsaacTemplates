@@ -1,6 +1,6 @@
 -- Imports --
 local modName, path, loadFile, stats, imports, useCustomErrorChecker =
-    table.unpack(...)
+table.unpack(...)
 
 do
     if (useCustomErrorChecker) then
@@ -21,7 +21,7 @@ do
 
         local function costume(costume)
             local cost = Isaac.GetCostumeIdByPath(
-                             "gfx/characters/" .. costume .. ".anm2")
+                "gfx/characters/" .. costume .. ".anm2")
             if (cost == -1) then
                 errorChecker.printError("No costume found by the name of", costume)
             end
@@ -43,7 +43,7 @@ do
                     local item = items[i]
                     if type(item) ~= "table" then
                         errorChecker.printError("Item Entry #", i,
-                                         " is not in the correct format!")
+                            " is not in the correct format!")
                         errorChecker.printError(
                             "Please make sure its in the format AddItem(ITEMID, REMOVECOSTUME)")
                     else
@@ -61,7 +61,7 @@ do
         local function checkGeneric(val, name, def)
             if val == nil then
                 errorChecker.printError("Invalid Entry for", name,
-                                 "Are you sure your typing it right?")
+                    "Are you sure your typing it right?")
             end
             if def and val == -1 then
                 errorChecker.printError("Entry", name, "is not found!")
@@ -112,7 +112,7 @@ do
             checkGeneric(character.pill, "pill", -1)
 
             checkGeneric(character.charge, "charge")
-            
+
 
             if (errorChecker.getErrorCount() == 1) then
                 errorChecker.clearErrors()
@@ -134,15 +134,15 @@ do
             errorChecker.setFile("stats.lua")
 
             errorChecker.mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED,
-                                         function(_, IsContin)
-                local room = Game():GetRoom()
+                function(_, IsContin)
+                    local room = Game():GetRoom()
 
-                for i = 0, 8 do room:RemoveDoor(i) end
-            end)
+                    for i = 0, 8 do room:RemoveDoor(DoorSlot[i]) end
+                end)
 
             local room = Game():GetRoom()
 
-            for i = 0, 8 do room:RemoveDoor(i) end
+            for i = 0, 8 do room:RemoveDoor(DoorSlot[i]) end
             goto EndOfFile
         end
     end
@@ -170,6 +170,7 @@ local function IsChar(player)
     if (ptype ~= char and ptype ~= taintedChar) then return false end
     return true
 end
+
 -- this function will return if the player is one of your characters.
 -- returns true if it is a character of yours, false if it isn't, and nil if the player doesn't exist.
 
@@ -180,6 +181,7 @@ local function IsTainted(player)
     if (ptype == char) then return false end
     return true
 end
+
 -- returns whether the inputted character is a tainted variant of your character.
 -- returns true if is tainted, false if not, and nil for any other reason. (like it not being ur character at all)
 
@@ -194,6 +196,7 @@ local function GetPlayers()
     end
     return #players > 0 and players or nil
 end
+
 -- will return a table of all players that are your character (or nil if none are)
 -- use this to get the players when the function your using doesn't give it to you.
 
@@ -203,6 +206,7 @@ local function GetPlayerStatTable(player)
 
     return (taint and stats.tainted) or stats.default
 end
+
 -- used to automatically grab the tainted or default variant of a stat from stats.lua.
 -- based on the inputted player.
 
@@ -227,6 +231,7 @@ local function FindVariant(Tainted)
     end
     return false, nil
 end
+
 -- use this function to automatically return if one of the current players is a specific variant of your character.
 -- also returns the player that is your variant (WARNING: returns the first one found, their could be multiple!)
 -- FindVariant(true) will return true if one of the players is a tainted version of your character, false otherwise
@@ -299,6 +304,7 @@ local function postPlayerInitLate(player)
     local player = player or Isaac.GetPlayer()
     if not (IsChar(player)) then return end
     local statTable = GetPlayerStatTable(player)
+    if statTable == nil then return end
     -- Costume
     AddCostumes(statTable.costume, player)
 
@@ -343,7 +349,7 @@ mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function()
     game_started = false
 end)
 
-mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_,player)
+mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
     if (game_started == false) then return end
     if (not is_continued) then
         postPlayerInitLate(player)

@@ -1,22 +1,23 @@
 --[[
 	DO NOT CHANGE, SCROLL DOWN TO CONFIG
-]] local mt = {
-    __index = {
-        items = {},
-        costume = {},
-        trinket = {},
-        card = {},
-        pill = {},
-        charge = {},
-        name = ""
-    }
+]]
+local mt = {
+	__index = {
+		items = {},
+		costume = {},
+		trinket = {},
+		card = {},
+		pill = {},
+		charge = {},
+		name = ""
+	}
 }
 function mt.__index:AddItem(id, costume)
-    costume = costume or false
-    table.insert(self.items, {id, costume})
+	costume = costume or false
+	table.insert(self.items, { id, costume })
 end
 
-local stats = {default = {}, tainted = {}}
+local stats = { default = {}, tainted = {} }
 setmetatable(stats.default, mt)
 setmetatable(stats.tainted, mt)
 local character = stats.default
@@ -36,15 +37,15 @@ tainted.items = {}
 character.name = "Alpha" -- The name of your character (must match the players.xml file).
 
 character.stats = {
-    damage = 2.00, -- float
-    firedelay = 1.00, -- float
-    shotspeed = 1.00, -- float
-    range = 1.00, -- float
-    speed = 1.00, -- float
-    tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE, -- Enum "TearFlags"
-    tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0), -- Color, first four arguments between 0 and 1
-    flying = false, -- boolean
-    luck = 1.00 -- float
+	damage = 2.00, -- float
+	firedelay = 1.00, -- float
+	shotspeed = 1.00, -- float
+	range = 1.00, -- float
+	speed = 1.00, -- float
+	tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE, -- Enum "TearFlags"
+	tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0), -- Color, first four arguments between 0 and 1
+	flying = false, -- boolean
+	luck = 1.00 -- float
 }
 
 --[[
@@ -149,15 +150,15 @@ tainted.enabled = true -- set this to false if you don't want a tainted characte
 
 tainted.name = "Omega"
 tainted.stats = {
-    damage = 2.00,
-    firedelay = 1.00,
-    shotspeed = 1.00,
-    range = 1.00,
-    speed = 1.00,
-    tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE,
-    tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0),
-    flying = false,
-    luck = 1.00
+	damage = 2.00,
+	firedelay = 1.00,
+	shotspeed = 1.00,
+	range = 1.00,
+	speed = 1.00,
+	tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE,
+	tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0),
+	flying = false,
+	luck = 1.00
 }
 
 tainted.costume = ""

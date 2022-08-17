@@ -1,142 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-	<meta charset="utf-8">
-	<title>Template Character Mod</title>
-	<link rel="stylesheet" href="../css/sidenav.css" media="screen" />
-	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-</head>
-<script>
-	function openSlideMenu() {
-		document.getElementById('menu').style.width = '250px';
-		document.getElementById('content').style.marginLeft = '250px';
-	}
+  <head>
+    <meta charset="utf-8">
+    <title>Template Character Mod</title>
+    <link rel="stylesheet" href="../css/sidenav.css" media="screen"/>
+    <script defer="defer" src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  </head>
+  <script>
+    function openSlideMenu() {
+      document
+        .getElementById('menu')
+        .style
+        .width = '250px';
+      document
+        .getElementById('content')
+        .style
+        .marginLeft = '250px';
+    }
 
-	function closeSideMenu() {
-		document.getElementById('menu').style.width = '0px';
-		document.getElementById('content').style.marginLeft = '0px';
-	}
-</script>
+    function closeSideMenu() {
+      document
+        .getElementById('menu')
+        .style
+        .width = '0px';
+      document
+        .getElementById('content')
+        .style
+        .marginLeft = '0px';
+    }
+  </script>
 
+  <body>
+    <div id="content">
+      <nav id="menu" class="nav">
+        <a href="#" class="close" onclick="closeSideMenu()">
+          <i class="fas fa-times"></i>
+        </a>
+        <a href="../index.html">Intro</a>
+        <a href="Playername.html">Playername Image</a>
+        <a href="StagePortrait.html">Stage Portrait</a>
+        <a href="CharacterCostume.html">Character Costume</a>
+        <a href="PlayersXML.html">Players.xml</a>
+        <a href="CharacterMenu.html">Character menu</a>
+        <a href="DeathPortraits.html">Death Portraits</a>
+        <a href="AnimationEditor.html">Animation Editor</a>
+        <a href="CoopMenu.html">Coop Menu</a>
+        <a href="StatsLua.html">Stats.lua</a>
+        <a href="Metadata.html">Metadata</a>
+        <a href="Uploading.html">Uploading</a>
+        <a href="Workshop.html">Workshop</a>
+        <a href="FAQ.html">FAQ</a>
+      </nav>
 
-<body>
-	<div id="content">
-		<nav id="menu" class="nav">
-			<a href="#" class="close" onclick="closeSideMenu()">
-				<i class="fas fa-times"></i>
-			</a>
-			<a href="../index.html">Intro</a>
-			<a href="Playername.html">Playername Image</a>
-			<a href="StagePortrait.html">Stage Portrait</a>
-			<a href="CharacterCostume.html">Character Costume</a>
-			<a href="PlayersXML.html">Players.xml</a>
-			<a href="CharacterMenu.html">Character menu</a>
-			<a href="DeathPortraits.html">Death Portraits</a>
-			<a href="AnimationEditor.html">Animation Editor</a>
-			<a href="CoopMenu.html">Coop Menu</a>
-			<a href="StatsLua.html">Stats.lua</a>
-			<a href="Metadata.html">Metadata</a>
-			<a href="Uploading.html">Uploading</a>
-			<a href="Workshop.html">Workshop</a>
-			<a href="FAQ.html">FAQ</a>
-		</nav>
+      <header>
+        <span class="slide">
+          <a href="#" onclick="openSlideMenu()">
+            <i class="fas fa-bars"></i>
+          </a>
+        </span>
+        <h1>Character Template ReadMe</h1>
+      </header>
+      <section class="tripSection">
+        <figure>
+          <img src="../images/AlphaInGame.png" alt="Character In-game">
+          <figcaption>In-Game Character with Costume</figcaption>
+        </figure>
+      </section>
+      <section class="sectionContent">
+        <h1>Character Costume(s) and Character Skin</h1>
+        <p>In this section we will be working on the costume(s) for your character(s) and the Character(s) skin. We will start with the skin.</p>
+        <p>The file we will be working on can be found in
+          <code class="path">.\resources\gfx\characters\costumes</code>
+        </p>
+        <p>I highly recommended to use my template and edit it instead of trying to make your own!</p>
+        <p>If you do decide to make your own, the file needs to be 512x512</p>
+        <p>When you are done save the file as
+          <code>character_charactername.png</code>
+        </p>
+        <p>Now do this again for your tainted character (or just copy it if you want them to be the same) and name it
+          <code>character_charactername_b.png</code>
+        </p>
+        <h1>Character Costume</h1>
+        <p>Next we will create an overlay costume for the character (Like maggie's hair, or cain's eyepatch)</p>
 
-		<header>
-			<span class="slide">
-				<a href="#" onclick="openSlideMenu()">
-					<i class="fas fa-bars"></i>
-				</a>
-			</span>
-			<h1>Character Template ReadMe</h1>
-		</header>
-		<section class="tripSection">
-			<figure>
-				<img src="../images/AlphaInGame.png" alt="Character In-game">
-				<figcaption>In-Game Character with Costume</figcaption>
-			</figure>
-		</section>
-		<section class="sectionContent">
-			<h1>Character Costume(s) and Character Skin</h1>
-			<p>In this section we will be working on the costume(s) for your character(s) and the Character(s) skin. We
-				will start with the skin.</p>
-			<p>The file we will be working on can be found in <code
-					class="path">.\resources\gfx\characters\costumes</code></p>
-			<p>I highly recommended to use my template and edit it instead of trying to make your own!</p>
-			<p>If you do decide to make your own, the file needs to be 512x512</p>
-			<p>When you are done save the file as <code>character_charactername.png</code></p>
-			<p>Now do this again for your tainted character (or just copy it if you want them to be the same) and name
-				it <code>character_charactername_b.png</code></p>
-			<h1>Character Costume</h1>
-			<p>Next we will create an overlay costume for the character (Like maggie's hair, or cain's eyepatch)</p>
+        <p>
+          If you do plan on making a costume, you will still need to delete some files.
+          <ul>
+            <li>
+              <code>costumes2.xml</code>
+            </li>
+            <li>
+              <code>character_alpha_cat_ears.anm2</code>
+            </li>
+            <li>
+              <code>character_cat_ears_template.png</code>
+            </li>
+          </ul>
+        </p>
+        <p>
+          Regardless if you do a costume or not be sure to delete the
+          <code>character_cat_ears_template_reference.psd</code>
+          file when your done using it (if you do).
+        </p>
 
-			<p>
-				If you do plan on making a costume, you will still need to delete some files.
-				<ul>
-					<li><code>costumes2.xml</code></li>
-					<li><code>character_alpha_cat_ears.anm2</code></li>
-					<li><code>character_cat_ears_template.png</code></li>
-				</ul>
-			</p>
-			<p>
-				Regardless if you do a costume or not be sure to delete the
-				<code>character_cat_ears_template_reference.psd</code> file
-				when your done using it (if you do).
-			</p>
+        <p>
+          Included in this template is a simple cat ears costume. along with its PSD reference I used to create it.</p>
+        <p>
+          This template allows for applying costumes to the tainted and regular character separately.</p>
+        <p>
+          You must put all the different files I made in the same place as I put them.</p>
+        <p>
+          anm2s in
+          <code class="path">\character</code>
+          and pngs in
+          <code class="path">\character\costumes</code>.
+        </p>
+        <p>Creating a costume takes 4 steps.</p>
+        <ol>
+          <li>Make the costume frames in
+            <code class="path">.\resources\gfx\characters\costumes</code>
+          </li>
+          - you need 8 frames total, 1 for each each facing direction + 1 for each direction while firing
+          <li>Setup the anm2 in
+            <code class="path">.\resources\gfx\characters</code>
+          </li>
+          - you can use the animation editor in the tools folder of the Isaac install (This is covered in
+          <a href="CharacterMenu.html">Character menu</a>)
+          <li>Tell the game your costume exists by adding it to
+            <code>costumes2.xml</code>
+            found in
+            <b>.\content</b>
+          </li>
+          <li>Apply the costume in the stats.lua file</li>
+        </p>
+      </ol>
 
-			<p>
-				Included in this template is a simple cat ears costume. along with its PSD reference I used to create
-				it.</p>
-			<p>
-				This template allows for applying costumes to the tainted and regular character separately.</p>
-			<p>
-				You must put all the different files I made in the same place as I put them.</p>
-			<p>
-				anm2s in <code class="path">\character</code> and pngs in <code class="path">\character\costumes</code>.
-			</p>
-			<p>Creating a costume takes 4 steps.</p>
-			<ol>
-				<li>Make the costume frames in <code class="path">.\resources\gfx\characters\costumes</code></li>
-				- you need 8 frames total, 1 for each each facing direction + 1 for each direction while firing
-				<li>Setup the anm2 in <code class="path">.\resources\gfx\characters</code></li>
-				- you can use the animation editor in the tools folder of the Isaac install (This is covered in <a
-					href="CharacterMenu.html">Character menu</a>)
-				<li>Tell the game your costume exists by adding it to <code>costumes2.xml</code> found in
-					<b>.\content</b>
-				</li>
-				<li>Apply the costume in the stats.lua file</li>
-				</p>
-			</ol>
-
-		</section>
-		<footer>
-			<div>
-				<label>Author: Manaphoenix</label>
-				<label>
-					<i class="fab fa-github"></i>
-					<a href="https://github.com/manaphoenix">Github</a>
-				</label>
-				<label>
-					<i class="fab fa-steam"></i>
-					<a href="https://steamcommunity.com/id/manaphoenix/">Steam</a>
-				</label>
-				<label>
-					<i class="fab fa-discord"></i>
-					<a href="https://discord.gg/isaac">Isaac Discord</a>
-				</label>
-				<label>
-					<i class="fab fa-discord"></i>
-					<a href="https://discord.gg/3eACyXaffZ">Modding of Isaac Discord</a>
-				</label>
-				<label>
-					<script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'V7V2BYH1S');kofiwidget2.draw();</script> 
-				</label>
-			</div>
-			<div class="footerLeftSide">
-				<label>V2</label>
-			</div>
-		</footer>
-	</div>
+    </section>
+    <footer>
+      <div>
+        <label>Author: Manaphoenix</label>
+        <label>
+          <i class="fab fa-github"></i>
+          <a href="https://github.com/manaphoenix">Github</a>
+        </label>
+        <label>
+          <i class="fab fa-steam"></i>
+          <a href="https://steamcommunity.com/id/manaphoenix/">Steam</a>
+        </label>
+        <label>
+          <i class="fab fa-discord"></i>
+          <a href="https://discord.gg/isaac">Isaac Discord</a>
+        </label>
+        <label>
+          <i class="fab fa-discord"></i>
+          <a href="https://discord.gg/3eACyXaffZ">Modding of Isaac Discord</a>
+        </label>
+        <label>
+          <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+          <script type='text/javascript'>
+            kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'V7V2BYH1S');
+            kofiwidget2.draw();
+          </script>
+        </label>
+      </div>
+      <div class="footerLeftSide">
+        <label>V2</label>
+      </div>
+    </footer>
+  </div>
 </body>
 
 </html>

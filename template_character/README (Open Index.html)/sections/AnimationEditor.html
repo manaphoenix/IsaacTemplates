@@ -1,146 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-	<meta charset="utf-8">
-	<title>Template Character Mod</title>
-	<link rel="stylesheet" href="../css/sidenav.css" media="screen" />
-	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-</head>
-<script>
-	function openSlideMenu() {
-		document.getElementById('menu').style.width = '250px';
-		document.getElementById('content').style.marginLeft = '250px';
-	}
+  <head>
+    <meta charset="utf-8">
+    <title>Template Character Mod</title>
+    <link rel="stylesheet" href="../css/sidenav.css" media="screen"/>
+    <script defer="defer" src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  </head>
+  <script>
+    function openSlideMenu() {
+      document
+        .getElementById('menu')
+        .style
+        .width = '250px';
+      document
+        .getElementById('content')
+        .style
+        .marginLeft = '250px';
+    }
 
-	function closeSideMenu() {
-		document.getElementById('menu').style.width = '0px';
-		document.getElementById('content').style.marginLeft = '0px';
-	}
-</script>
+    function closeSideMenu() {
+      document
+        .getElementById('menu')
+        .style
+        .width = '0px';
+      document
+        .getElementById('content')
+        .style
+        .marginLeft = '0px';
+    }
+  </script>
 
+  <body>
+    <div id="content">
+      <nav id="menu" class="nav">
+        <a href="#" class="close" onclick="closeSideMenu()">
+          <i class="fas fa-times"></i>
+        </a>
+        <a href="../index.html">Intro</a>
+        <a href="Playername.html">Playername Image</a>
+        <a href="StagePortrait.html">Stage Portrait</a>
+        <a href="CharacterCostume.html">Character Costume</a>
+        <a href="PlayersXML.html">Players.xml</a>
+        <a href="CharacterMenu.html">Character menu</a>
+        <a href="DeathPortraits.html">Death Portraits</a>
+        <a href="AnimationEditor.html">Animation Editor</a>
+        <a href="CoopMenu.html">Coop Menu</a>
+        <a href="StatsLua.html">Stats.lua</a>
+        <a href="Metadata.html">Metadata</a>
+        <a href="Uploading.html">Uploading</a>
+        <a href="Workshop.html">Workshop</a>
+        <a href="FAQ.html">FAQ</a>
+      </nav>
 
-<body>
-	<div id="content">
-		<nav id="menu" class="nav">
-			<a href="#" class="close" onclick="closeSideMenu()">
-				<i class="fas fa-times"></i>
-			</a>
-			<a href="../index.html">Intro</a>
-			<a href="Playername.html">Playername Image</a>
-			<a href="StagePortrait.html">Stage Portrait</a>
-			<a href="CharacterCostume.html">Character Costume</a>
-			<a href="PlayersXML.html">Players.xml</a>
-			<a href="CharacterMenu.html">Character menu</a>
-			<a href="DeathPortraits.html">Death Portraits</a>
-			<a href="AnimationEditor.html">Animation Editor</a>
-			<a href="CoopMenu.html">Coop Menu</a>
-			<a href="StatsLua.html">Stats.lua</a>
-			<a href="Metadata.html">Metadata</a>
-			<a href="Uploading.html">Uploading</a>
-			<a href="Workshop.html">Workshop</a>
-			<a href="FAQ.html">FAQ</a>
-		</nav>
+      <header>
+        <span class="slide">
+          <a href="#" onclick="openSlideMenu()">
+            <i class="fas fa-bars"></i>
+          </a>
+        </span>
+        <h1>Character Template ReadMe</h1>
+      </header>
+      <section class="tripSection"></section>
+      <section class="sectionContent">
+        <h1>Animation Editor</h1>
+        <p>Now, Isaac doesn't actually directly import png files, instead it reads a special file called an anm2 file.</p>
+        <p>This file tells Isaac how the text should be animated and what not.</p>
+        <p>We will be using this tool associate our images we just made with the actual character now.</p>
+        <p>you can find this tool in the tools folder of the Isaac Directory.</p>
+        <p>My suggestion is to associate .anm2 files to this editor so its easier to open them in the future.</p>
+        <p>To do this you will need to open the editor in Administrator.</p>
+        <p>Go up to settings, and click the "Associate ..." line.</p>
+        <p>you can then close the application if you wish, and just go to the folder where the anm2 file is and open them directly.</p>
+        <p>if you do so, skip over this next line.</p>
+        <p>
+          Once the editor is open, go up to File, and click Open. then you will need to go
+          <code class="path">.\content\gfx</code>
+        </p>
+        <p>
+          open
+          <code>charactermenu.anm2</code>
+          On the right side of the program you will see the animations that exist within this anm2. what you need to do is click on Alpha, hit duplicate, and name it whatever you character's name is in players.xml (including caps) Then delete Alpha.
+        </p>
+        <p>
+          With your character selected on the left side you should see the bottom panel called the "timeline". when you click one of those yellow squares with a dot it will let you edit that frame of the animation. the only frame you
+          <b>Need</b>
+          to edit is the "Name" frame. just ensure your characters name is selected with the red bounding box.
+        </p>
+        <p>
+          Once your done save the file (Ctrl+S or File->Save). It will warn you about overwriting an existing file. hit accept. for your tainted character you will need to do the same thing but in the
+          <code>charactermenualt.anm2</code>
+          file
+        </p>
+        <p>
+          This same process is repeated for characterportraits.anm2 and characterportraitsalt.anm2, only the frame there you need to edit is the Portrait.
+        </p>
 
-		<header>
-			<span class="slide">
-				<a href="#" onclick="openSlideMenu()">
-					<i class="fas fa-bars"></i>
-				</a>
-			</span>
-			<h1>Character Template ReadMe</h1>
-		</header>
-		<section class="tripSection">
+        <h1>Death Portraits anm2</h1>
+        <p>
+          Ok, now we just need to do the death screen anm2, so open
+          <code>death screen.anm2</code>
+          Duplicate Alpha, renaming it your characters name. Then delete Alpha.
+        </p>
+        <p>
+          Now this is where it's a little different, the only thing you need to change in this file is the Name sprite. If you want to change other things go ahead of course, but I won't be covering that.
+        </p>
+        <p>
+          Once your done save it. For your tainted character you need to do the same thing, but in
+          <code>death screen alt.anm2</code>.
+        </p>
 
-		</section>
-		<section class="sectionContent">
-			<h1>Animation Editor</h1>
-			<p>Now, Isaac doesn't actually directly import png files, instead it reads a special file called an anm2
-				file.</p>
-			<p>This file tells Isaac how the text should be animated and what not.</p>
-			<p>We will be using this tool associate our images we just made with the actual character now.</p>
-			<p>you can find this tool in the tools folder of the Isaac Directory.</p>
-			<p>My suggestion is to associate .anm2 files to this editor so its easier to open them in the future.</p>
-			<p>To do this you will need to open the editor in Administrator.</p>
-			<p>Go up to settings, and click the "Associate ..." line.</p>
-			<p>you can then close the application if you wish, and just go to the folder where the anm2 file is and open
-				them directly.</p>
-			<p>if you do so, skip over this next line.</p>
-			<p>
-				Once the editor is open, go up to File, and click Open.
-				then you will need to go <code class="path">.\content\gfx</code>
-			</p>
-			<p>
-				open <code>charactermenu.anm2</code>
-				On the right side of the program you will see the animations that exist within this anm2.
-				what you need to do is click on Alpha, hit duplicate, and name it whatever you character's name is in
-				players.xml (including caps)
-				Then delete Alpha.
-			</p>
-			<p>
-				With your character selected on the left side you should see the bottom panel called the "timeline".
-				when you click one of those yellow squares with a dot it will let you edit that frame of the
-				animation.
-				the only frame you <b>Need</b> to edit is the "Name" frame.
-				just ensure your characters name is selected with the red bounding box.
-			</p>
-			<p>
-				Once your done save the file (Ctrl+S or File->Save). It will warn you about overwriting an existing
-				file. hit accept. for your tainted character you will need to do the same thing but in the
-				<code>charactermenualt.anm2</code>
-				file
-			</p>
-			<p>
-				This same process is repeated for characterportraits.anm2 and characterportraitsalt.anm2, only the frame
-				there you need to edit is the Portrait.
-			</p>
-
-			<h1>Death Portraits anm2</h1>
-			<p>
-				Ok, now we just need to do the death screen anm2, so open <code>death screen.anm2</code>
-				Duplicate Alpha, renaming it your characters name.
-				Then delete Alpha.
-			</p>
-			<p>
-				Now this is where it's a little different, the only thing you need to change in this file is the Name
-				sprite.
-				If you want to change other things go ahead of course, but I won't be covering that.
-			</p>
-			<p>
-				Once your done save it.
-
-				For your tainted character you need to do the same thing, but in <code>death screen alt.anm2</code>.
-			</p>
-
-		</section>
-		<footer>
-			<div>
-				<label>Author: Manaphoenix</label>
-				<label>
-					<i class="fab fa-github"></i>
-					<a href="https://github.com/manaphoenix">Github</a>
-				</label>
-				<label>
-					<i class="fab fa-steam"></i>
-					<a href="https://steamcommunity.com/id/manaphoenix/">Steam</a>
-				</label>
-				<label>
-					<i class="fab fa-discord"></i>
-					<a href="https://discord.gg/isaac">Isaac Discord</a>
-				</label>
-				<label>
-					<i class="fab fa-discord"></i>
-					<a href="https://discord.gg/3eACyXaffZ">Modding of Isaac Discord</a>
-				</label>
-				<label>
-					<script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'V7V2BYH1S');kofiwidget2.draw();</script> 
-				</label>
-			</div>
-			<div class="footerLeftSide">
-				<label>V2</label>
-			</div>
-		</footer>
-	</div>
-</body>
+      </section>
+      <footer>
+        <div>
+          <label>Author: Manaphoenix</label>
+          <label>
+            <i class="fab fa-github"></i>
+            <a href="https://github.com/manaphoenix">Github</a>
+          </label>
+          <label>
+            <i class="fab fa-steam"></i>
+            <a href="https://steamcommunity.com/id/manaphoenix/">Steam</a>
+          </label>
+          <label>
+            <i class="fab fa-discord"></i>
+            <a href="https://discord.gg/isaac">Isaac Discord</a>
+          </label>
+          <label>
+            <i class="fab fa-discord"></i>
+            <a href="https://discord.gg/3eACyXaffZ">Modding of Isaac Discord</a>
+          </label>
+          <label>
+            <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+            <script type='text/javascript'>
+              kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'V7V2BYH1S');
+              kofiwidget2.draw();
+            </script>
+          </label>
+        </div>
+        <div class="footerLeftSide">
+          <label>V2</label>
+        </div>
+      </footer>
+    </div>
+  </body>
 
 </html>
