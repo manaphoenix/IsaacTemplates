@@ -83,7 +83,7 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
 
     if CriticalHit then
         local data = player:GetData()
-    
+
         if (playerStat.criticalChance and cache & CacheFlag.CACHE_CRIT_CHANCE == CacheFlag.CACHE_CRIT_CHANCE) then
             data.critChance = data.critChance + playerStat.criticalChance
         end
