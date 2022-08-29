@@ -82,18 +82,23 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
     end
 end)
 
+---applies the costume to the player
+---@param CostumeName string
+---@param player EntityPlayer
 local function AddCostume(CostumeName, player) -- actually adds the costume.
     local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. CostumeName .. ".anm2")
     if (cost ~= -1) then player:AddNullCostume(cost) end
 end
 
+---goes through each costume and applies it
+---@param AppliedCostume table
+---@param player EntityPlayer
 local function AddCostumes(AppliedCostume, player) -- costume logic
+    if #AppliedCostume == 0 then return end
     if (type(AppliedCostume) == "table") then
         for i = 1, #AppliedCostume do
             AddCostume(AppliedCostume[i], player)
         end
-    else
-        AddCostume(AppliedCostume, player)
     end
 end
 
@@ -137,6 +142,8 @@ local function postPlayerInitLate(player)
     end
 end
 
+---@param _ any
+---@param Is_Continued boolean
 mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, Is_Continued)
     if (not Is_Continued) then
         is_continued = false
@@ -149,6 +156,8 @@ mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function()
     game_started = false
 end)
 
+---@param _ any
+---@param player EntityPlayer
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
     if (game_started == false) then return end
     if (not is_continued) then
