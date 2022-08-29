@@ -3,21 +3,27 @@ local module = {}
 ---@class AllCharacters
 local _characters = {}
 
----Gets the character by name
----@param name string the name of the normal variant of the character, cap sensitive
+---returns the CharacterSet that the player is playing
+---@param player EntityPlayer the player
 ---@return CharacterSet | nil
-function _characters:getCharacter(name)
+function _characters:getCharacterSet(player)
+    local ptype = player:GetPlayerType()
+
     for _, v in ipairs(self) do
         if type(v) == "table" then
-            if v.normal.name == name then
-                return v
+            ---@cast v CharacterSet
+            local normalVar = Isaac.GetPlayerTypeByName(v.normal.name)
+            if ptype == normalVar then return v end
+            if v.hasTainted then
+                local taintedVar = Isaac.GetPlayerTypeByName(v.tainted.name, true)
+                if ptype == taintedVar then return v end
             end
         end
     end
 end
 
----Gets the character by name
----@param player EntityPlayer the name of the normal variant of the character, cap sensitive
+---Returns the Character based on variant
+---@param player EntityPlayer the player
 ---@return Character | nil
 function _characters:getCharacterByVariant(player)
     local ptype = player:GetPlayerType()
@@ -35,14 +41,20 @@ function _characters:getCharacterByVariant(player)
     end
 end
 
----returns if given name is one of your characters
----@param name string the name of either variant of the character, cap sensitive
+---returns if given player is one of your characters
+---@param player EntityPlayer the player
 ---@return boolean
-function _characters:isChar(name)
+function _characters:isChar(player)
+    local ptype = player:GetPlayerType()
+
     for _, v in ipairs(self) do
         if type(v) == "table" then
-            if v.normal.name == name or v.tainted.name == name then
-                return true
+            ---@cast v CharacterSet
+            local normalVar = Isaac.GetPlayerTypeByName(v.normal.name)
+            if ptype == normalVar then return true end
+            if v.hasTainted then
+                local taintedVar = Isaac.GetPlayerTypeByName(v.tainted.name, true)
+                if ptype == taintedVar then return true end
             end
         end
     end

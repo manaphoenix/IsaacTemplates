@@ -19,7 +19,7 @@ local is_continued = false -- a hacky check for if the game is continued.
 ---@return boolean | nil
 local function IsChar(player)
     if (player == nil) then return nil end
-    if characters:isChar(player:GetName()) then return true end
+    if characters:isChar(player) then return true end
     return false
 end
 
@@ -29,8 +29,7 @@ local function GetPlayers()
     local players = {}
     for i = 0, game:GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
-        local pname = player:GetName()
-        if (characters:isChar(pname)) then
+        if (characters:isChar(player)) then
             table.insert(players, player)
         end
     end
