@@ -114,13 +114,6 @@ local function addCostumes(AppliedCostume, player) -- costume logic
     end
 end
 
----@class CriticalHit
----@field callbacks table
----@field items table
----@field players table
----@field entities table
-local CriticalHit = {}
-
 ---@param player? EntityPlayer
 local function postPlayerInitLate(player)
     player = player or Isaac.GetPlayer()
