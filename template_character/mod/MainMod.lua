@@ -86,7 +86,7 @@ end)
 ---applies the costume to the player
 ---@param CostumeName string
 ---@param player EntityPlayer
-local function AddCostume(CostumeName, player) -- actually adds the costume.
+local function applyCostume(CostumeName, player) -- actually adds the costume.
     local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. CostumeName .. ".anm2")
     if (cost ~= -1) then player:AddNullCostume(cost) end
 end
@@ -94,11 +94,11 @@ end
 ---goes through each costume and applies it
 ---@param AppliedCostume table
 ---@param player EntityPlayer
-local function AddCostumes(AppliedCostume, player) -- costume logic
+local function addCostumes(AppliedCostume, player) -- costume logic
     if #AppliedCostume == 0 then return end
     if (type(AppliedCostume) == "table") then
         for i = 1, #AppliedCostume do
-            AddCostume(AppliedCostume[i], player)
+            applyCostume(AppliedCostume[i], player)
         end
     end
 end
@@ -110,7 +110,7 @@ local function postPlayerInitLate(player)
     local statTable = characters:getCharacterDescription(player)
     if statTable == nil then return end
     -- Costume
-    AddCostumes(statTable.costume, player)
+    addCostumes(statTable.costume, player)
 
     local items = statTable.items
     if (#items > 0) then
