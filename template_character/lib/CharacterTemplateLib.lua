@@ -132,7 +132,7 @@ function CharacterSet:AddItem(id, costume, tainted)
 end
 
 ---@param id PillEffect|Card the Id of the pocket item
----@param isPill? boolean whether to show that collectibles costume (if it has one), defaults to false
+---@param isPill? boolean whether pocket item is a pill, defaults to false
 ---@param tainted? boolean whether you are setting the tainted variant, default is false
 function CharacterSet:SetPocketItem(id, isPill, tainted)
     if tainted then
