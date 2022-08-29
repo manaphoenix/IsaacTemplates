@@ -20,7 +20,7 @@ local function GetPlayers()
     local players = {}
     for i = 0, game:GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
-        if (characters:isChar(player)) then
+        if (characters:isACharacterDescription(player)) then
             table.insert(players, player)
         end
     end
