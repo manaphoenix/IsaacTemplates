@@ -38,7 +38,7 @@ end
 
 -- Character Code
 
----@param _ table
+---@param _ any
 ---@param player EntityPlayer
 ---@param cache CacheFlag | BitSet128
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
