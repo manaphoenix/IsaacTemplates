@@ -99,7 +99,7 @@ function CharacterSet:AddCostume(id, tainted)
     end
 end
 
----@param charge number The string id of the costume
+---@param charge number The charge value
 ---@param tainted? boolean whether you are setting the tainted variant, default is false
 function CharacterSet:SetCharge(charge, tainted)
     if tainted then
@@ -109,7 +109,7 @@ function CharacterSet:SetCharge(charge, tainted)
     end
 end
 
----@param trinket TrinketType The string id of the costume
+---@param trinket TrinketType The id of the trinket
 ---@param tainted? boolean whether you are setting the tainted variant, default is false
 function CharacterSet:SetTrinket(trinket, tainted)
     if tainted then
