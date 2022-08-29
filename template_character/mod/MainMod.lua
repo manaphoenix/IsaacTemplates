@@ -29,6 +29,16 @@ end
 
 -- Character Code
 
+---converts tearRate to the FireDelay formula, then modifies the FireDelay by the request amount, returns Modified FireDelay
+---@param tearRate number
+---@param val number
+---@return number
+local function ModifyTearRate(tearRate, val)
+    local currentTears = 30 / (tearRate + 1)
+    local newTears = currentTears + val
+    return math.max((30 / newTears) - 1, -0.9999)
+end
+
 ---@param _ any
 ---@param player EntityPlayer
 ---@param cache CacheFlag | BitSet128
@@ -42,7 +52,7 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
     end
 
     if (cache & CacheFlag.CACHE_FIREDELAY == CacheFlag.CACHE_FIREDELAY) then
-        player.MaxFireDelay = player.MaxFireDelay + playerStat.Firedelay
+        player.MaxFireDelay = ModifyTearRate(player.MaxFireDelay, playerStat.Firedelay)
     end
 
     if (cache & CacheFlag.CACHE_SHOTSPEED == CacheFlag.CACHE_SHOTSPEED) then
