@@ -1,64 +1,51 @@
 local CharacterBuilder = {}
 
+-- internal map used to speed up indexing
+-- in form:
+--[[
+    [PlayerTypeID] = {
+        pointer : CharacterDescription,
+        tainted : boolean,
+        set : CharacterSet
+    }
+
+    pointer points to the CharacterDescription that the player type is
+    and tainted is a boolean that is true if that CharacterDescription is for a tainted variant.
+    set is the CharacterSet the CharacterDescription belongs to.
+]]
+local _CharacterDescriptionMap = {}
+
 ---@class AllCharacters
-local characterSets = {}
+local _characterSets = {}
 
 ---returns the CharacterSet that the player is playing
 ---@param player EntityPlayer the player
 ---@return CharacterSet | nil
-function characterSets:getCharacterSet(player)
+function _characterSets:getCharacterSet(player)
     local ptype = player:GetPlayerType()
+    if (not _CharacterDescriptionMap[ptype]) then return nil end
 
-    for _, v in ipairs(self) do
-        if type(v) == "table" then
-            ---@cast v CharacterSet
-            local normalVar = Isaac.GetPlayerTypeByName(v.normal.name)
-            if ptype == normalVar then return v end
-            if v.hasTainted then
-                local taintedVar = Isaac.GetPlayerTypeByName(v.tainted.name, true)
-                if ptype == taintedVar then return v end
-            end
-        end
-    end
+    return _CharacterDescriptionMap[ptype].set
 end
 
 ---Returns the CharacterDescription of the player (if there is one)
 ---@param player EntityPlayer the player
 ---@return CharacterDescription | nil
-function characterSets:getCharacterDescription(player)
+function _characterSets:getCharacterDescription(player)
     local ptype = player:GetPlayerType()
+    if (not _CharacterDescriptionMap[ptype]) then return nil end
 
-    for _, v in ipairs(self) do
-        if type(v) == "table" then
-            ---@cast v CharacterSet
-            local normalVar = Isaac.GetPlayerTypeByName(v.normal.name)
-            if ptype == normalVar then return v.normal end
-            if v.hasTainted then
-                local taintedVar = Isaac.GetPlayerTypeByName(v.tainted.name, true)
-                if ptype == taintedVar then return v.tainted end
-            end
-        end
-    end
+    return _CharacterDescriptionMap[ptype].pointer
 end
 
 ---returns two values, first is if the character is one of these characters, the second is if its the tainted variant
 ---@param player EntityPlayer the player
 ---@return boolean, boolean|nil
-function characterSets:isACharacterDescription(player)
+function _characterSets:isACharacterDescription(player)
     local ptype = player:GetPlayerType()
+    if (not _CharacterDescriptionMap[ptype]) then return false, nil end
 
-    for _, v in ipairs(self) do
-        if type(v) == "table" then
-            ---@cast v CharacterSet
-            local normalVar = Isaac.GetPlayerTypeByName(v.normal.name)
-            if ptype == normalVar then return true, false end
-            if v.hasTainted then
-                local taintedVar = Isaac.GetPlayerTypeByName(v.tainted.name, true)
-                if ptype == taintedVar then return true, true end
-            end
-        end
-    end
-    return false, nil
+    return true, _CharacterDescriptionMap[ptype].tainted
 end
 
 ---@class Stats
@@ -206,7 +193,7 @@ function CharacterBuilder.newCharacterSet(Name, isTainted)
         t.tainted.name = Name
     end
     setmetatable(t, { __index = CharacterSet })
-    table.insert(characterSets, t)
+    table.insert(_characterSets, t)
     return t
 end
 
@@ -217,7 +204,19 @@ end
 
 ---@return AllCharacters
 function CharacterBuilder.build()
-    return characterSets
+    for _, v in ipairs(_characterSets) do
+        if type(v) == "table" then
+            ---@cast v CharacterSet
+            local normalPType = Isaac.GetPlayerTypeByName(v.normal.name)
+            _CharacterDescriptionMap[normalPType] = { pointer = v.normal, tainted = false, set = v}
+            if v.hasTainted then
+                local taintedPType = Isaac.GetPlayerTypeByName(v.tainted.name, true)
+                _CharacterDescriptionMap[taintedPType] = {pointer = v.tainted, tainted = true, set = v}
+            end
+        end
+    end
+
+    return _characterSets
 end
 
 return CharacterBuilder

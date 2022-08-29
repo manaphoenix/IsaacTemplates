@@ -112,7 +112,7 @@ local function postPlayerInitLate(player)
             end
         end
         local charge = statTable.charge
-        if (player:GetActiveItem() and charge ~= -1) then
+        if (charge and player:GetActiveItem()) then
             if (charge == true) then
                 player:FullCharge()
             else
