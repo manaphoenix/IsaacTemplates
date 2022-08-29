@@ -47,39 +47,50 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
 
     local playerStat = characters:getCharacterDescription(player).stats
 
-    if (cache & CacheFlag.CACHE_DAMAGE == CacheFlag.CACHE_DAMAGE) then
+    if (playerStat.Damage and cache & CacheFlag.CACHE_DAMAGE == CacheFlag.CACHE_DAMAGE) then
         player.Damage = player.Damage + playerStat.Damage
     end
 
-    if (cache & CacheFlag.CACHE_FIREDELAY == CacheFlag.CACHE_FIREDELAY) then
+    if (playerStat.Firedelay and cache & CacheFlag.CACHE_FIREDELAY == CacheFlag.CACHE_FIREDELAY) then
         player.MaxFireDelay = calculateNewFireDelay(player.MaxFireDelay, playerStat.Firedelay)
     end
 
-    if (cache & CacheFlag.CACHE_SHOTSPEED == CacheFlag.CACHE_SHOTSPEED) then
+    if (playerStat.Shotspeed and cache & CacheFlag.CACHE_SHOTSPEED == CacheFlag.CACHE_SHOTSPEED) then
         player.ShotSpeed = player.ShotSpeed + playerStat.Shotspeed
     end
 
-    if (cache & CacheFlag.CACHE_RANGE == CacheFlag.CACHE_RANGE) then
+    if (playerStat.Range and cache & CacheFlag.CACHE_RANGE == CacheFlag.CACHE_RANGE) then
         player.TearRange = player.TearRange + playerStat.Range
     end
 
-    if (cache & CacheFlag.CACHE_SPEED == CacheFlag.CACHE_SPEED) then
+    if (playerStat.Speed and cache & CacheFlag.CACHE_SPEED == CacheFlag.CACHE_SPEED) then
         player.MoveSpeed = player.MoveSpeed + playerStat.Speed
     end
 
-    if (cache & CacheFlag.CACHE_LUCK == CacheFlag.CACHE_LUCK) then
+    if (playerStat.Luck and cache & CacheFlag.CACHE_LUCK == CacheFlag.CACHE_LUCK) then
         player.Luck = player.Luck + playerStat.Luck
     end
 
-    if (cache & CacheFlag.CACHE_FLYING == CacheFlag.CACHE_FLYING and
-        playerStat.Flying) then player.CanFly = true end
+    if (cache & CacheFlag.CACHE_FLYING == CacheFlag.CACHE_FLYING and playerStat.Flying == true) then player.CanFly = true end
 
-    if (cache & CacheFlag.CACHE_TEARFLAG == CacheFlag.CACHE_TEARFLAG) then
+    if (playerStat.Tearflags and cache & CacheFlag.CACHE_TEARFLAG == CacheFlag.CACHE_TEARFLAG) then
         player.TearFlags = player.TearFlags | playerStat.Tearflags
     end
 
-    if (cache & CacheFlag.CACHE_TEARCOLOR == CacheFlag.CACHE_TEARCOLOR) then
+    if (playerStat.Tearcolor and cache & CacheFlag.CACHE_TEARCOLOR == CacheFlag.CACHE_TEARCOLOR) then
         player.TearColor = playerStat.Tearcolor
+    end
+
+    if CriticalHit then
+        local data = player:GetData()
+    
+        if (playerStat.criticalChance and cache & CacheFlag.CACHE_CRIT_CHANCE == CacheFlag.CACHE_CRIT_CHANCE) then
+            data.critChance = data.critChance + playerStat.criticalChance
+        end
+
+        if (playerStat.criticalMultiplier and cache & CacheFlag.CACHE_CRIT_MULTIPLIER == CacheFlag.CACHE_CRIT_MULTIPLIER) then
+            data.critMultiplier = data.critMultiplier + playerStat.criticalMultiplier
+        end
     end
 end)
 
@@ -103,6 +114,13 @@ local function addCostumes(AppliedCostume, player) -- costume logic
     end
 end
 
+---@class CriticalHit
+---@field callbacks table
+---@field items table
+---@field players table
+---@field entities table
+local CriticalHit = {}
+
 ---@param player? EntityPlayer
 local function postPlayerInitLate(player)
     player = player or Isaac.GetPlayer()
@@ -111,6 +129,10 @@ local function postPlayerInitLate(player)
     if statTable == nil then return end
     -- Costume
     addCostumes(statTable.costume, player)
+
+    if CriticalHit then
+        CriticalHit:registerPlayer(player:GetPlayerType())
+    end
 
     local items = statTable.items
     if (#items > 0) then

@@ -58,6 +58,8 @@ end
 ---@field Tearflags BitSet128 | TearFlags used to give the character innate special tears
 ---@field Tearcolor Color used to give the character a special tear color
 ---@field Flying boolean is the character able to innately fly? (Base: False)
+---@field criticalMultiplier number how much your damage is multiplied by on a crit (REQUIRES Critical Hit Lib)
+---@field criticalChance number how often you get a critical hit (REQUIRES Critical Hit Lib)
 
 ---@class CharacterDescription
 ---@field name string The name of the character

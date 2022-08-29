@@ -94,6 +94,20 @@ normalStats.Tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0) -- Color, first four 
 normalStats.Flying = false
 normalStats.Luck = 1.00
 
+normalStats.criticalChance = 0
+normalStats.criticalMultiplier = 2
+--[[
+	These two stats are for if the user is Running the Critical Hit Lib
+
+	Critical Chance is how often you can crit, it is a value between 0 and 1
+	Defaults to 0
+	Critical Multiplier is how much your damage is multiplied by, it is a value between 0.01 - inf
+	(Yes, this means your critical multiplier can actually reduce your damage)
+	Defaults to 2x
+
+	if you do not set these stats and they are running your character will simply start with no critchance and 2x crit multiplier
+]]
+
 alpha:setStats(normalStats)
 
 --[[
