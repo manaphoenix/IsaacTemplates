@@ -1,7 +1,7 @@
-local Characters = require("lib.CharacterTemplateLib")
+local CharacterBuilder = require("lib.CharacterTemplateLib")
 
 -- first we make a new character
-local Alpha = Characters.newCharacter("Alpha")
+local alpha = CharacterBuilder.newCharacterSet("Alpha")
 --[[
 	When calling newCharacter you can pass in the characters name to set that
 	you can also pass in false if this character does not have a tainted variant
@@ -18,7 +18,7 @@ local Alpha = Characters.newCharacter("Alpha")
 -- next we setup all the characters stuff:
 -- Note: anything you don't want you don't need to put, just remove it
 
-Alpha:AddCostume("character_alpha_cat_ears")
+alpha:addCostume("character_alpha_cat_ears")
 --[[
 	To add a costume you do
 	Character:AddCostume(ID)
@@ -30,9 +30,9 @@ Alpha:AddCostume("character_alpha_cat_ears")
 	NOTE: your anm2 must be in ".\resources\gfx\characters" or it will not be found.
 ]]
 
-Alpha:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and give me the costume.
-Alpha:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, false) -- I want Sad Onion and give me the costume.
-Alpha:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, true) -- I want Sad Onion and remove the costume
+alpha:addItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and give me the costume.
+alpha:addItem(CollectibleType.COLLECTIBLE_SAD_ONION, false) -- I want Sad Onion and give me the costume.
+alpha:addItem(CollectibleType.COLLECTIBLE_SAD_ONION, true) -- I want Sad Onion and remove the costume
 --[[
   For every item you want to add to your character repeat this line.
   character:AddItem(ItemID, RemoveCostume)
@@ -48,7 +48,7 @@ Alpha:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, true) -- I want Sad Onion a
   You can find a list of avaliable CollectibleType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType.html
 ]]
 
-Alpha:SetTrinket(TrinketType.TRINKET_PETRIFIED_POOP)
+alpha:setTrinket(TrinketType.TRINKET_PETRIFIED_POOP)
 --[[
 	Use the above line to give the character a starting trinket.
 	If you do not want a starting trinket, just remove this line
@@ -56,7 +56,7 @@ Alpha:SetTrinket(TrinketType.TRINKET_PETRIFIED_POOP)
 	You can find a list of avaliable TrinketType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType.html
 ]]
 
-Alpha:SetPocketItem(Card.CARD_FOOL)
+alpha:setPocketItem(Card.CARD_FOOL)
 --[[
 	Use the above line to give the character a starting PocketItem.
 	
@@ -74,7 +74,7 @@ Alpha:SetPocketItem(Card.CARD_FOOL)
 	NOTE: Exclusive, you cannot give both a Card and a Pill
 ]]
 
-Alpha:SetCharge(1) -- set the starting charge for your Active item, the value must be greater than 0 or true
+alpha:setCharge(1) -- set the starting charge for your Active item, the value must be greater than 0 or true
 --[[
 	Use the above line to give your starting active item a default charge
 	if you have no active item, or you want no charges, you can just remove this line.
@@ -83,18 +83,18 @@ Alpha:SetCharge(1) -- set the starting charge for your Active item, the value mu
 ]]
 
 -- next we need to setup our players stats
-local NormalStats = Characters.newStatTable() -- create a new stat table
-NormalStats.Damage = 5.50
-NormalStats.Firedelay = 3.73
-NormalStats.Shotspeed = 2.00
-NormalStats.Range = 7.50
-NormalStats.Speed = 2.00
-NormalStats.Tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE
-NormalStats.Tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0) -- Color, first four arguments between 0 and 1
-NormalStats.Flying = false
-NormalStats.Luck = 1.00
+local normalStats = CharacterBuilder.newStatTable() -- create a new stat table
+normalStats.Damage = 5.50
+normalStats.Firedelay = 3.73
+normalStats.Shotspeed = 2.00
+normalStats.Range = 7.50
+normalStats.Speed = 2.00
+normalStats.Tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE
+normalStats.Tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0) -- Color, first four arguments between 0 and 1
+normalStats.Flying = false
+normalStats.Luck = 1.00
 
-Alpha:SetStats(NormalStats)
+alpha:setStats(normalStats)
 
 --[[
 	Replace these stats with the values you want, make sure you use the correct type.
@@ -124,28 +124,28 @@ Alpha:SetStats(NormalStats)
 
 	Now do it all again for your tainted character :)
 ]]
-Alpha:SetTrinket(TrinketType.TRINKET_SWALLOWED_PENNY, true)
+alpha:setTrinket(TrinketType.TRINKET_SWALLOWED_PENNY, true)
 -- its just like above, except we add a "true" onto the end to tell the template that this is the tainted variant were talking about
 
-Alpha:AddItem(CollectibleType.COLLECTIBLE_INNER_EYE, false, true) -- I want Sad Onion and give me the costume.
+alpha:addItem(CollectibleType.COLLECTIBLE_INNER_EYE, false, true) -- I want Sad Onion and give me the costume.
 -- again just like above, except we need to add true as the third option to let the template know were talking about the tainted variant
 
-Alpha:SetPocketItem(PillEffect.PILLEFFECT_BAD_GAS, true, true) -- this is a pill, so the second option is true, and third option tells the template its the tainted variant
+alpha:setPocketItem(PillEffect.PILLEFFECT_BAD_GAS, true, true) -- this is a pill, so the second option is true, and third option tells the template its the tainted variant
 -- even if this is a card you would need the third option
 -- so it would look like "Alpha:SetPocketItem(CardType, false, true)" meaning, its a card so set the second one to false, and third tells the template its the tainted variant
 
-local TaintedStats = Characters.newStatTable() -- create a new stat table
-TaintedStats.Damage = 5.50
-TaintedStats.Firedelay = 3.73
-TaintedStats.Shotspeed = 2.00
-TaintedStats.Range = 7.50
-TaintedStats.Speed = 2.00
-TaintedStats.Tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE
-TaintedStats.Tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0) -- Color, first four arguments between 0 and 1
-TaintedStats.Flying = false
-TaintedStats.Luck = 1.00
+local taintedStats = CharacterBuilder.newStatTable() -- create a new stat table
+taintedStats.Damage = 5.50
+taintedStats.Firedelay = 3.73
+taintedStats.Shotspeed = 2.00
+taintedStats.Range = 7.50
+taintedStats.Speed = 2.00
+taintedStats.Tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE
+taintedStats.Tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0) -- Color, first four arguments between 0 and 1
+taintedStats.Flying = false
+taintedStats.Luck = 1.00
 
-Alpha:SetStats(TaintedStats, true) -- true again at the end, getting the idea now?
+alpha:setStats(taintedStats, true) -- true again at the end, getting the idea now?
 
 --[[
 	--MORE INFO:--
@@ -182,4 +182,4 @@ Alpha:SetStats(TaintedStats, true) -- true again at the end, getting the idea no
 	Make sure to use the same name as in the items.xml file.
 ]]
 
-return Characters.build() -- last thing we call to tell the character builder were done.
+return CharacterBuilder.build() -- last thing we call to tell the character builder were done.

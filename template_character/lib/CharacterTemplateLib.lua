@@ -1,12 +1,12 @@
-local module = {}
+local CharacterBuilder = {}
 
 ---@class AllCharacters
-local _characters = {}
+local characterSets = {}
 
 ---returns the CharacterSet that the player is playing
 ---@param player EntityPlayer the player
 ---@return CharacterSet | nil
-function _characters:getCharacterSet(player)
+function characterSets:getCharacterSet(player)
     local ptype = player:GetPlayerType()
 
     for _, v in ipairs(self) do
@@ -22,10 +22,10 @@ function _characters:getCharacterSet(player)
     end
 end
 
----Returns the Character based on variant
+---Returns the CharacterDescription of the player (if there is one)
 ---@param player EntityPlayer the player
----@return Character | nil
-function _characters:getCharacterByVariant(player)
+---@return CharacterDescription | nil
+function characterSets:getCharacterDescription(player)
     local ptype = player:GetPlayerType()
 
     for _, v in ipairs(self) do
@@ -41,24 +41,24 @@ function _characters:getCharacterByVariant(player)
     end
 end
 
----returns if given player is one of your characters
+---returns two values, first is if the character is one of these characters, the second is if its the tainted variant
 ---@param player EntityPlayer the player
----@return boolean
-function _characters:isChar(player)
+---@return boolean, boolean|nil
+function characterSets:isACharacterDescription(player)
     local ptype = player:GetPlayerType()
 
     for _, v in ipairs(self) do
         if type(v) == "table" then
             ---@cast v CharacterSet
             local normalVar = Isaac.GetPlayerTypeByName(v.normal.name)
-            if ptype == normalVar then return true end
+            if ptype == normalVar then return true, false end
             if v.hasTainted then
                 local taintedVar = Isaac.GetPlayerTypeByName(v.tainted.name, true)
-                if ptype == taintedVar then return true end
+                if ptype == taintedVar then return true, true end
             end
         end
     end
-    return false
+    return false, nil
 end
 
 ---@class Stats
@@ -72,7 +72,7 @@ end
 ---@field Tearcolor Color used to give the character a special tear color
 ---@field Flying boolean is the character able to innately fly? (Base: False)
 
----@class Character
+---@class CharacterDescription
 ---@field name string The name of the character
 ---@field stats Stats The stats of the character
 ---@field costume table|nil The costume the character should wear
@@ -84,14 +84,14 @@ end
 local character = {}
 
 ---@class CharacterSet
----@field normal Character the normal variant of the character
----@field tainted Character the tainted variant of the character
+---@field normal CharacterDescription the normal variant of the character
+---@field tainted CharacterDescription the tainted variant of the character
 ---@field hasTainted boolean whether this set has a tainted variant
 local CharacterSet = {}
 
 ---@param id string The string id of the costume
 ---@param tainted? boolean whether you are setting the tainted variant, default is false
-function CharacterSet:AddCostume(id, tainted)
+function CharacterSet:addCostume(id, tainted)
     if tainted then
         table.insert(self.tainted.costume, id)
     else
@@ -101,7 +101,7 @@ end
 
 ---@param charge number The charge value
 ---@param tainted? boolean whether you are setting the tainted variant, default is false
-function CharacterSet:SetCharge(charge, tainted)
+function CharacterSet:setCharge(charge, tainted)
     if tainted then
         self.tainted.charge = charge
     else
@@ -111,7 +111,7 @@ end
 
 ---@param trinket TrinketType The id of the trinket
 ---@param tainted? boolean whether you are setting the tainted variant, default is false
-function CharacterSet:SetTrinket(trinket, tainted)
+function CharacterSet:setTrinket(trinket, tainted)
     if tainted then
         self.tainted.trinket = trinket
     else
@@ -122,7 +122,7 @@ end
 ---@param id CollectibleType the Id of the collectible
 ---@param costume? boolean whether to show that collectibles costume (if it has one), defaults to false
 ---@param tainted? boolean whether you are setting the tainted variant, default is false
-function CharacterSet:AddItem(id, costume, tainted)
+function CharacterSet:addItem(id, costume, tainted)
     costume = costume or false
     if tainted then
         table.insert(self.tainted.items, { id, costume })
@@ -134,7 +134,7 @@ end
 ---@param id PillEffect|Card the Id of the pocket item
 ---@param isPill? boolean whether pocket item is a pill, defaults to false
 ---@param tainted? boolean whether you are setting the tainted variant, default is false
-function CharacterSet:SetPocketItem(id, isPill, tainted)
+function CharacterSet:setPocketItem(id, isPill, tainted)
     if tainted then
         self.tainted.isPill = isPill or false
         self.tainted.PocketItem = id
@@ -144,7 +144,8 @@ function CharacterSet:SetPocketItem(id, isPill, tainted)
     end
 end
 
-local baseTable = {
+-- internal table of base stats to automatically offset
+local _baseTable = {
     Damage = 3.50,
     Speed = 1.00,
     Firedelay = 2.73,
@@ -155,12 +156,12 @@ local baseTable = {
 
 ---@param statTable Stats
 ---@param tainted? boolean whether you are setting the tainted variant, default is false
-function CharacterSet:SetStats(statTable, tainted)
+function CharacterSet:setStats(statTable, tainted)
     -- offset stats by base
     local t = {}
     for i, v in pairs(statTable) do
-        if baseTable[i] then
-            local stat = baseTable[i]
+        if _baseTable[i] then
+            local stat = _baseTable[i]
             if stat > v then
                 t[i] = -(stat - v) -- subtract the difference
             elseif stat < v then
@@ -182,8 +183,8 @@ function CharacterSet:SetStats(statTable, tainted)
 end
 
 ---internal function to create a new Character table
----@return Character
-local function _newCharacter()
+---@return CharacterDescription
+local function _newCharacterDescription()
     local t = {
         costume = {},
         items = {}
@@ -195,28 +196,28 @@ end
 ---@return CharacterSet
 ---@param Name? string the name of the character
 ---@param isTainted? boolean is there a tainted variant of this character? (Default is true)
-function module.newCharacter(Name, isTainted)
+function CharacterBuilder.newCharacterSet(Name, isTainted)
     local t = {}
-    t.normal = _newCharacter()
-    t.tainted = _newCharacter()
+    t.normal = _newCharacterDescription()
+    t.tainted = _newCharacterDescription()
     t.hasTainted = isTainted or true
     if Name then
         t.normal.name = Name
         t.tainted.name = Name
     end
     setmetatable(t, { __index = CharacterSet })
-    table.insert(_characters, t)
+    table.insert(characterSets, t)
     return t
 end
 
 ---@return Stats
-function module.newStatTable()
+function CharacterBuilder.newStatTable()
     return {}
 end
 
 ---@return AllCharacters
-function module.build()
-    return _characters
+function CharacterBuilder.build()
+    return characterSets
 end
 
-return module
+return CharacterBuilder

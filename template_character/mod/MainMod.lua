@@ -14,15 +14,6 @@ local is_continued = false -- a hacky check for if the game is continued.
 
 -- Utility Functions
 
----Returns if the player is one of your characters, true if it is, false if not, nil if player doesn't exist.
----@param player EntityPlayer
----@return boolean | nil
-local function IsChar(player)
-    if (player == nil) then return nil end
-    if characters:isChar(player) then return true end
-    return false
-end
-
 ---Gets all players that is one of your characters, returns a table of all players, or nil if none are
 ---@return table|nil
 local function GetPlayers()
@@ -42,9 +33,9 @@ end
 ---@param player EntityPlayer
 ---@param cache CacheFlag | BitSet128
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
-    if not (IsChar(player)) then return end
+    if not (characters:isACharacterDescription(player)) then return end
 
-    local playerStat = characters:getCharacterByVariant(player).stats
+    local playerStat = characters:getCharacterDescription(player).stats
 
     if (cache & CacheFlag.CACHE_DAMAGE == CacheFlag.CACHE_DAMAGE) then
         player.Damage = player.Damage + playerStat.Damage
@@ -105,8 +96,8 @@ end
 ---@param player? EntityPlayer
 local function postPlayerInitLate(player)
     player = player or Isaac.GetPlayer()
-    if not (IsChar(player)) then return end
-    local statTable = characters:getCharacterByVariant(player)
+    if not (characters:isACharacterDescription(player)) then return end
+    local statTable = characters:getCharacterDescription(player)
     if statTable == nil then return end
     -- Costume
     AddCostumes(statTable.costume, player)
