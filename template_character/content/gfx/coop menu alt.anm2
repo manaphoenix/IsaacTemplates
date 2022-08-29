@@ -1,34 +1,34 @@
 <AnimatedActor>
-  <Info CreatedBy="trtv" CreatedOn="5/24/2021 6:33:29 PM" Version="7" Fps="30"/>
-  <Content>
-    <Spritesheets>
-      <Spritesheet Path="coop menu b.png" Id="0"/>
-      <Spritesheet Path="baby_select.png" Id="1"/>
-    </Spritesheets>
-    <Layers>
-      <Layer Name="Main" Id="0" SpritesheetId="0"/>
-      <Layer Name="Babies" Id="1" SpritesheetId="1"/>
-      <Layer Name="Arrows" Id="2" SpritesheetId="0"/>
-    </Layers>
-    <Nulls/>
-    <Events/>
-  </Content>
-  <Animations DefaultAnimation="Omega">
-    <Animation Name="Omega" FrameNum="1" Loop="false">
-      <RootAnimation>
-        <Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
-      </RootAnimation>
-      <LayerAnimations>
-        <LayerAnimation LayerId="0" Visible="true">
-          <Frame XPosition="0" YPosition="0" XPivot="16" YPivot="16" XCrop="1" YCrop="-2" Width="33" Height="33" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
-        </LayerAnimation>
-        <LayerAnimation LayerId="1" Visible="true">
-          <Frame XPosition="0" YPosition="0" XPivot="16" YPivot="16" XCrop="0" YCrop="0" Width="32" Height="32" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
-        </LayerAnimation>
-        <LayerAnimation LayerId="2" Visible="true"/>
-      </LayerAnimations>
-      <NullAnimations/>
-      <Triggers/>
-    </Animation>
-  </Animations>
+	<Info CreatedBy="trtv" CreatedOn="8/28/2022 10:44:44 PM" Version="8" Fps="30"/>
+	<Content>
+		<Spritesheets>
+			<Spritesheet Path="coop menu b.png" Id="0"/>
+			<Spritesheet Path="baby_select.png" Id="1"/>
+		</Spritesheets>
+		<Layers>
+			<Layer Name="Main" Id="0" SpritesheetId="0"/>
+			<Layer Name="Babies" Id="1" SpritesheetId="1"/>
+			<Layer Name="Arrows" Id="2" SpritesheetId="0"/>
+		</Layers>
+		<Nulls/>
+		<Events/>
+	</Content>
+	<Animations DefaultAnimation="Alpha">
+		<Animation Name="Alpha" FrameNum="1" Loop="false">
+			<RootAnimation>
+				<Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+			</RootAnimation>
+			<LayerAnimations>
+				<LayerAnimation LayerId="0" Visible="true">
+					<Frame XPosition="0" YPosition="0" XPivot="16" YPivot="16" XCrop="1" YCrop="-2" Width="33" Height="33" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+				</LayerAnimation>
+				<LayerAnimation LayerId="1" Visible="true">
+					<Frame XPosition="0" YPosition="0" XPivot="16" YPivot="16" XCrop="0" YCrop="0" Width="32" Height="32" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+				</LayerAnimation>
+				<LayerAnimation LayerId="2" Visible="true"/>
+			</LayerAnimations>
+			<NullAnimations/>
+			<Triggers/>
+		</Animation>
+	</Animations>
 </AnimatedActor>

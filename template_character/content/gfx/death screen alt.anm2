@@ -1,33 +1,33 @@
 <AnimatedActor>
-  <Info CreatedBy="Unknown" CreatedOn="5/30/2021 8:20:23 PM" Version="53" Fps="30"/>
-  <Content>
-    <Spritesheets>
-      <Spritesheet Path="death portraits.png" Id="0"/>
-    </Spritesheets>
-    <Layers>
-      <Layer Name="Name" Id="0" SpritesheetId="0"/>
-    </Layers>
-    <Nulls>
-      <Null Name="SeedPos" Id="0" ShowRect="false"/>
-    </Nulls>
-    <Events/>
-  </Content>
-  <Animations DefaultAnimation="Omega">
-    <Animation Name="Omega" FrameNum="732" Loop="true">
-      <RootAnimation>
-        <Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
-      </RootAnimation>
-      <LayerAnimations>
-        <LayerAnimation LayerId="0" Visible="true">
-          <Frame XPosition="18" YPosition="78" XPivot="32" YPivot="8" XCrop="443" YCrop="148" Width="67" Height="27" XScale="66.6666717529297" YScale="84.375" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="10.4166660308838" Interpolated="false"/>
-        </LayerAnimation>
-      </LayerAnimations>
-      <NullAnimations>
-        <NullAnimation NullId="0" Visible="true">
-          <Frame XPosition="-146" YPosition="-73" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
-        </NullAnimation>
-      </NullAnimations>
-      <Triggers/>
-    </Animation>
-  </Animations>
+	<Info CreatedBy="Unknown" CreatedOn="8/28/2022 10:44:55 PM" Version="54" Fps="30"/>
+	<Content>
+		<Spritesheets>
+			<Spritesheet Path="death portraits.png" Id="0"/>
+		</Spritesheets>
+		<Layers>
+			<Layer Name="Name" Id="0" SpritesheetId="0"/>
+		</Layers>
+		<Nulls>
+			<Null Name="SeedPos" Id="0" ShowRect="false"/>
+		</Nulls>
+		<Events/>
+	</Content>
+	<Animations DefaultAnimation="Alpha">
+		<Animation Name="Alpha" FrameNum="732" Loop="true">
+			<RootAnimation>
+				<Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+			</RootAnimation>
+			<LayerAnimations>
+				<LayerAnimation LayerId="0" Visible="true">
+					<Frame XPosition="18" YPosition="78" XPivot="32" YPivot="8" XCrop="443" YCrop="148" Width="67" Height="27" XScale="66.6666717529297" YScale="84.375" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="10.4166660308838" Interpolated="false"/>
+				</LayerAnimation>
+			</LayerAnimations>
+			<NullAnimations>
+				<NullAnimation NullId="0" Visible="true">
+					<Frame XPosition="-146" YPosition="-73" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+				</NullAnimation>
+			</NullAnimations>
+			<Triggers/>
+		</Animation>
+	</Animations>
 </AnimatedActor>

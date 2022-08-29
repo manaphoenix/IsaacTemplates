@@ -1,287 +1,85 @@
 -- Imports --
-local modName, path, loadFile, stats, imports, useCustomErrorChecker =
-table.unpack(...)
 
-do
-    if (useCustomErrorChecker) then
-        local errorChecker = loadFile("lib/cerror")
-
-        -- Utilities
-        local function checkName(name, tainted)
-            if (not name) then
-                errorChecker.printError("No character name found!")
-            else
-                local c = Isaac.GetPlayerTypeByName(name, tainted)
-                if (c == -1) then
-                    errorChecker.printError("No Character Found by the name of", name)
-                    errorChecker.printError("Double check your players.xml file!")
-                end
-            end
-        end
-
-        local function costume(costumeStr)
-            local cost = Isaac.GetCostumeIdByPath(
-                "gfx/characters/" .. costumeStr .. ".anm2")
-            if (cost == -1) then
-                errorChecker.printError("No costume found by the name of", costumeStr)
-            end
-        end
-
-        local function checkCostume(costumes)
-            if costumes == "" then return end
-
-            if type(costumes) == "table" then
-                for i = 1, #costumes do costume(costumes[i]) end
-            else
-                costume(costumes)
-            end
-        end
-
-        local function checkItems(items)
-            if (#items > 0) then
-                for i = 1, #items do
-                    local item = items[i]
-                    if type(item) ~= "table" then
-                        errorChecker.printError("Item Entry #", i,
-                            " is not in the correct format!")
-                        errorChecker.printError(
-                            "Please make sure its in the format AddItem(ITEMID, REMOVECOSTUME)")
-                    else
-                        if (item[1] == -1) then
-                            errorChecker.printError("Item Entry #", i, " is not found!")
-                            errorChecker.printError("This is in the modded item format")
-                            errorChecker.printError(
-                                "Double check your items.xml and stats.lua to ensure the name matches")
-                        end
-                    end
-                end
-            end
-        end
-
-        local function checkGeneric(val, name, def)
-            if val == nil then
-                errorChecker.printError("Invalid Entry for", name,
-                    "Are you sure your typing it right?")
-            end
-            if def and val == -1 then
-                errorChecker.printError("Entry", name, "is not found!")
-                errorChecker.printError("This is in the modded format")
-                errorChecker.printError("Double check your spelling it right!")
-            end
-        end
-
-        -- Default
-        errorChecker.printError("Regular Character Checker:")
-
-        local character = stats.default
-
-        checkName(character.name, false)
-
-        checkCostume(character.costume)
-
-        checkItems(character.items)
-
-        checkGeneric(character.trinket, "trinket", -1)
-
-        checkGeneric(character.card, "card", -1)
-
-        checkGeneric(character.pill, "pill", -1)
-
-        checkGeneric(character.charge, "charge")
-
-        if (errorChecker.getErrorCount() == 1) then
-            errorChecker.clearErrors()
-        end
-
-        -- Tainted
-        if (stats.tainted.enabled) then
-            errorChecker.printError("Tainted Character Checker:")
-
-            character = stats.tainted
-
-            checkName(character.name, true)
-
-            checkCostume(character.costume)
-
-            checkItems(character.items)
-
-            checkGeneric(character.trinket, "trinket", -1)
-
-            checkGeneric(character.card, "card", -1)
-
-            checkGeneric(character.pill, "pill", -1)
-
-            checkGeneric(character.charge, "charge")
-
-
-            if (errorChecker.getErrorCount() == 1) then
-                errorChecker.clearErrors()
-            end
-        end
-
-        if (stats.default.name == "Alpha" or (stats.tainted.name == "Omega" and stats.tainted.enabled)) then
-            errorChecker.printError("You must change the character(s) name from the default!")
-            errorChecker.printError("Name: " .. stats.default.name)
-            if (stats.tainted.enabled) then
-                errorChecker.printError("Name: " .. stats.tainted.name)
-            end
-        end
-
-        -- checker
-        if (errorChecker.getErrorCount() > 0) then
-            errorChecker.registerError()
-            errorChecker.setMod(modName)
-            errorChecker.setFile("stats.lua")
-
-            errorChecker.mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED,
-                function(_, IsContin)
-                    local room = Game():GetRoom()
-
-                    for i = 0, 8 do room:RemoveDoor(DoorSlot[i]) end
-                end)
-
-            local room = Game():GetRoom()
-
-            for i = 0, 8 do room:RemoveDoor(DoorSlot[i]) end
-            goto EndOfFile
-        end
-    end
-end
+---@type string, string, function, AllCharacters, boolean
+local modName, path, loadFile, characters, useCustomErrorChecker = table.unpack(...)
 
 -- Init --
 local mod = RegisterMod(modName, 1)
-
-if (type(imports) == "table") then imports:Init(mod) end
-
 -- CODE --
 local config = Isaac.GetItemConfig()
 local game = Game()
 local pool = game:GetItemPool()
 local game_started = false -- a hacky check for if the game is continued.
 local is_continued = false -- a hacky check for if the game is continued.
-local char = Isaac.GetPlayerTypeByName(stats.default.name, false)
-local taintedChar = Isaac.GetPlayerTypeByName(stats.tainted.name, true)
-taintedChar = taintedChar == -1 and char or taintedChar
 
 -- Utility Functions
+
+---Returns if the player is one of your characters, true if it is, false if not, nil if player doesn't exist.
+---@param player EntityPlayer
+---@return boolean | nil
 local function IsChar(player)
     if (player == nil) then return nil end
-    local ptype = player:GetPlayerType()
-    if (ptype ~= char and ptype ~= taintedChar) then return false end
-    return true
+    if characters:isChar(player:GetName()) then return true end
+    return false
 end
 
--- this function will return if the player is one of your characters.
--- returns true if it is a character of yours, false if it isn't, and nil if the player doesn't exist.
-
-local function IsTainted(player)
-    if (player == nil) then return nil end
-    local ptype = player:GetPlayerType()
-    if (ptype ~= char and ptype ~= taintedChar) then return nil end
-    if (ptype == char) then return false end
-    return true
-end
-
--- returns whether the inputted character is a tainted variant of your character.
--- returns true if is tainted, false if not, and nil for any other reason. (like it not being ur character at all)
-
+---Gets all players that is one of your characters, returns a table of all players, or nil if none are
+---@return table|nil
 local function GetPlayers()
     local players = {}
     for i = 0, game:GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
-        local ptype = player:GetPlayerType()
-        if (ptype == char or ptype == taintedChar) then
+        local pname = player:GetName()
+        if (characters:isChar(pname)) then
             table.insert(players, player)
         end
     end
     return #players > 0 and players or nil
 end
 
--- will return a table of all players that are your character (or nil if none are)
--- use this to get the players when the function your using doesn't give it to you.
-
-local function GetPlayerStatTable(player)
-    local taint = IsTainted(player)
-    if (taint == nil) then return nil end
-
-    return (taint and stats.tainted) or stats.default
-end
-
--- used to automatically grab the tainted or default variant of a stat from stats.lua.
--- based on the inputted player.
-
-local function FindVariant(Tainted)
-    local players = GetPlayers()
-    local variantFound = false
-    if (players) then
-        for _, player in ipairs(players) do
-            if (Tainted) then -- search for tainted only
-                if (IsTainted(player)) then
-                    variantFound = true
-                    return variantFound, player
-                end
-            else -- search for regular
-                if (not IsTainted(player)) then
-                    variantFound = true
-                    return variantFound, player
-                end
-            end
-        end
-
-    end
-    return false, nil
-end
-
--- use this function to automatically return if one of the current players is a specific variant of your character.
--- also returns the player that is your variant (WARNING: returns the first one found, their could be multiple!)
--- FindVariant(true) will return true if one of the players is a tainted version of your character, false otherwise
--- FindVariant(false) will return true if one the players is a regular version of your character, false otherwise
---[[
-Use:
-
-local tainted, player = FindVariant(true)
-player:Kill() -- lol
-]]
-
 -- Character Code
+
+---@param _ table
+---@param player EntityPlayer
+---@param cache CacheFlag | BitSet128
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
     if not (IsChar(player)) then return end
 
-    local playerStat = GetPlayerStatTable(player).stats
+    local playerStat = characters:getCharacterByVariant(player).stats
 
     if (cache & CacheFlag.CACHE_DAMAGE == CacheFlag.CACHE_DAMAGE) then
-        player.Damage = player.Damage + playerStat.damage
+        player.Damage = player.Damage + playerStat.Damage
     end
 
     if (cache & CacheFlag.CACHE_FIREDELAY == CacheFlag.CACHE_FIREDELAY) then
-        player.MaxFireDelay = player.MaxFireDelay + playerStat.firedelay
+        player.MaxFireDelay = player.MaxFireDelay + playerStat.Firedelay
     end
 
     if (cache & CacheFlag.CACHE_SHOTSPEED == CacheFlag.CACHE_SHOTSPEED) then
-        player.ShotSpeed = player.ShotSpeed + playerStat.shotspeed
+        player.ShotSpeed = player.ShotSpeed + playerStat.Shotspeed
     end
 
     if (cache & CacheFlag.CACHE_RANGE == CacheFlag.CACHE_RANGE) then
-        player.TearRange = player.TearRange + playerStat.range
+        player.TearRange = player.TearRange + playerStat.Range
     end
 
     if (cache & CacheFlag.CACHE_SPEED == CacheFlag.CACHE_SPEED) then
-        player.MoveSpeed = player.MoveSpeed + playerStat.speed
+        player.MoveSpeed = player.MoveSpeed + playerStat.Speed
     end
 
     if (cache & CacheFlag.CACHE_LUCK == CacheFlag.CACHE_LUCK) then
-        player.Luck = player.Luck + playerStat.luck
+        player.Luck = player.Luck + playerStat.Luck
     end
 
     if (cache & CacheFlag.CACHE_FLYING == CacheFlag.CACHE_FLYING and
-        playerStat.flying) then player.CanFly = true end
+        playerStat.Flying) then player.CanFly = true end
 
     if (cache & CacheFlag.CACHE_TEARFLAG == CacheFlag.CACHE_TEARFLAG) then
-        player.TearFlags = player.TearFlags | playerStat.tearflags
+        player.TearFlags = player.TearFlags | playerStat.Tearflags
     end
 
     if (cache & CacheFlag.CACHE_TEARCOLOR == CacheFlag.CACHE_TEARCOLOR) then
-        player.TearColor = playerStat.tearcolor
+        player.TearColor = playerStat.Tearcolor
     end
 end)
 
@@ -300,10 +98,11 @@ local function AddCostumes(AppliedCostume, player) -- costume logic
     end
 end
 
+---@param player? EntityPlayer
 local function postPlayerInitLate(player)
-    local player = player or Isaac.GetPlayer()
+    player = player or Isaac.GetPlayer()
     if not (IsChar(player)) then return end
-    local statTable = GetPlayerStatTable(player)
+    local statTable = characters:getCharacterByVariant(player)
     if statTable == nil then return end
     -- Costume
     AddCostumes(statTable.costume, player)
@@ -328,13 +127,15 @@ local function postPlayerInitLate(player)
     end
 
     local trinket = statTable.trinket
-    if (trinket ~= 0) then player:AddTrinket(trinket, true) end
+    if (trinket) then player:AddTrinket(trinket, true) end
 
-    local pill = statTable.pill
-    if (pill ~= false) then player:SetPill(0, pool:ForceAddPillEffect(pill)) end
-
-    local card = statTable.card
-    if (card ~= 0) then player:SetCard(0, card) end
+    if (statTable.PocketItem) then
+        if statTable.isPill then
+            player:SetPill(0, pool:ForceAddPillEffect(statTable.PocketItem))
+        else
+            player:SetCard(0, statTable.PocketItem)
+        end
+    end
 end
 
 mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, Is_Continued)

@@ -3,30 +3,29 @@ local useCustomErrorChecker = true -- should the custom error checker be used?
 
 -- file loc
 local _, _err = pcall(require, "")
+---@type string
 local modName = _err:match("/mods/(.*)/%.lua")
+---@type string
 local path = "mods/" .. modName .. "/"
 
+---loads a file, with no cache
+---@param loc string
+---@param ... any
+---@return any
 local function loadFile(loc, ...)
-    return assert(loadfile(path .. loc .. ".lua"))(...)
+    return assert(loadfile(path .. loc .. ".lua","bt",_ENV))(...)
 end
 
 local _, ogerr = pcall(function()
+    ---@type AllCharacters
     local stats = loadFile("mod/stats")
-    local imports = loadFile("mod/imports")
-    loadFile("mod/MainMod", { modName, path, loadFile, stats, imports, useCustomErrorChecker })
+    loadFile("mod/MainMod", { modName, path, loadFile, stats, useCustomErrorChecker })
 end)
 
 if (ogerr) then
     if (useCustomErrorChecker) then
-        local errorChecker = loadFile("lib/cerror")
+        local errorChecker = require("lib.cerror")
         errorChecker.registerError()
-
-        errorChecker.mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED,
-            function()
-                local room = Game():GetRoom()
-
-                for i = 0, 8 do room:RemoveDoor(DoorSlot[i]) end
-            end)
 
         local str = errorChecker.formatError(ogerr)
 
@@ -34,36 +33,29 @@ if (ogerr) then
             local file = str:match("%w+%.lua")
             local line = str:match(":(%d+):")
             local err = str:match(":%d+: (.*)")
-            errorChecker.setMod(modName)
-            errorChecker.setFile(file)
-            errorChecker.setLine(line)
-            errorChecker.printError("Error:", err)
-            errorChecker.printError("")
-            errorChecker.printError("For full error report, open log.txt")
-            errorChecker.printError("")
-            errorChecker.printError("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt")
-            errorChecker.printError("")
-            errorChecker.printError("Reload the mod, then start a new run, Holding R works")
+            errorChecker.SetData({
+                Mod = modName,
+                File = file,
+                Line = line
+            })
+            errorChecker.add("Error:", err, true)
+            errorChecker.add("For full error report, open log.txt",true)
+            errorChecker.add("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt",true)
+            errorChecker.add("Restart your game after fixing the error!")
         else
-            errorChecker.printError("Unexpected error occured, please open log.txt!")
-            errorChecker.printError("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt")
-            errorChecker.printError("")
-            errorChecker.printError(ogerr)
+            errorChecker.add("Unexpected error occured, please open log.txt!")
+            errorChecker.add("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt",true)
+            errorChecker.add(ogerr)
         end
-        Isaac.DebugString("-- START OF " .. modName:upper() .. " ERROR --")
-        Isaac.DebugString(ogerr)
-        Isaac.DebugString("-- END OF " .. modName:upper() .. " ERROR --")
 
         local room = Game():GetRoom()
+        for i = 0, 7 do room:RemoveDoor(i) end
 
-        for i = 0, 8 do room:RemoveDoor(DoorSlot[i]) end
-
+        errorChecker.dump(ogerr)
         error()
     else
-        Isaac.ConsoleOutput(modName ..
-            " has hit an error, see Log.txt for more info\n")
-        Isaac.ConsoleOutput(
-            "Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt")
+        Isaac.ConsoleOutput(modName .. " has hit an error, see Log.txt for more info\n")
+        Isaac.ConsoleOutput("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt")
         Isaac.DebugString("-- START OF " .. modName:upper() .. " ERROR --")
         Isaac.DebugString(ogerr)
         Isaac.DebugString("-- END OF " .. modName:upper() .. " ERROR --")

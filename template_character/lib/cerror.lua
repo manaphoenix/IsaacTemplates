@@ -8,7 +8,7 @@ local warnCol = KColor(0.584313725, 0.858823529, 0.490196078, 1)
 local wrapLen = 33
 local noteWrap = 18
 local HUD = Game():GetHUD()
-local notes = {Mod = "", File = "", Line = ""}
+local notes = { Mod = "", File = "", Line = "" }
 
 local text = Font()
 text:Load("font/terminus.fnt")
@@ -30,8 +30,7 @@ sidePaper.Scale = Vector(0.5, 0.5)
 
 local function GetScreenSize() -- By Kilburn himself.
     local room = Game():GetRoom()
-    local pos = Isaac.WorldToScreen(zero) - room:GetRenderScrollOffset() -
-                    Game().ScreenShakeOffset
+    local pos = Isaac.WorldToScreen(zero) - room:GetRenderScrollOffset() - Game().ScreenShakeOffset
 
     local rx = pos.X + 60 * 26 / 40
     local ry = pos.Y + 140 * (26 / 40)
@@ -47,15 +46,29 @@ local errorOffset = errorPos.X
 local noteOffset = Posx / 7.75
 local scale = Vector(0.75, 0.75)
 
-function module.printError(...)
-    local s, args = "", table.pack(...)
-    for i = 1, args.n do s = s .. tostring(args[i] or nil) .. " " end
-
-    local wrap = module.wordWrap(s)
-    for i = 1, #wrap do table.insert(errors, wrap[i]) end
+local function render()
+    xOffset = 40
+    bg:RenderLayer(0, zero)
+    mainPaper:RenderLayer(1, errorPos)
+    sidePaper:RenderLayer(29, notePos)
+    for i = 1, #errors do
+        text:DrawStringScaled(errors[i], errorOffset, xOffset, scale.X, scale.Y,
+            errCol, 0, true)
+        xOffset = xOffset + 10
+    end
+    xOffset = 45
+    for i, v in pairs(notes) do
+        if (v:len() > 0) then
+            local str = i .. ": " .. v
+            str = module.truncate(str, true)
+            text:DrawStringScaled(str, noteOffset, xOffset, scale.X, scale.Y,
+                warnCol, 0, true)
+            xOffset = xOffset + 10
+        end
+    end
 end
 
-function module.wordWrap(txt, useNote)
+local function wordWrap(txt, useNote)
     local wrap = {}
     local cur = ""
     local tChars = 0
@@ -80,6 +93,23 @@ function module.wordWrap(txt, useNote)
     return wrap
 end
 
+function module.add(...)
+    local s, args, newLine = "", table.pack(...), false
+    for i = 1, args.n do
+        if args[i] ~= true then
+            s = s .. tostring(args[i] or nil) .. " "
+        else
+            newLine = true
+        end
+    end
+
+    local wrap = wordWrap(s)
+    for i = 1, #wrap do table.insert(errors, wrap[i]) end
+    if newLine then
+        table.insert(errors, "")
+    end
+end
+
 function module.truncate(txt, useNote)
     local wrapper = useNote and noteWrap or wrapLen
     if (txt:len() > wrapper) then
@@ -89,51 +119,26 @@ function module.truncate(txt, useNote)
     end
 end
 
-function module.setHUD(state) HUD:SetVisible(state) end
-
 function module.formatError(err) return err:match(".-(%w+%.lua:%d+:.%w+.*)") end
 
-function module.getErrorCount() return #errors end
-
-function module.clearErrors()
-    errors = {};
-    notes = {Mod = "", File = "", Line = ""}
-    module.setHUD(true)
+function module.SetData(data)
+    notes.Mod = data.Mod or notes.Mod or "UNKNOWN"
+    notes.File = data.File or notes.File or "UNKNOWN"
+    notes.Line = data.Line or notes.Line or "UNKNOWN"
 end
 
-function module.setMod(inp) notes.Mod = inp end
-
-function module.setFile(inp) notes.File = inp end
-
-function module.setLine(inp) notes.Line = inp end
-
-local function render()
-    xOffset = 40
-    bg:RenderLayer(0, zero)
-    mainPaper:RenderLayer(1, errorPos)
-    sidePaper:RenderLayer(29, notePos)
-    for i = 1, #errors do
-        text:DrawStringScaled(errors[i], errorOffset, xOffset, scale.X, scale.Y,
-                              errCol, 0, true)
-        xOffset = xOffset + 10
-    end
-    xOffset = 45
-    for i, v in pairs(notes) do
-        if (v:len() > 0) then
-            local str = i .. ": " .. v
-            str = module.truncate(str, true)
-            text:DrawStringScaled(str, noteOffset, xOffset, scale.X, scale.Y,
-                                  warnCol, 0, true)
-            xOffset = xOffset + 10
-        end
-    end
+function module.dump(err)
+    module.mod:AddCallback(ModCallbacks.MC_POST_RENDER, render)
+    Isaac.DebugString("-- START OF " .. module.modName:upper() .. " ERROR --")
+    Isaac.DebugString(err)
+    Isaac.DebugString("-- END OF " .. module.modName:upper() .. " ERROR --")
 end
 
 function module.registerError()
     local mod = RegisterMod("CustomErrorChecker", 1)
     module.mod = mod
-    mod:AddCallback(ModCallbacks.MC_POST_RENDER, render)
-    module.setHUD(false)
+    
+    HUD:SetVisible(false)
 end
 
 return module

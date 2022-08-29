@@ -1,90 +1,38 @@
+local Characters = require("lib.CharacterTemplateLib")
+
+-- first we make a new character
+local Alpha = Characters.newCharacter("Alpha")
 --[[
-	DO NOT CHANGE, SCROLL DOWN TO CONFIG
-]]
-local mt = {
-	__index = {
-		items = {},
-		costume = {},
-		trinket = {},
-		card = {},
-		pill = {},
-		charge = {},
-		name = ""
-	}
-}
-function mt.__index:AddItem(id, costume)
-	costume = costume or false
-	table.insert(self.items, { id, costume })
-end
+	When calling newCharacter you can pass in the characters name to set that
+	you can also pass in false if this character does not have a tainted variant
 
-local stats = { default = {}, tainted = {} }
-setmetatable(stats.default, mt)
-setmetatable(stats.tainted, mt)
-local character = stats.default
-local tainted = stats.tainted
+	if your tainted character has a different name you will need to set it afterwards
+	by doing:
+	
+	Alpha.tainted.name = "" -- name here
 
-character.items = {}
-tainted.items = {}
-
---[[
-	CONFIG (THIS WHERE YOU CAN CHANGE STUFF)
-	Try looking at MORE_INFO at the bottom of the page if you get stuck :)
+	however, the base game gives the tainted and regular variant of a character the same name in the code
+	so if you want to be like the game, it should be the same.
 ]]
 
+-- next we setup all the characters stuff:
+-- Note: anything you don't want you don't need to put, just remove it
+
+Alpha:AddCostume("character_alpha_cat_ears")
 --[[
-	REGULAR CHARACTER SETUP
-]]
-character.name = "Alpha" -- The name of your character (must match the players.xml file).
+	To add a costume you do
+	Character:AddCostume(ID)
+	
+	you can do this multiple times if you have multiple costumes.
 
-character.stats = {
-	damage = 2.00, -- float
-	firedelay = 1.00, -- float
-	shotspeed = 1.00, -- float
-	range = 1.00, -- float
-	speed = 1.00, -- float
-	tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE, -- Enum "TearFlags"
-	tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0), -- Color, first four arguments between 0 and 1
-	flying = false, -- boolean
-	luck = 1.00 -- float
-}
-
---[[
-	Replace these stats with the values you want, make sure you use the correct type.
-
-	These stats are ADDED TO Isaac's Default Stats.
-	This means that if you put damage as 2.00, it will ADD 2 damage to 3.50 (The Base),
-	giving a total damage of 5.50.
-	Put negative values to subtract from base stats.
-
-	Base Stats:
-	Speed: 1.00
-	Firedelay: 2.73
-	Damage: 3.50
-	Range: 6.50
-	Shotspeed: 1.00
-	Luck: 0.00
-
-	Tear Flags:
-	For multiple tear effects, you must seperate each tear flag using the '|' (bitwise or) symbol.
-	You can find a list of TearFlags here: https://wofsauge.github.io/IsaacDocs/rep/enums/TearFlags.html
-	Write tearflags = TearFlags.TEAR_NORMAL, if you don't want your character to have any innate tear effects.
-]]
-
-character.costume = "character_alpha_cat_ears"
---[[
-	Put the name of the costume file here.
-	If you have multiple, you need to make it a "table"
-	like this:
-	character.costume = {"costume 1","costume 2"}
-
-	If you are not using a costume for this character, put character.costume =  "".
+	If your character does not have a costume you can remove this line
 
 	NOTE: your anm2 must be in ".\resources\gfx\characters" or it will not be found.
 ]]
 
-character:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and give me the costume.
-character:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, false) -- I want Sad Onion and give me the costume.
-character:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, true) -- I want Sad Onion and remove the costume
+Alpha:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and give me the costume.
+Alpha:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, false) -- I want Sad Onion and give me the costume.
+Alpha:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, true) -- I want Sad Onion and remove the costume
 --[[
   For every item you want to add to your character repeat this line.
   character:AddItem(ItemID, RemoveCostume)
@@ -97,48 +45,78 @@ character:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION, true) -- I want Sad Oni
   
   If you do not want to add any items to this character, just remove all of these lines.
 	  
-	You can find a list of avaliable CollectibleType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType.html
+  You can find a list of avaliable CollectibleType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/CollectibleType.html
 ]]
 
-character.trinket = TrinketType.TRINKET_NULL
+Alpha:SetTrinket(TrinketType.TRINKET_PETRIFIED_POOP)
 --[[
 	Use the above line to give the character a starting trinket.
-	If you do not want a starting trinket, put
-	character.trinket = TrinketType.TRINKET_NULL
+	If you do not want a starting trinket, just remove this line
 
 	You can find a list of avaliable TrinketType's here: https://wofsauge.github.io/IsaacDocs/rep/enums/TrinketType.html
 ]]
 
-character.card = Card.CARD_FOOL
+Alpha:SetPocketItem(Card.CARD_FOOL)
 --[[
-	Use the above line to give the character a starting Card.
+	Use the above line to give the character a starting PocketItem.
 	
-	If you do not want a starting Card, put
-	character.card = Card.CARD_NULL
+	It can be either a card like above
+	or a pill
+
+	if you want a pill you need to do
+	SetPocketItem(CardID, true) -- true means that your telling the template that this is a pill not a card.
+
+	if you do not want a starting PocketItem you can just remove this line.
 
 	You can find a list of avaliable Cards here: https://wofsauge.github.io/IsaacDocs/rep/enums/Card.html
+	You can find a list of avaliable PillEffect's here: https://wofsauge.github.io/IsaacDocs/rep/enums/PillEffect.html
 
 	NOTE: Exclusive, you cannot give both a Card and a Pill
 ]]
 
-character.pill = false
---[[
-	Use the above line to give the character a starting Pill.
-	If you do not want a starting Pill, put false
-
-	You can find a list of avaliable PillEffect's here: https://wofsauge.github.io/IsaacDocs/rep/enums/PillEffect.html
-
-	NOTE: Exclusive, you cannot give both a card and a pill
-]]
-
-character.charge = -1
+Alpha:SetCharge(1) -- set the starting charge for your Active item, the value must be greater than 0 or true
 --[[
 	Use the above line to give your starting active item a default charge
-	set to -1 for no charge.
+	if you have no active item, or you want no charges, you can just remove this line.
 	set to a number for specific charges
 	set to true for full charge :)
+]]
 
-	If you do not have an active item, leave it at -1 :)
+-- next we need to setup our players stats
+local NormalStats = Characters.newStatTable() -- create a new stat table
+NormalStats.Damage = 5.50
+NormalStats.Firedelay = 3.73
+NormalStats.Shotspeed = 2.00
+NormalStats.Range = 7.50
+NormalStats.Speed = 2.00
+NormalStats.Tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE
+NormalStats.Tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0) -- Color, first four arguments between 0 and 1
+NormalStats.Flying = false
+NormalStats.Luck = 1.00
+
+Alpha:SetStats(NormalStats)
+
+--[[
+	Replace these stats with the values you want, make sure you use the correct type.
+
+	These stats override the base stats (see below), which are based on Isaac,
+	
+	You only need to include the stats you want to change, if you don't want them, just remove the line
+
+	Base Stats:
+	Speed: 1.00
+	Firedelay: 2.73
+	Damage: 3.50
+	Range: 6.50
+	Shotspeed: 1.00
+	Luck: 0.00
+	Tearflags: none
+	Flying: false
+	Tearcolor: none (defaults to white, so there is no reason to set this)
+
+	Tear Flags:
+	For multiple tear effects, you must seperate each tear flag using the '|' (bitwise or) symbol.
+	You can find a list of TearFlags here: https://wofsauge.github.io/IsaacDocs/rep/enums/TearFlags.html
 ]]
 
 --[[
@@ -146,32 +124,28 @@ character.charge = -1
 
 	Now do it all again for your tainted character :)
 ]]
-tainted.enabled = true -- set this to false if you don't want a tainted character.
+Alpha:SetTrinket(TrinketType.TRINKET_SWALLOWED_PENNY, true)
+-- its just like above, except we add a "true" onto the end to tell the template that this is the tainted variant were talking about
 
-tainted.name = "Omega"
-tainted.stats = {
-	damage = 2.00,
-	firedelay = 1.00,
-	shotspeed = 1.00,
-	range = 1.00,
-	speed = 1.00,
-	tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE,
-	tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0),
-	flying = false,
-	luck = 1.00
-}
+Alpha:AddItem(CollectibleType.COLLECTIBLE_INNER_EYE, false, true) -- I want Sad Onion and give me the costume.
+-- again just like above, except we need to add true as the third option to let the template know were talking about the tainted variant
 
-tainted.costume = ""
+Alpha:SetPocketItem(PillEffect.PILLEFFECT_BAD_GAS, true, true) -- this is a pill, so the second option is true, and third option tells the template its the tainted variant
+-- even if this is a card you would need the third option
+-- so it would look like "Alpha:SetPocketItem(CardType, false, true)" meaning, its a card so set the second one to false, and third tells the template its the tainted variant
 
-tainted.trinket = TrinketType.TRINKET_SWALLOWED_PENNY
+local TaintedStats = Characters.newStatTable() -- create a new stat table
+TaintedStats.Damage = 5.50
+TaintedStats.Firedelay = 3.73
+TaintedStats.Shotspeed = 2.00
+TaintedStats.Range = 7.50
+TaintedStats.Speed = 2.00
+TaintedStats.Tearflags = TearFlags.TEAR_POISON | TearFlags.TEAR_FREEZE
+TaintedStats.Tearcolor = Color(1.0, 1.0, 1.0, 1.0, 0, 0, 0) -- Color, first four arguments between 0 and 1
+TaintedStats.Flying = false
+TaintedStats.Luck = 1.00
 
-tainted.card = Card.CARD_FOOL
-
-tainted.pill = false
-
-tainted.charge = -1
-
-tainted:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and give me the costume.
+Alpha:SetStats(TaintedStats, true) -- true again at the end, getting the idea now?
 
 --[[
 	--MORE INFO:--
@@ -208,4 +182,4 @@ tainted:AddItem(CollectibleType.COLLECTIBLE_SAD_ONION) -- I want Sad Onion and g
 	Make sure to use the same name as in the items.xml file.
 ]]
 
-return stats
+return Characters.build() -- last thing we call to tell the character builder were done.
