@@ -80,18 +80,6 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
     if (playerStat.Tearcolor and cache & CacheFlag.CACHE_TEARCOLOR == CacheFlag.CACHE_TEARCOLOR) then
         player.TearColor = playerStat.Tearcolor
     end
-
-    if CriticalHit then
-        local data = player:GetData()
-
-        if (playerStat.criticalChance and cache & CacheFlag.CACHE_CRIT_CHANCE == CacheFlag.CACHE_CRIT_CHANCE) then
-            data.critChance = data.critChance + playerStat.criticalChance
-        end
-
-        if (playerStat.criticalMultiplier and cache & CacheFlag.CACHE_CRIT_MULTIPLIER == CacheFlag.CACHE_CRIT_MULTIPLIER) then
-            data.critMultiplier = data.critMultiplier + playerStat.criticalMultiplier
-        end
-    end
 end)
 
 ---applies the costume to the player
@@ -114,6 +102,22 @@ local function addCostumes(AppliedCostume, player) -- costume logic
     end
 end
 
+---@param player EntityPlayer
+local function CriticalHitCacheCallback(player)
+    if not (characters:isACharacterDescription(player)) then return end
+
+    local playerStat = characters:getCharacterDescription(player).stats
+    local data = player:GetData()
+
+    if (playerStat.criticalChance) then
+        data.critChance = data.critChance + playerStat.criticalChance
+    end
+
+    if (playerStat.criticalMultiplier) then
+        data.critMultiplier = data.critMultiplier + playerStat.criticalMultiplier
+    end
+end
+
 ---@param player? EntityPlayer
 local function postPlayerInitLate(player)
     player = player or Isaac.GetPlayer()
@@ -122,10 +126,6 @@ local function postPlayerInitLate(player)
     if statTable == nil then return end
     -- Costume
     addCostumes(statTable.costume, player)
-
-    if CriticalHit then
-        CriticalHit:registerPlayer(player:GetPlayerType())
-    end
 
     local items = statTable.items
     if (#items > 0) then
@@ -155,6 +155,12 @@ local function postPlayerInitLate(player)
         else
             player:SetCard(0, statTable.PocketItem)
         end
+    end
+
+    if CriticalHit then
+        CriticalHit:AddCacheCallback(CriticalHitCacheCallback)
+        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+        player:EvaluateItems()
     end
 end
 
