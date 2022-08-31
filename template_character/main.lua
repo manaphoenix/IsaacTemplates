@@ -13,12 +13,12 @@ local path = "mods/" .. modName .. "/"
 ---@param ... any
 ---@return any
 local function loadFile(loc, ...)
-    return assert(loadfile(path .. loc .. ".lua","bt",_ENV))(...)
+    return assert(loadfile(path .. loc .. ".lua","bt",_ENV), "File not found at: " .. path .. loc .. ".lua")(...)
 end
 
 local _, ogerr = pcall(function()
     ---@type AllCharacters
-    local stats = loadFile("mod/stats")
+    local stats = loadFile("mod/stats", loadFile)
     loadFile("mod/MainMod", { modName, path, loadFile, stats, useCustomErrorChecker })
 end)
 
