@@ -13,7 +13,7 @@ local path = "mods/" .. modName .. "/"
 ---@param ... any
 ---@return any
 local function loadFile(loc, ...)
-    return assert(loadfile(path .. loc .. ".lua","bt",_ENV), "File not found at: " .. path .. loc .. ".lua")(...)
+    return assert(loadfile(path .. loc .. ".lua", "bt", _ENV), "File not found at: " .. path .. loc .. ".lua")(...)
 end
 
 local _, ogerr = pcall(function()
@@ -39,12 +39,14 @@ if (ogerr) then
                 Line = line
             })
             errorChecker.add("Error:", err, true)
-            errorChecker.add("For full error report, open log.txt",true)
-            errorChecker.add("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt",true)
+            errorChecker.add("For full error report, open log.txt", true)
+            errorChecker.add("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt"
+                , true)
             errorChecker.add("Restart your game after fixing the error!")
         else
             errorChecker.add("Unexpected error occured, please open log.txt!")
-            errorChecker.add("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt",true)
+            errorChecker.add("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt"
+                , true)
             errorChecker.add(ogerr)
         end
 
