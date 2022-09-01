@@ -15,12 +15,12 @@ local is_continued = false -- a hacky check for if the game is continued.
 -- Utility Functions
 
 ---converts tearRate to the FireDelay formula, then modifies the FireDelay by the request amount, returns Modified FireDelay
----@param tearRate number
----@param tearStat number
+---@param currentTearRate number
+---@param offsetBy number
 ---@return number
-local function calculateNewFireDelay(tearRate, tearStat)
-    local currentTears = 30 / (tearRate + 1)
-    local newTears = currentTears + tearStat
+local function calculateNewFireDelay(currentTearRate, offsetBy)
+    local currentTears = 30 / (currentTearRate + 1)
+    local newTears = currentTears + offsetBy
     return math.max((30 / newTears) - 1, -0.9999)
 end
 
@@ -186,65 +186,6 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
         postPlayerInitLate(player)
     end
 end)
-
---[[
-    // ModCallbacks.MC_POST_PEFFECT_UPDATE (4)
-// PlayerTypeCustom.FOO
-export function fooPostPEffectUpdate(player: EntityPlayer): void {
-  convertRedHeartContainersToBlackHearts(player);
-  removeRedHearts(player);
-}
-
-function convertRedHeartContainersToBlackHearts(player: EntityPlayer) {
-  const maxHearts = player.GetMaxHearts();
-  if (maxHearts > 0) {
-    player.AddMaxHearts(maxHearts * -1, false);
-    player.AddBlackHearts(maxHearts);
-  }
-}
-
-/**
- * We also have to check for normal red hearts, so that the player is not able to fill bone hearts
- * (by e.g. picking up a healing item like Breakfast).
- */
-function removeRedHearts(player: EntityPlayer) {
-  const hearts = player.GetHearts();
-  if (hearts > 0) {
-    player.AddHearts(hearts * -1);
-  }
-}
-
-/**
- * ModCallbacks.MC_PRE_PICKUP_COLLISION (38)
- * PickupVariant.PICKUP_HEART (10)
- *
- * Even though this character can never have any red heart containers, it is still possible for
- * them to have a bone heart and then touch a red heart to fill the bone heart. If this happened,
- * code in the PostPEffectUpdate callback would immediately cause the red hearts to be removed, but
- * it would still erroneously delete the pickup. To work around this, prevent this character from
- * colliding with any red hearts.
- */
-export function fooPrePickupCollisionHeart(
-  pickup: EntityPickup,
-  collider: Entity,
-): boolean | undefined {
-  if (!isRedHeart(pickup)) {
-    return undefined;
-  }
-
-  const player = collider.ToPlayer();
-  if (player === undefined) {
-    return undefined;
-  }
-
-  const character = player.GetPlayerType();
-  if (character !== PlayerTypeCustom.FOO) {
-    return undefined;
-  }
-
-  return false;
-}
-]]
 
 -- put your custom code here!
 
