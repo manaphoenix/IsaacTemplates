@@ -1,7 +1,5 @@
 -- Imports --
-
----@type string, string, function, AllCharacters, boolean
-local modName, path, loadFile, characters, useCustomErrorChecker = table.unpack(...)
+local characters = require("stats")
 
 -- Init --
 local mod = RegisterMod(modName, 1)

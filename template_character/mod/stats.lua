@@ -1,5 +1,4 @@
-local loadFile = ...
-local CharacterBuilder = loadFile("lib/CharacterTemplateLib")
+local CharacterBuilder = require("lib.CharacterTemplateLib")
 
 -- first we make a new character
 local alpha = CharacterBuilder.newCharacterSet("Alpha")

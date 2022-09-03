@@ -129,9 +129,9 @@ end
 
 function module.dump(err)
     module.mod:AddCallback(ModCallbacks.MC_POST_RENDER, render)
-    Isaac.DebugString("-- START OF " .. module.modName:upper() .. " ERROR --")
+    Isaac.DebugString("-- START OF " .. notes.Mod:upper() .. " ERROR --")
     Isaac.DebugString(err)
-    Isaac.DebugString("-- END OF " .. module.modName:upper() .. " ERROR --")
+    Isaac.DebugString("-- END OF " .. notes.Mod:upper() .. " ERROR --")
 end
 
 function module.registerError()
