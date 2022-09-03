@@ -1,4 +1,4 @@
-local CharacterBuilder = require("lib.CharacterTemplateLib")
+local CharacterBuilder = require("CharacterTemplateLib")
 
 -- first we make a new character
 local alpha = CharacterBuilder.newCharacterSet("Alpha")
