@@ -16,7 +16,7 @@ local items = {
 
 --- callbacks
 --- we use this table to store each and every callback so we can make one big callback, instead of a bunch of tiny ones.
---- all of our global go to _ENV, so we can safely make this a global without messing anything up for anyone else.
+--- all of our globals go to _ENV, so we can safely make this a global without messing anything up for anyone else.
 ---@class ItemCallbacks
 callbacks = {}
 
