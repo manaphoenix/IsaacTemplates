@@ -1,58 +1,176 @@
+-- vars
+local useCustomErrorChecker = true -- should the custom error checker be used?
+local mainFileName = "MainMod"
+
 -- file loc
 local _, _err = pcall(require, "")
 ---@type string
 local modName = _err:match("/mods/(.*)/%.lua")
 ---@type string
-local path = "mods/" .. modName .. "/"
+local dir = "mods/" .. modName .. "/"
 
----loads a file, with no cache
----@param loc string
----@param ... any
----@return any
-local function loadFile(loc, ...)
-    return assert(loadfile(path .. loc .. ".lua", "bt", _ENV), "File not found at: " .. path .. loc .. ".lua")(...)
-end
+local preload = {}
+local loaded = {
+    _G = _G,
+    coroutine = coroutine,
+    math = math,
+    string = string,
+    table = table,
+    utf8 = utf8
+}
+local sentinel = {}
 
--- Register our mod
-local mod = RegisterMod("TemplateItems", 1)
--- get the item registry
-local itemRegistry = loadFile("Registries/itemRegistry")
----@cast itemRegistry ItemRegistry
-
--- register the EID entries, so our items have descriptions
-loadFile("Registries/EIDRegistry", itemRegistry)
-
---- next we setup an easy to use table to automatically go through each item and register it.
---- We only need to put the file name, w/o the .Lua as our file loader will do the extension and folder for us
-local items = {
-    "Elysium",
-    "Exodus",
-    "HermesBoots"
+local package = {
+    path = "/?;/?.lua;/?/init.lua;/lib/?.lua;/mod/?.lua",
+    config = "/\n;\n?\n!\n-",
+    loaded = loaded,
+    preload = preload
 }
 
---- callbacks
---- we use this table to store each and every callback so we can make one big callback, instead of a bunch of tiny ones.
----@class ItemCallbacks
-local callbacks = {}
+---searches along a series of paths, seperated by ;
+---@param name string
+---@param path string
+---@param sep? string
+---@param rep? string
+function package.searchpath(name, path, sep, rep)
+    sep = sep or "."
+    rep = rep or "/"
+    --local pathSep, pathRep = ";", "?"
 
----a custom add to our callback class, it will keeps all of our items sorted based on callbacks, so we can make one combined callback later.
----@param callback ModCallbacks
----@param f function
----@param opt any
-function callbacks.add(callback, f, opt)
-    --TODO: Add Callback Logic
-    callbacks[callback] = callbacks[callback] or {} -- just make sure the callback table exists, and if it doesn't, create it.
-    table.insert(callbacks[callback], {func = f, opt = opt}) -- insert into that callback, a new callback function; and its optional parameter.
+    local fname = string.gsub(name, sep:gsub("%.", "%%."), rep)
+    local sError = ""
+    for pattern in string.gmatch(path, "[^;]+") do
+        local sPath = string.gsub(pattern, "%?", fname)
+        local fn, err = loadfile(dir .. sPath)
+        if fn then
+            return dir .. sPath
+        else
+            if #sError > 0 then
+                sError = sError .. "\n  "
+            end
+            sError = sError .. "no file '" .. sPath .. "'"
+        end
+    end
+    return nil, sError
 end
 
---- now for each item:
-for _, item in ipairs(items) do
-    loadFile("Items/" .. item, itemRegistry, callbacks) -- we load the file, passing in the itemRegistry and the callbacks table to add the callbacks they need.
-end
-
-for callback, callbackInfo in pairs(callbacks) do -- for each callback in our callback class
-    if type(callback) == "number" then -- if the callback is infact a callback (just to ensure we don't try to register something that isn't a callback)
-        mod:AddCallback(callback, callbackInfo.func, callbackInfo.opt) -- register our callback
-        -- TODO: Combine callbacks if possible (IF you are reading this, its not strictly necessary; but it could cause lag... if you have ALOT of items...)
+local function preloader(pckg)
+    return function(name)
+        if pckg.preload[name] then
+            return pckg.preload[name]
+        else
+            return nil, "package.preload[" .. name .. "]: no such field"
+        end
     end
 end
+
+local function from_file(pckg, _env)
+    return function(name)
+        local sPath, sError = pckg.searchpath(name, package.path)
+        if not sPath then
+            return nil, sError
+        end
+        local fnFile, lError = loadfile(sPath, nil, _env)
+        if fnFile then
+            return fnFile, lError
+        else
+            return nil, lError
+        end
+    end
+end
+
+local env = {
+    package = package,
+    modName = modName
+}
+
+package.loaders = { preloader(package), from_file(package, env) }
+
+---requires a module
+---@param modname string
+function env.require(modname)
+    if package.loaded[modname] == sentinel then
+        error("loop or previous error loading module '" .. modname .. "'", 0)
+    end
+
+    if package.loaded[modname] then
+        return package.loaded[modname]
+    end
+
+    local sError = "module '" .. modname .. "' not found:"
+    for _, searcher in ipairs(package.loaders) do
+        local loader = table.pack(searcher(modname))
+        if loader[1] then
+            package.loaded[modname] = sentinel
+            local result = loader[1](modname, table.unpack(loader, 2, loader.n))
+            if result == nil then result = true end
+
+            package.loaded[modname] = result
+            return result
+        else
+            sError = sError .. "\n  " .. loader[2]
+        end
+    end
+    error(sError, 2)
+end
+
+env.include = env.require
+setmetatable(env, {
+    __newindex = function(self, key, value)
+        rawset(self, key, value)
+    end,
+    __index = _G
+})
+
+local function errHandler(err)
+    if (useCustomErrorChecker) then
+        local errorChecker = require("lib.cerror")
+        errorChecker.registerError()
+
+        local str = errorChecker.formatError(ogerr)
+
+        if (str) then
+            local file = str:match("%w+%.lua")
+            local line = str:match(":(%d+):")
+            local err = str:match(":%d+: (.*)")
+            errorChecker.SetData({
+                Mod = modName,
+                File = file,
+                Line = line
+            })
+            errorChecker.add("Error:", err, true)
+            errorChecker.add("For full error report, open log.txt", true)
+            errorChecker.add("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt"
+                , true)
+            errorChecker.add("Restart your game after fixing the error!")
+        else
+            errorChecker.add("Unexpected error occured, please open log.txt!")
+            errorChecker.add("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt"
+                , true)
+            errorChecker.add(ogerr)
+        end
+
+        local room = Game():GetRoom()
+        for i = 0, 7 do room:RemoveDoor(i) end
+
+        errorChecker.dump(ogerr)
+        error()
+    else
+        Isaac.ConsoleOutput(modName .. " has hit an error, see Log.txt for more info\n")
+        Isaac.ConsoleOutput("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt")
+        Isaac.DebugString("-- START OF " .. modName:upper() .. " ERROR --")
+        Isaac.DebugString(ogerr)
+        Isaac.DebugString("-- END OF " .. modName:upper() .. " ERROR --")
+        error()
+    end
+end
+
+xpcall(function()
+    ---@type AllCharacters
+    local fn, err = loadfile(dir .. "mod/" .. mainFileName .. ".lua", "bt", env)
+    if fn then
+        fn()
+    else
+        errHandler(err)
+    end
+end, errHandler)

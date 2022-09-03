@@ -1,11 +1,4 @@
--- we grab what was passed to us through "..."
-local registry, callback = ...
----@cast registry ItemRegistry
----@cast callback ItemCallbacks
-
---- ItemRegistry is our registry that stores all of our items IDs for use.
---- callback is our custom class to store what each item needs in terms of callbacks, so we can combine them later into one big callback
-
+local itemRegistry = require("Registries/ItemRegistry")
 
 -- SEE Items.xml for the other half of what you need to do for this item!
 
@@ -41,4 +34,4 @@ local function Post_Player_Update(_, player)
   end
 end
 
-callback.add(ModCallbacks.MC_POST_PLAYER_UPDATE, Post_Player_Update) -- this runs for every player update.
+callbacks.add(ModCallbacks.MC_POST_PLAYER_UPDATE, Post_Player_Update) -- this runs for every player update.
