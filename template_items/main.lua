@@ -127,7 +127,7 @@ local function errHandler(err)
         local errorChecker = env.require("lib.cerror")
         errorChecker.registerError()
 
-        local str = errorChecker.formatError(ogerr)
+        local str = errorChecker.formatError(err)
 
         if (str) then
             local file = str:match("%w+%.lua")
@@ -147,19 +147,19 @@ local function errHandler(err)
             errorChecker.add("Unexpected error occured, please open log.txt!")
             errorChecker.add("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt"
                 , true)
-            errorChecker.add(ogerr)
+            errorChecker.add(err)
         end
 
         local room = Game():GetRoom()
         for i = 0, 7 do room:RemoveDoor(i) end
 
-        errorChecker.dump(ogerr)
+        errorChecker.dump(err)
         error()
     else
         Isaac.ConsoleOutput(modName .. " has hit an error, see Log.txt for more info\n")
         Isaac.ConsoleOutput("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt")
         Isaac.DebugString("-- START OF " .. modName:upper() .. " ERROR --")
-        Isaac.DebugString(ogerr)
+        Isaac.DebugString(err)
         Isaac.DebugString("-- END OF " .. modName:upper() .. " ERROR --")
         error()
     end
