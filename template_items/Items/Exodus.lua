@@ -13,7 +13,7 @@ local function TriggerEffect(player)
 end
 
 local function Post_Player_Update(_, player)
-  if (player == nil or not player:HasCollectible(registry.Exodus)) then return end
+  if (player == nil or not player:HasCollectible(itemRegistry.Exodus)) then return end
   -- this update is ran even on the main menu ... so we have to check if player even exists.
   -- next we check if the player does not have our item
   -- in either case, we return b/c there isn't anything to check.

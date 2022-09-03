@@ -2,7 +2,7 @@ local itemRegistry = require("Registries/ItemRegistry")
 
 -- SEE Items.xml for the other half of what you need to do for this item!
 local function EvalCache(_, player, cache)
-  if (player:HasCollectible(registry.Hermes)) then -- if the player has our item
+  if (player:HasCollectible(itemRegistry.Hermes)) then -- if the player has our item
     player.MoveSpeed = player.MoveSpeed * 2 -- multiply their speed by 2, Woosh!
   end
 end
