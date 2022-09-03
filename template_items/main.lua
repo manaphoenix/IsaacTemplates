@@ -124,7 +124,7 @@ setmetatable(env, {
 
 local function errHandler(err)
     if (useCustomErrorChecker) then
-        local errorChecker = require("lib.cerror")
+        local errorChecker = env.require("lib.cerror")
         errorChecker.registerError()
 
         local str = errorChecker.formatError(ogerr)

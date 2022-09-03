@@ -2,7 +2,6 @@
 local mod = RegisterMod("TemplateItems", 1)
 -- get the item registry
 local itemRegistry = require("Registries/ItemRegistry")
----@cast itemRegistry ItemRegistry
 
 -- register the EID entries, so our items have descriptions
 require("Registries/EIDRegistry")
@@ -33,7 +32,7 @@ end
 
 --- now for each item:
 for _, item in ipairs(items) do
-    require("Items/" .. item) -- we load the file, passing in the itemRegistry and the callbacks table to add the callbacks they need.
+    require("Items/" .. item) -- we load the file.
 end
 
 for callback, callbackInfo in pairs(callbacks) do -- for each callback in our callback class
