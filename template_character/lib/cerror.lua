@@ -119,7 +119,12 @@ function module.truncate(txt, useNote)
     end
 end
 
-function module.formatError(err) return err:match(".-(%w+%.lua:%d+:.%w+.*)") end
+function module.formatError(err)
+    if err then
+        return err:match(".-(%w+%.lua:%d+:.%w+.*)") or err
+    end
+    return "UNKNOWN"
+end
 
 function module.SetData(data)
     notes.Mod = data.Mod or notes.Mod or "UNKNOWN"
@@ -130,7 +135,7 @@ end
 function module.dump(err)
     module.mod:AddCallback(ModCallbacks.MC_POST_RENDER, render)
     Isaac.DebugString("-- START OF " .. notes.Mod:upper() .. " ERROR --")
-    Isaac.DebugString(err)
+    Isaac.DebugString(err or "UNKNOWN")
     Isaac.DebugString("-- END OF " .. notes.Mod:upper() .. " ERROR --")
 end
 

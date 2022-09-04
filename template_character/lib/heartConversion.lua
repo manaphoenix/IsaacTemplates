@@ -1,6 +1,3 @@
----@type number
-local ConversionHeartSubType = HeartSubType.SOUL | HeartSubType.BLACK
-
 ---@class characterHealthReplacementMap
 local characterHealthReplacementMap = {}
 
@@ -85,7 +82,10 @@ end
 ---@param _ any
 ---@param player EntityPlayer
 local function postPEffectUpdate(_, player)
-    local ptype = player:GetPlayerType();
+    if player == nil then
+        error("Player is non-existant!")
+    end
+    local ptype = player:GetPlayerType()
     local conversionHeartSubType = characterHealthReplacementMap.get(ptype);
     if (conversionHeartSubType == nil) then
       return;
@@ -100,8 +100,8 @@ local module = {}
 ---registers the callback, internal
 ---@param mod mod
 function module.characterHealthConversionInit(mod)
-    mod:AddCallback(ModCallbacks.POST_PEFFECT_UPDATE, postPEffectUpdate)
-    mod:AddCallback(ModCallbacks.PRE_PICKUP_COLLISION, prePickupCollisionHeart, PickupVariant.HEART)
+    mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, postPEffectUpdate)
+    mod:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, prePickupCollisionHeart, PickupVariant.HEART)
 end
 
 ---helper function to make a character have the same health mechanic as Blue Baby or Dark Judas

@@ -132,13 +132,13 @@ local function errHandler(err)
         if (str) then
             local file = str:match("%w+%.lua")
             local line = str:match(":(%d+):")
-            local err = str:match(":%d+: (.*)")
+            local merr = str:match(":%d+: (.*)")
             errorChecker.SetData({
                 Mod = modName,
                 File = file,
                 Line = line
             })
-            errorChecker.add("Error:", err, true)
+            errorChecker.add("Error:", merr, true)
             errorChecker.add("For full error report, open log.txt", true)
             errorChecker.add("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt"
                 , true)
@@ -166,7 +166,6 @@ local function errHandler(err)
 end
 
 xpcall(function()
-    ---@type AllCharacters
     local fn, err = loadfile(dir .. "mod/" .. mainFileName .. ".lua", "bt", env)
     if fn then
         fn()
