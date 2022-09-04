@@ -6,5 +6,5 @@
   <passive cache="speed" gfx="Hermes_Boots.png" description="Whoosh!" name="Hermes Boots" quality="1"/>
 
   <!-- Exodus !-->
-  <active description="Penned up bull" gfx="Exodus.png" maxcharges="5" name="Exodus" chargetype="special" quality="1", persistent="True"/>
+  <active description="Penned up bull" gfx="Exodus.png" maxcharges="5" name="Exodus" chargetype="special" quality="1" persistent="True"/>
 </items>

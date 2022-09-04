@@ -37,7 +37,13 @@ end
 
 for callback, callbackInfo in pairs(callbacks) do -- for each callback in our callback class
     if type(callback) == "number" then -- if the callback is infact a callback (just to ensure we don't try to register something that isn't a callback)
-        mod:AddCallback(callback, callbackInfo.func, callbackInfo.opt) -- register our callback
+        for _, callbackTables in pairs(callbackInfo) do
+            if callbackTables.opt then
+                mod:AddCallback(callback, callbackTables.func, callbackTables.opt) -- register our callback
+            else
+                mod:AddCallback(callback, callbackTables.func) -- register our callback
+            end
+        end
         -- TODO: Combine callbacks if possible (IF you are reading this, its not strictly necessary; but it could cause lag... if you have ALOT of items...)
     end
 end
