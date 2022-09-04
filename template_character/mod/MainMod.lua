@@ -1,5 +1,6 @@
 -- Imports --
 local characters = require("stats")
+local heartConverter = require("heartConversion")
 
 -- Init --
 local mod = RegisterMod(modName, 1)
@@ -36,6 +37,37 @@ local function GetPlayers()
 end
 
 -- Character Code
+
+-- go through each our characters and register them to the heartConverter if need be
+local didConvert = false
+
+for i,v in pairs(characters) do
+    if type(v) == "table" then
+        ---@cast v CharacterSet
+        local normalPType = Isaac.GetPlayerTypeByName(v.normal.name)
+        if v.normal.soulHeartOnly then
+            didConvert = true
+            heartConverter.registerCharacterHealthConversion(normalPType, HeartSubType.HEART_SOUL)
+        elseif v.normal.blackHeartOnly then
+            didConvert = true
+            heartConverter.registerCharacterHealthConversion(normalPType, HeartSubType.HEART_BLACK)
+        end
+        if v.hasTainted then
+            local taintedPType = Isaac.GetPlayerTypeByName(v.tainted.name, true)
+            if v.tainted.soulHeartOnly then
+                didConvert = true
+                heartConverter.registerCharacterHealthConversion(taintedPType, HeartSubType.HEART_SOUL)
+            elseif v.tainted.blackHeartOnly then
+                didConvert = true
+                heartConverter.registerCharacterHealthConversion(taintedPType, HeartSubType.HEART_BLACK)
+            end
+        end
+    end
+end
+
+if didConvert then
+    heartConverter.characterHealthConversionInit(mod)
+end
 
 ---@param _ any
 ---@param player EntityPlayer
