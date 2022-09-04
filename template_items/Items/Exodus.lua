@@ -3,8 +3,8 @@ local itemRegistry = require("Registries/ItemRegistry")
 -- SEE Items.xml for the other half of what you need to do for this item!
 
 local function TriggerEffect(player)
-  if (not player:GetData()["ExodusCharge"] or player:GetData()["ExodusCharge"] < 1) then return end -- if we don't have any uses, or we have ran out of uses, return we can't use this anymore
-  player:GetData()["ExodusCharge"] = player:GetData()["ExodusCharge"] - 1 -- remove 1 from our use charge, we used our items
+  local dat = player:GetEffects():GetCollectibleNum(itemRegistry.Exodus)
+  if dat >= 5 then return end
 
   local enemies = Isaac.FindInRadius(player.Position, 1000, EntityPartition.ENEMY) -- find all enemies in the room
   for _, enemy in pairs(enemies) do -- for each enemy
@@ -16,12 +16,8 @@ local function Post_Player_Update(_, player)
   if (player == nil or not player:HasCollectible(itemRegistry.Exodus)) then return end
   -- this update is ran even on the main menu ... so we have to check if player even exists.
   -- next we check if the player does not have our item
-  -- in either case, we return b/c there isn't anything to check.
-
-  -- first pickup
-  if (not player:GetData()["ExodusCharge"]) then -- if this is our first time picking up this item...
-    player:GetData()["ExodusCharge"] = 5 -- set our uses to 5
-  end
+  -- in either case, we return b/c there isn't anything to check
+  local dat = player:GetEffects():GetCollectibleNum(itemRegistry.Exodus) -- get the number of times the item has already being used.
 
   -- effect trigger
   if (Input.IsActionTriggered(ButtonAction.ACTION_ITEM, player.ControllerIndex)) then -- if our player pushes the use active item button...
@@ -29,8 +25,8 @@ local function Post_Player_Update(_, player)
   end
 
   -- sync
-  if (player:GetActiveCharge() ~= player:GetData()["ExodusCharge"]) then -- Just an update code to have the in-game charge bar be equal to the number of uses we have remaining...
-    player:SetActiveCharge(player:GetData()["ExodusCharge"]) -- just setting the charge bar equal to w/e our charges is...
+  if (dat < 5 and player:GetActiveCharge() ~= (5-dat)) then -- Just an update code to have the in-game charge bar be equal to the number of uses we have remaining...
+    player:SetActiveCharge((5-dat)) -- just setting the charge bar equal to w/e our charges is...
   end
 end
 
