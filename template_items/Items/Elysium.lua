@@ -1,8 +1,5 @@
 local itemRegistry = require("Registries/ItemRegistry")
 
---- This item needs the Game() so we init it here.
-local Game = Game()
-
 -- SEE Items.xml for the other half of what you need to do for this item!
 local function EvalCache(_, player, _) -- when the cache eval is triggered
   if (player:HasCollectible(itemRegistry.Elysium)) then -- check to make sure the player has our collectible.
