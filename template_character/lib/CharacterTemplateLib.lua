@@ -48,6 +48,12 @@ function _characterSets:isACharacterDescription(player)
     return true, _CharacterDescriptionMap[ptype].tainted
 end
 
+---@enum HeartEnum
+local HeartEnum = {
+    SOUL_HEART = 1,
+    BLACK_HEART = 2
+}
+
 ---@class Stats
 ---@field Damage number how much damage the character should have (Base: 3.50)
 ---@field Speed number how fast the character should move (Base: 1.00)
@@ -69,7 +75,9 @@ end
 ---@field PocketItem PillEffect|Card the PocketItem the character starts with (Pill or Card)
 ---@field isPill boolean is the PocketItem a pill?
 ---@field charge number|boolean the charge level the active item should start at (if the character starts with one)
----@field trinket TrinketType
+---@field trinket TrinketType the trinket type the player starts with
+---@field soulHeartOnly boolean whether the player is a Soul Heart only character like Bluebaby
+---@field blackHeartOnly boolean whether the player is a Black heart only character like Dark Judas
 local character = {}
 
 ---@class CharacterSet
@@ -171,6 +179,25 @@ function CharacterSet:setStats(statTable, tainted)
     end
 end
 
+---set whether the character is a SoulHeart or BlackHeart only character
+---@param Heart HeartEnum
+---@param tainted? boolean
+function CharacterSet:setHeartType(Heart, tainted)
+    if not tainted then
+        if Heart == HeartEnum.SOUL_HEART then
+            self.normal.soulHeartOnly = true
+        elseif Heart == HeartEnum.BLACK_HEART then
+            self.normal.blackHeartOnly = true
+        end
+    else
+        if Heart == HeartEnum.SOUL_HEART then
+            self.tainted.soulHeartOnly = true
+        elseif Heart == HeartEnum.BLACK_HEART then
+            self.tainted.blackHeartOnly = true
+        end
+    end
+end
+
 ---internal function to create a new Character table
 ---@return CharacterDescription
 local function _newCharacterDescription()
@@ -210,10 +237,10 @@ function CharacterBuilder.build()
         if type(v) == "table" then
             ---@cast v CharacterSet
             local normalPType = Isaac.GetPlayerTypeByName(v.normal.name)
-            _CharacterDescriptionMap[normalPType] = { pointer = v.normal, tainted = false, set = v}
+            _CharacterDescriptionMap[normalPType] = { pointer = v.normal, tainted = false, set = v }
             if v.hasTainted then
                 local taintedPType = Isaac.GetPlayerTypeByName(v.tainted.name, true)
-                _CharacterDescriptionMap[taintedPType] = {pointer = v.tainted, tainted = true, set = v}
+                _CharacterDescriptionMap[taintedPType] = { pointer = v.tainted, tainted = true, set = v }
             end
         end
     end
