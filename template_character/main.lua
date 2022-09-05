@@ -81,7 +81,8 @@ end
 
 local env = {
     package = package,
-    modName = modName
+    modName = modName,
+    _HOST = [[_ENV Loader 1.0.5 (by manaphoenix)]]
 }
 
 package.loaders = { preloader(package), from_file(package, env) }
