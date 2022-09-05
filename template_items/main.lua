@@ -82,7 +82,8 @@ end
 local env = {
     package = package,
     modName = modName,
-    _HOST = [[_ENV Loader 1.0.5 (by manaphoenix)]]
+    _HOST = [[_ENV Loader 1.0.5 (by manaphoenix)]],
+    _TEMPLATEITEMS = [[Item Template V2.0.1]]
 }
 
 package.loaders = { preloader(package), from_file(package, env) }
