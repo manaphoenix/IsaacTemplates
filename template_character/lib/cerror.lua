@@ -1,4 +1,5 @@
 -- This file control the custom error checker.
+---@class ErrorChecker
 local module = {}
 local errors = {}
 local xOffset = 0
@@ -132,10 +133,12 @@ function module.SetData(data)
     notes.Line = data.Line or notes.Line or "UNKNOWN"
 end
 
+---dump to log
+---@param err string
 function module.dump(err)
     module.mod:AddCallback(ModCallbacks.MC_POST_RENDER, render)
     Isaac.DebugString("-- START OF " .. notes.Mod:upper() .. " ERROR --")
-    Isaac.DebugString(err or "UNKNOWN")
+    Isaac.DebugString(err)
     Isaac.DebugString("-- END OF " .. notes.Mod:upper() .. " ERROR --")
 end
 
