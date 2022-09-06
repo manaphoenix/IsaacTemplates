@@ -82,8 +82,8 @@ end
 local env = {
     package = package,
     modName = modName,
-    _HOST = [[_ENV Loader 1.0.5 (by manaphoenix)]],
-    _TEMPLATEITEMS = [[Item Template V2.0.1]]
+    _HOST = [[_ENV Loader 1.0.7 (by manaphoenix)]],
+    _MODVERSION = [[Template_Character V3.0.1]]
 }
 
 package.loaders = { preloader(package), from_file(package, env) }
@@ -125,8 +125,10 @@ setmetatable(env, {
 })
 
 local function errHandler(err)
+    err  = tostring(err)
     if (useCustomErrorChecker) then
         local errorChecker = env.require("lib.cerror")
+        ---@cast errorChecker ErrorChecker
         errorChecker.registerError()
 
         local str = errorChecker.formatError(err)
