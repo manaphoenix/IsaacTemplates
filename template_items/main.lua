@@ -83,7 +83,7 @@ local env = {
     package = package,
     modName = modName,
     _HOST = [[_ENV Loader 1.0.7 (by manaphoenix)]],
-    _MODVERSION = [[Template_Character V3.0.1]]
+    _MODVERSION = [[Template_Items V3.0.1]]
 }
 
 package.loaders = { preloader(package), from_file(package, env) }
