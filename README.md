@@ -1,3 +1,7 @@
+# THIS TEMPLATE IS NOW OBSOLETE.
+
+**You can rewrite this or use it however you want still, but I will not be helping**
+
 # Isaac Templates
 
 A collection of mod templates for The Binding of Isaac: Rebirth.
