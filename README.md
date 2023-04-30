@@ -1,6 +1,5 @@
-# THIS TEMPLATE IS NOW OBSOLETE.
-
-**You can rewrite this or use it however you want still, but I will not be helping**
+# THIS TEMPLATE NOW ONCE AGAIN WORKS, BUT...
+**All the fancy hand holding bits of the project had to be removed, so you'll have to use the default vanilla way of debugging your code**
 
 # Isaac Templates
 
