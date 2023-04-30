@@ -42,9 +42,9 @@ local function convertRedHeartContainers(player, conversionType)
 
     player:AddMaxHearts(maxHearts * -1, false);
 
-    if conversionType == HeartSubType.HEART_SOUL then
+    if conversionType == HeartSubType.SOUL then
         player:AddSoulHearts(maxHearts);
-    elseif conversionType == HeartSubType.HEART_BLACK then
+    elseif conversionType == HeartSubType.BLACK then
         player:AddBlackHearts(maxHearts);
     end
 end

@@ -1,179 +1,227 @@
--- vars
-local useCustomErrorChecker = true -- should the custom error checker be used?
-local mainFileName = "MainMod"
 
+-- Imports --
+local characters = include("mod.stats")
+local heartConverter = include("lib.heartConversion")
 -- file loc
 local _, _err = pcall(require, "")
 ---@type string
 local modName = _err:match("/mods/(.*)/%.lua")
----@type string
-local dir = "mods/" .. modName .. "/"
 
-local preload = {}
-local loaded = {
-    _G = _G,
-    coroutine = coroutine,
-    math = math,
-    string = string,
-    table = table,
-    utf8 = utf8
-}
-local sentinel = {}
+-- Init --
+local mod = RegisterMod(modName, 1)
+-- CODE --
+local config = Isaac.GetItemConfig()
+local game = Game()
+local pool = game:GetItemPool()
+local game_started = false -- a hacky check for if the game is continued.
+local is_continued = false -- a hacky check for if the game is continued.
 
-local package = {
-    path = "/?;/?.lua;/?/init.lua;/lib/?.lua;/mod/?.lua",
-    config = "/\n;\n?\n!\n-",
-    loaded = loaded,
-    preload = preload
-}
+-- Utility Functions
 
----searches along a series of paths, seperated by ;
----@param name string
----@param path string
----@param sep? string
----@param rep? string
-function package.searchpath(name, path, sep, rep)
-    sep = sep or "."
-    rep = rep or "/"
-    --local pathSep, pathRep = ";", "?"
+---converts tearRate to the FireDelay formula, then modifies the FireDelay by the request amount, returns Modified FireDelay
+---@param currentTearRate number
+---@param offsetBy number
+---@return number
+local function calculateNewFireDelay(currentTearRate, offsetBy)
+    local currentTears = 30 / (currentTearRate + 1)
+    local newTears = currentTears + offsetBy
+    return math.max((30 / newTears) - 1, -0.9999)
+end
 
-    local fname = string.gsub(name, sep:gsub("%.", "%%."), rep)
-    local sError = ""
-    for pattern in string.gmatch(path, "[^;]+") do
-        local sPath = string.gsub(pattern, "%?", fname)
-        local fn, err = loadfile(dir .. sPath)
-        if fn then
-            return dir .. sPath
-        else
-            if #sError > 0 then
-                sError = sError .. "\n  "
+---Gets all players that is one of your characters, returns a table of all players, or nil if none are
+---@return table|nil
+local function GetPlayers()
+    local players = {}
+    for i = 0, game:GetNumPlayers() - 1 do
+        local player = Isaac.GetPlayer(i)
+        if (characters:isACharacterDescription(player)) then
+            table.insert(players, player)
+        end
+    end
+    return #players > 0 and players or nil
+end
+
+-- Character Code
+
+-- go through each our characters and register them to the heartConverter if need be
+local didConvert = false
+
+for i,v in pairs(characters) do
+    if type(v) == "table" then
+        ---@cast v CharacterSet
+        local normalPType = Isaac.GetPlayerTypeByName(v.normal.name)
+        if v.normal.soulHeartOnly then
+            didConvert = true
+            heartConverter.registerCharacterHealthConversion(normalPType, HeartSubType.HEART_SOUL)
+        elseif v.normal.blackHeartOnly then
+            didConvert = true
+            heartConverter.registerCharacterHealthConversion(normalPType, HeartSubType.HEART_BLACK)
+        end
+        if v.hasTainted then
+            local taintedPType = Isaac.GetPlayerTypeByName(v.tainted.name, true)
+            if v.tainted.soulHeartOnly then
+                didConvert = true
+                heartConverter.registerCharacterHealthConversion(taintedPType, HeartSubType.HEART_SOUL)
+            elseif v.tainted.blackHeartOnly then
+                didConvert = true
+                heartConverter.registerCharacterHealthConversion(taintedPType, HeartSubType.HEART_BLACK)
             end
-            sError = sError .. "no file '" .. sPath .. "'"
         end
     end
-    return nil, sError
 end
 
-local function preloader(pckg)
-    return function(name)
-        if pckg.preload[name] then
-            return pckg.preload[name]
+if didConvert then
+    heartConverter.characterHealthConversionInit(mod)
+end
+
+---@param _ any
+---@param player EntityPlayer
+---@param cache CacheFlag | BitSet128
+mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, player, cache)
+    if not (characters:isACharacterDescription(player)) then return end
+
+    local playerStat = characters:getCharacterDescription(player).stats
+
+    if (playerStat.Damage and cache & CacheFlag.CACHE_DAMAGE == CacheFlag.CACHE_DAMAGE) then
+        player.Damage = player.Damage + playerStat.Damage
+    end
+
+    if (playerStat.Firedelay and cache & CacheFlag.CACHE_FIREDELAY == CacheFlag.CACHE_FIREDELAY) then
+        player.MaxFireDelay = calculateNewFireDelay(player.MaxFireDelay, playerStat.Firedelay)
+    end
+
+    if (playerStat.Shotspeed and cache & CacheFlag.CACHE_SHOTSPEED == CacheFlag.CACHE_SHOTSPEED) then
+        player.ShotSpeed = player.ShotSpeed + playerStat.Shotspeed
+    end
+
+    if (playerStat.Range and cache & CacheFlag.CACHE_RANGE == CacheFlag.CACHE_RANGE) then
+        player.TearRange = player.TearRange + playerStat.Range
+    end
+
+    if (playerStat.Speed and cache & CacheFlag.CACHE_SPEED == CacheFlag.CACHE_SPEED) then
+        player.MoveSpeed = player.MoveSpeed + playerStat.Speed
+    end
+
+    if (playerStat.Luck and cache & CacheFlag.CACHE_LUCK == CacheFlag.CACHE_LUCK) then
+        player.Luck = player.Luck + playerStat.Luck
+    end
+
+    if (cache & CacheFlag.CACHE_FLYING == CacheFlag.CACHE_FLYING and playerStat.Flying == true) then player.CanFly = true end
+
+    if (playerStat.Tearflags and cache & CacheFlag.CACHE_TEARFLAG == CacheFlag.CACHE_TEARFLAG) then
+        player.TearFlags = player.TearFlags | playerStat.Tearflags
+    end
+
+    if (playerStat.Tearcolor and cache & CacheFlag.CACHE_TEARCOLOR == CacheFlag.CACHE_TEARCOLOR) then
+        player.TearColor = playerStat.Tearcolor
+    end
+end)
+
+---applies the costume to the player
+---@param CostumeName string
+---@param player EntityPlayer
+local function applyCostume(CostumeName, player) -- actually adds the costume.
+    local cost = Isaac.GetCostumeIdByPath("gfx/characters/" .. CostumeName .. ".anm2")
+    if (cost ~= -1) then player:AddNullCostume(cost) end
+end
+
+---goes through each costume and applies it
+---@param AppliedCostume table
+---@param player EntityPlayer
+local function addCostumes(AppliedCostume, player) -- costume logic
+    if #AppliedCostume == 0 then return end
+    if (type(AppliedCostume) == "table") then
+        for i = 1, #AppliedCostume do
+            applyCostume(AppliedCostume[i], player)
+        end
+    end
+end
+
+---@param player EntityPlayer
+local function CriticalHitCacheCallback(player)
+    if not (characters:isACharacterDescription(player)) then return end
+
+    local playerStat = characters:getCharacterDescription(player).stats
+    local data = player:GetData()
+
+    if (playerStat.criticalChance) then
+        data.critChance = data.critChance + playerStat.criticalChance
+    end
+
+    if (playerStat.criticalMultiplier) then
+        data.critMultiplier = data.critMultiplier + playerStat.criticalMultiplier
+    end
+end
+
+---@param player? EntityPlayer
+local function postPlayerInitLate(player)
+    player = player or Isaac.GetPlayer()
+    if not (characters:isACharacterDescription(player)) then return end
+    local statTable = characters:getCharacterDescription(player)
+    if statTable == nil then return end
+    -- Costume
+    addCostumes(statTable.costume, player)
+
+    local items = statTable.items
+    if (#items > 0) then
+        for i, v in ipairs(items) do
+            player:AddCollectible(v[1])
+            if (v[2]) then
+                local ic = config:GetCollectible(v[1])
+                player:RemoveCostume(ic)
+            end
+        end
+        local charge = statTable.charge
+        if (charge and player:GetActiveItem()) then
+            if (charge == true) then
+                player:FullCharge()
+            else
+                player:SetActiveCharge(charge)
+            end
+        end
+    end
+
+    local trinket = statTable.trinket
+    if (trinket) then player:AddTrinket(trinket, true) end
+
+    if (statTable.PocketItem) then
+        if statTable.isPill then
+            player:SetPill(0, pool:ForceAddPillEffect(statTable.PocketItem))
         else
-            return nil, "package.preload[" .. name .. "]: no such field"
+            player:SetCard(0, statTable.PocketItem)
         end
+    end
+
+    if CriticalHit then
+        CriticalHit:AddCacheCallback(CriticalHitCacheCallback)
+        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+        player:EvaluateItems()
     end
 end
 
-local function from_file(pckg, _env)
-    return function(name)
-        local sPath, sError = pckg.searchpath(name, package.path)
-        if not sPath then
-            return nil, sError
-        end
-        local fnFile, lError = loadfile(sPath, nil, _env)
-        if fnFile then
-            return fnFile, lError
-        else
-            return nil, lError
-        end
+---@param _ any
+---@param Is_Continued boolean
+mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, Is_Continued)
+    if (not Is_Continued) then
+        is_continued = false
+        postPlayerInitLate()
     end
-end
+    game_started = true
+end)
 
-local env = {
-    package = package,
-    modName = modName,
-    _HOST = [[_ENV Loader 1.0.7 (by manaphoenix)]],
-    _MODVERSION = [[Template_Character V3.0.1]]
-}
+mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function()
+    game_started = false
+end)
 
-package.loaders = { preloader(package), from_file(package, env) }
-
----requires a module
----@param modname string
-function env.require(modname)
-    if package.loaded[modname] == sentinel then
-        error("loop or previous error loading module '" .. modname .. "'", 0)
+---@param _ any
+---@param player EntityPlayer
+mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, player)
+    if (game_started == false) then return end
+    if (not is_continued) then
+        postPlayerInitLate(player)
     end
+end)
 
-    if package.loaded[modname] then
-        return package.loaded[modname]
-    end
+-- put your custom code here!
 
-    local sError = "module '" .. modname .. "' not found:"
-    for _, searcher in ipairs(package.loaders) do
-        local loader = table.pack(searcher(modname))
-        if loader[1] then
-            package.loaded[modname] = sentinel
-            local result = loader[1](modname, table.unpack(loader, 2, loader.n))
-            if result == nil then result = true end
-
-            package.loaded[modname] = result
-            return result
-        else
-            sError = sError .. "\n  " .. loader[2]
-        end
-    end
-    error(sError, 2)
-end
-
-env.include = env.require
-setmetatable(env, {
-    __newindex = function(self, key, value)
-        rawset(self, key, value)
-    end,
-    __index = _G
-})
-
-local function errHandler(err)
-    err  = tostring(err)
-    if (useCustomErrorChecker) then
-        local errorChecker = env.require("lib.cerror")
-        ---@cast errorChecker ErrorChecker
-        errorChecker.registerError()
-
-        local str = errorChecker.formatError(err)
-
-        if (str) then
-            local file = str:match("%w+%.lua")
-            local line = str:match(":(%d+):")
-            local merr = str:match(":%d+: (.*)")
-            errorChecker.SetData({
-                Mod = modName,
-                File = file,
-                Line = line
-            })
-            errorChecker.add("Error:", merr, true)
-            errorChecker.add("For full error report, open log.txt", true)
-            errorChecker.add("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt"
-                , true)
-            errorChecker.add("Restart your game after fixing the error!")
-        else
-            errorChecker.add("Unexpected error occured, please open log.txt!")
-            errorChecker.add("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt"
-                , true)
-            errorChecker.add(err)
-        end
-
-        local room = Game():GetRoom()
-        for i = 0, 7 do room:RemoveDoor(i) end
-
-        errorChecker.dump(err)
-        error()
-    else
-        Isaac.ConsoleOutput(modName .. " has hit an error, see Log.txt for more info\n")
-        Isaac.ConsoleOutput("Log Root: C:\\Users\\<YOUR USER>\\Documents\\My Games\\Binding of Isaac Repentance\\log.txt")
-        Isaac.DebugString("-- START OF " .. modName:upper() .. " ERROR --")
-        Isaac.DebugString(err)
-        Isaac.DebugString("-- END OF " .. modName:upper() .. " ERROR --")
-        error()
-    end
-end
-
-xpcall(function()
-    local fn, err = loadfile(dir .. "mod/" .. mainFileName .. ".lua", "bt", env)
-    if fn then
-        fn()
-    else
-        errHandler(err)
-    end
-end, errHandler)
+::EndOfFile::
