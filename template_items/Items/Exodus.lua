@@ -1,4 +1,5 @@
-local itemRegistry = require("Registries/ItemRegistry")
+local ItemLib = include("lib.itemLib") -- important to use include here, require will only make one copy and we each item to get its own copy
+local itemRegistry = ItemLib.registries -- each item will also need access to the item registry for filtering purpose or what have you.
 local firstUse = true -- we have to track the first use of our item, or else it will use two charges intead of just one.
 
 -- SEE Items.xml for the other half of what you need to do for this item!
@@ -38,4 +39,6 @@ local function Post_Player_Update(_, player)
   -- using math.max just stop the edge case that somehow the dat value gets set to 6, and thus the calculation would become -1
 end
 
-callbacks.add(ModCallbacks.MC_POST_PLAYER_UPDATE, Post_Player_Update) -- this runs for every player update.
+ItemLib:add(ModCallbacks.MC_POST_PLAYER_UPDATE, Post_Player_Update)
+
+return ItemLib
