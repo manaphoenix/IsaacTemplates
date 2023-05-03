@@ -2,7 +2,7 @@
 local ItemObject = {}
 ItemObject.callbacks = {} -- to store all the callbacks each item needs to function
 ---@type ItemRegistry
-ItemObject.registries = include("Registries.ItemRegistry")
+ItemObject.registries = include("registry.ItemRegistry")
 
 ---add a callback to added later
 ---@param callback ModCallbacks
