@@ -133,7 +133,8 @@ alpha:setStats(normalStats)
 	You can find a list of TearFlags here: https://wofsauge.github.io/IsaacDocs/rep/enums/TearFlags.html
 ]]
 
-alpha:setHeartType(1) -- lets you set the character to be a blackheart or soulheart only character
+--alpha:setHeartType(1) -- lets you set the character to be a blackheart or soulheart only character
+-- USE AT YOUR OWN RISK!
 
 --[[
 	TAINTED CHARACTER SETUP
